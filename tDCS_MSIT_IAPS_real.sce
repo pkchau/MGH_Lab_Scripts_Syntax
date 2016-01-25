@@ -4,7 +4,7 @@
 response_matching = simple_matching;
 active_buttons = 7;
 button_codes = 1,2,3,4,5,6,7;
-#stimulus_properties = condition;
+stimulus_properties = condition,string, emotion,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -350,7 +350,7 @@ begin
 	iaps_pic.set_part(1, pics_set[randomizer_array[x]]);
 	iaps_pic_only.set_part(1, pics_set[randomizer_array[x]]);
 	iaps_pic.add_part(num,0,0);
-	iaps_pre_event.set_event_code(pics_set[randomizer_array[x]].description());
+#	iaps_pre_event.set_event_code(pics_set[randomizer_array[x]].description());
 	#Set the correct response depending on the stimulus displayed
 	string c = num.caption();
 	if (c == "212" || c == "313" || c == "221" || c == "100" || c == "331") then
@@ -361,7 +361,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(num.description());
+	msit_iaps_event.set_event_code(num.description() + "," + pics_set[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;
