@@ -19,7 +19,7 @@ begin;
 #We want to separate the entire list of repeated images in 'halves' b/c we want the the first display of the unique image to be Int/NonInt and the 2nd display to be of the other condition.
 
 array {
-	bitmap { filename = "3053.bmp"; description = "Neg"; } p;
+	bitmap { filename = "3053.bmp"; description = "Neg"; } neg;
 	bitmap { filename = "1120.bmp"; description = "Neg"; };
 	bitmap { filename = "3230.bmp"; description = "Neg"; };
 	bitmap { filename = "3266.bmp"; description = "Neg"; };
@@ -43,7 +43,10 @@ array {
 	bitmap { filename = "2750.bmp"; description = "Neg"; };
 	bitmap { filename = "9570.bmp"; description = "Neg"; };
 	bitmap { filename = "9220.bmp"; description = "Neg"; };
-	bitmap { filename = "2620.bmp"; description = "Neu"; };
+} neg_pics_set;
+
+array {
+	bitmap { filename = "2620.bmp"; description = "Neu"; } neu;
 	bitmap { filename = "7004.bmp"; description = "Neu"; };
 	bitmap { filename = "7025.bmp"; description = "Neu"; };
 	bitmap { filename = "7140.bmp"; description = "Neu"; };
@@ -67,7 +70,10 @@ array {
 	bitmap { filename = "2570.bmp"; description = "Neu"; };
 	bitmap { filename = "7150.bmp"; description = "Neu"; };
 	bitmap { filename = "2210.bmp"; description = "Neu"; };
-	bitmap { filename = "7501.bmp"; description = "Pos"; };
+} neu_pics_set;
+
+array {
+	bitmap { filename = "7501.bmp"; description = "Pos"; } pos;
 	bitmap { filename = "8502.bmp"; description = "Pos"; };
 	bitmap { filename = "5470.bmp"; description = "Pos"; };
 	bitmap { filename = "2303.bmp"; description = "Pos"; };
@@ -91,7 +97,7 @@ array {
 	bitmap { filename = "4689.bmp"; description = "Pos"; };
 	bitmap { filename = "8496.bmp"; description = "Pos"; };
 	bitmap { filename = "2341.bmp"; description = "Pos"; };
-} pics_set;
+} pos_pics_set;
 
 #Now we create a 1D array of the 3 digit Numbers stimuli w/ Interference
 #This is b/c we want the 3-digit #s to be randomly matched to each picture.
@@ -195,7 +201,7 @@ trial {
 	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
-			bitmap p;
+			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic_only;
 	} iaps_pre_event;
@@ -208,7 +214,7 @@ trial {
 	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
-			bitmap p;
+			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic;
 	} msit_iaps_event;
@@ -261,26 +267,24 @@ combined_num_array.append(nonint_num_array);
 
 #Randomly choose picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
 array<int>randomize_pics_array[0];
-loop int i = 1 until i > 24
+loop int i = 1 until i > neg_pics_set.count()
 begin
 	randomize_pics_array.add(i);
 	i = i + 1;
 end;
 randomize_pics_array.shuffle();
 
-#Make pictures array from pics set array
-int num_emo = 3;
-int num_emo_divider = pics_set.count()/num_emo;
+#Make pictures array from randomized subset of pics set array
 array<bitmap> pics_array[0];
-loop int i = 0 until i > num_emo - 1
-	begin
-	loop int x = 1 until x > num_trials/3
-	begin
-		pics_array.add(pics_set[randomize_pics_array[x] + i*num_emo_divider]);
-		x = x + 1;
-	end;
+
+loop int i = 1 until i > randomize_pics_array.count()
+begin
+	pics_array.add(neg_pics_set[randomize_pics_array[i]]);
+	pics_array.add(neu_pics_set[randomize_pics_array[i]]);
+	pics_array.add(pos_pics_set[randomize_pics_array[i]]);
 	i = i + 1;
 end;
+
 #We now create a randomizer array containing #s 1-48 (1 up to # of total stimuli) to randomize the stimuli while keeping everything counterbalanced and in the correct corresponding order across the separate arrays
 array<int> randomizer_array[0];
 loop int i = 1 until i > num_trials
@@ -289,7 +293,6 @@ begin
 	i = i + 1;
 end; 
 randomizer_array.shuffle();
-
 
 #Begin the experiment
 intro_1.present();
