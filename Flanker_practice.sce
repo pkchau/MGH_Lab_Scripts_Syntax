@@ -265,29 +265,57 @@ int num_all_stimuli = num_inc_stimuli + num_con_stimuli;
 
 #Make arrays of ALL stimuli in task
 array<text> flankers_only[0];
-loop int i = 1 until i > num_all_stimuli/flankers_set.count()
+loop int i = 1 until i > num_all_stimuli/flankers_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin
-	flankers_only.append(flankers_set);
+	loop int x = 1 until x > flankers_set.count()
+	begin
+		if (flankers_only.count() == num_all_stimuli) then
+			break;
+		end;
+		flankers_only.add(flankers_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 array<text> flankers_target[0];
-loop int i = 1 until i > num_con_stimuli/con_target_set.count()
+loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-	flankers_target.append(con_target_set);
+	loop int x = 1 until x > con_target_set.count()
+	begin
+		if (flankers_target.count() == num_con_stimuli) then
+			break;
+		end;
+		flankers_target.add(con_target_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
-loop int i = 1 until i > num_inc_stimuli/inc_target_set.count()
+loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-	flankers_target.append(inc_target_set);
+	loop int x = 1 until x > inc_target_set.count()
+	begin
+		if (flankers_target.count() == num_all_stimuli) then
+			break;
+		end;
+	flankers_target.add(inc_target_set[x]);
+	x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 array<int> ITIs[0];
 loop int i = 1 until i > num_all_stimuli/ITI_set.count()	+ 1 #Add 1 b/c 32/3 doesn't divide evenly and will round down
 begin;
-	ITIs.append(ITI_set);
+	loop int x = 1 until x > ITI_set.count()
+	begin
+		if (ITI_set.count() == num_all_stimuli) then
+			break;
+		end;
+		ITIs.add(ITI_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
