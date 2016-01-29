@@ -1,18 +1,24 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
+#Numbers font = 36 in old expt
 
 #Header
 response_matching = simple_matching;
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 7
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = condition,string, emotion,string,;
+stimulus_properties = subjectID,string, condition,string, emotion,string,;
 event_code_delimiter = ",";
 #End Header	
 
 #Begin SDL
 begin;
 
-#Create a 3 1D arrays with all the pictures and with the corresponding valence categories in the picure description, separated by emotion (Neg, Neu, Pos)
+#Create a 1D array with all the pictures and with the corresponding valence categories in the picure description
+#We have 72 unique images that are shown 2x (i.e. the same image is repeated) in the expt.
+#1-72 in the array will be all the unique images listed 1x. 
+#73-144 will be the images repeated again in the same order.
+#We want to separate the entire list of repeated images in 'halves' b/c we want the the first display of the unique image to be Int/NonInt and the 2nd display to be of the other condition.
+
 array {
 	bitmap { filename = "3053.bmp"; description = "Neg"; } neg;
 	bitmap { filename = "1120.bmp"; description = "Neg"; };
@@ -117,7 +123,7 @@ array {
 	text { caption = "020"; font_size = 36; description = "NON"; };
 	text { caption = "003"; font_size = 36; description = "NON"; };
 	text { caption = "100"; font_size = 36; description = "NON"; };
-} non_num_set;
+} nonint_num_set;
 
 #Intro 1
 trial {
@@ -233,48 +239,32 @@ begin_pcl;
 
 #SET number of trials here
 int num_trials = 48;
-#SET proportion/# of Int and NonInt #s here
-int num_int = num_trials/2;
-int num_non = num_trials/2;
 
-#Create full int and nonint number arrays
+#Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
+#Have 23 Int #s: Int num array has 12 in set > each Int # should be displayed 1-2 times
 array<text> int_num_array[0];
-loop int i = 1 until i > num_int/int_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
+loop int i = 1 until i > num_trials/2/int_num_set.count() + 1
 begin
-	loop int x = 1 until x > int_num_set.count()
-	begin
-		if (int_num_array.count() == num_int) then
-			break;
-		end;
-		int_num_array.add(int_num_set[x]);
-		x = x + 1;
-	end;
+	int_num_array.append(int_num_set);
 	i = i + 1;
 end;
-	
-array<text> non_num_array[0];
-loop int i = 1 until i > num_non/non_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
+#Have 22 NonInt Stimuli: NonInt set has 3 in set > each NonInt # should be displayed 7-8 times 
+array<text> nonint_num_array[0];
+loop int i = 1 until i > num_trials/2/nonint_num_set.count() + 1
 begin
-	loop int x = 1 until x > non_num_set.count()
-	begin
-		if (non_num_array.count() == num_non) then
-			break;
-		end;
-		non_num_array.add(int_num_set[x]);
-		x = x + 1;
-	end;
+	nonint_num_array.append(nonint_num_set);
 	i = i + 1;
 end;
-	
+
 #Now that we have our 2 arrays, we randomize the order of the IntNumbers and NonIntNumbers arrays
 int_num_array.shuffle();
-non_num_array.shuffle();
+nonint_num_array.shuffle();
 
 #We now combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array. 
 #We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
 array<text>combined_num_array[1];
 combined_num_array.assign(int_num_array);
-combined_num_array.append(non_num_array);
+combined_num_array.append(nonint_num_array);
 
 #Randomly choose picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
 array<int>randomize_pics_array[0];
@@ -287,6 +277,7 @@ randomize_pics_array.shuffle();
 
 #Make pictures array from randomized subset of pics set array
 array<bitmap> pics_array[0];
+
 loop int i = 1 until i > randomize_pics_array.count()
 begin
 	pics_array.add(neg_pics_set[randomize_pics_array[i]]);
@@ -295,7 +286,7 @@ begin
 	i = i + 1;
 end;
 
-#We now create a randomizer array containing #s 1 up to # of total stimuli to randomize the stimuli while keeping everything counterbalanced and in the correct corresponding order across the separate arrays
+#We now create a randomizer array containing #s 1-48 (1 up to # of total stimuli) to randomize the stimuli while keeping everything counterbalanced and in the correct corresponding order across the separate arrays
 array<int> randomizer_array[0];
 loop int i = 1 until i > num_trials
 begin
@@ -328,7 +319,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(num.description() + "," + pics_array[randomizer_array[x]].description());
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;

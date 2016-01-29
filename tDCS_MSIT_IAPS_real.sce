@@ -11,37 +11,37 @@ event_code_delimiter = ",";
 #begin SDL
 begin;
 
-#Create a 1D array with all the pictures and with the corresponding valence categories in the picure description
+#Create a 3 1D arrays with all the pictures and with the corresponding valence categories in the picure description, separated by emotion (Neg, Neu, Pos)
 #We have 72 unique images that are shown 2x (i.e. the same image is repeated) in the expt.
-#73-144 will be the images repeated again in the same order.
-#We want to separate the entire list of repeated images in 'halves' b/c we want the the first display of the unique image to be Int/NonInt and the 2nd display to be of the other condition.
+array {
+	bitmap { filename = "3053.bmp"; description = "Neg"; } neg;
+	bitmap { filename = "1120.bmp"; description = "Neg"; };
+	bitmap { filename = "3230.bmp"; description = "Neg"; };
+	bitmap { filename = "3266.bmp"; description = "Neg"; };
+	bitmap { filename = "3071.bmp"; description = "Neg"; };
+	bitmap { filename = "9253.bmp"; description = "Neg"; };
+	bitmap { filename = "6550.bmp"; description = "Neg"; };
+	bitmap { filename = "3030.bmp"; description = "Neg"; };
+	bitmap { filename = "9440.bmp"; description = "Neg"; };
+	bitmap { filename = "3180.bmp"; description = "Neg"; };
+	bitmap { filename = "2800.bmp"; description = "Neg"; };
+	bitmap { filename = "9571.bmp"; description = "Neg"; };
+	bitmap { filename = "2120.bmp"; description = "Neg"; };
+	bitmap { filename = "6260.bmp"; description = "Neg"; };
+	bitmap { filename = "9000.bmp"; description = "Neg"; };
+	bitmap { filename = "3301.bmp"; description = "Neg"; };
+	bitmap { filename = "3350.bmp"; description = "Neg"; };
+	bitmap { filename = "9600.bmp"; description = "Neg"; };
+	bitmap { filename = "6370.bmp"; description = "Neg"; };
+	bitmap { filename = "3160.bmp"; description = "Neg"; };
+	bitmap { filename = "6570.bmp"; description = "Neg"; };
+	bitmap { filename = "2750.bmp"; description = "Neg"; };
+	bitmap { filename = "9570.bmp"; description = "Neg"; };
+	bitmap { filename = "9220.bmp"; description = "Neg"; };
+} neg_pics_set;
 
 array {
-	bitmap { filename = "3053.bmp"; description = "Neg"; } p;
-	bitmap { filename = "1120.bmp"; description = "Neg"; };
-	bitmap { filename = "3230.bmp"; description = "Neg"; };
-	bitmap { filename = "3266.bmp"; description = "Neg"; };
-	bitmap { filename = "3071.bmp"; description = "Neg"; };
-	bitmap { filename = "9253.bmp"; description = "Neg"; };
-	bitmap { filename = "6550.bmp"; description = "Neg"; };
-	bitmap { filename = "3030.bmp"; description = "Neg"; };
-	bitmap { filename = "9440.bmp"; description = "Neg"; };
-	bitmap { filename = "3180.bmp"; description = "Neg"; };
-	bitmap { filename = "2800.bmp"; description = "Neg"; };
-	bitmap { filename = "9571.bmp"; description = "Neg"; };
-	bitmap { filename = "2120.bmp"; description = "Neg"; };
-	bitmap { filename = "6260.bmp"; description = "Neg"; };
-	bitmap { filename = "9000.bmp"; description = "Neg"; };
-	bitmap { filename = "3301.bmp"; description = "Neg"; };
-	bitmap { filename = "3350.bmp"; description = "Neg"; };
-	bitmap { filename = "9600.bmp"; description = "Neg"; };
-	bitmap { filename = "6370.bmp"; description = "Neg"; };
-	bitmap { filename = "3160.bmp"; description = "Neg"; };
-	bitmap { filename = "6570.bmp"; description = "Neg"; };
-	bitmap { filename = "2750.bmp"; description = "Neg"; };
-	bitmap { filename = "9570.bmp"; description = "Neg"; };
-	bitmap { filename = "9220.bmp"; description = "Neg"; };
-	bitmap { filename = "2620.bmp"; description = "Neu"; };
+	bitmap { filename = "2620.bmp"; description = "Neu"; } neu;
 	bitmap { filename = "7004.bmp"; description = "Neu"; };
 	bitmap { filename = "7025.bmp"; description = "Neu"; };
 	bitmap { filename = "7140.bmp"; description = "Neu"; };
@@ -65,7 +65,10 @@ array {
 	bitmap { filename = "2570.bmp"; description = "Neu"; };
 	bitmap { filename = "7150.bmp"; description = "Neu"; };
 	bitmap { filename = "2210.bmp"; description = "Neu"; };
-	bitmap { filename = "7501.bmp"; description = "Pos"; };
+} neu_pics_set;
+
+array {
+	bitmap { filename = "7501.bmp"; description = "Pos"; } pos;
 	bitmap { filename = "8502.bmp"; description = "Pos"; };
 	bitmap { filename = "5470.bmp"; description = "Pos"; };
 	bitmap { filename = "2303.bmp"; description = "Pos"; };
@@ -89,79 +92,7 @@ array {
 	bitmap { filename = "4689.bmp"; description = "Pos"; };
 	bitmap { filename = "8496.bmp"; description = "Pos"; };
 	bitmap { filename = "2341.bmp"; description = "Pos"; };
-	bitmap { filename = "3053.bmp"; description = "Neg"; };
-	bitmap { filename = "1120.bmp"; description = "Neg"; };
-	bitmap { filename = "3230.bmp"; description = "Neg"; };
-	bitmap { filename = "3266.bmp"; description = "Neg"; };
-	bitmap { filename = "3071.bmp"; description = "Neg"; };
-	bitmap { filename = "9253.bmp"; description = "Neg"; };
-	bitmap { filename = "6550.bmp"; description = "Neg"; };
-	bitmap { filename = "3030.bmp"; description = "Neg"; };
-	bitmap { filename = "9440.bmp"; description = "Neg"; };
-	bitmap { filename = "3180.bmp"; description = "Neg"; };
-	bitmap { filename = "2800.bmp"; description = "Neg"; };
-	bitmap { filename = "9571.bmp"; description = "Neg"; };
-	bitmap { filename = "2120.bmp"; description = "Neg"; };
-	bitmap { filename = "6260.bmp"; description = "Neg"; };
-	bitmap { filename = "9000.bmp"; description = "Neg"; };
-	bitmap { filename = "3301.bmp"; description = "Neg"; };
-	bitmap { filename = "3350.bmp"; description = "Neg"; };
-	bitmap { filename = "9600.bmp"; description = "Neg"; };
-	bitmap { filename = "6370.bmp"; description = "Neg"; };
-	bitmap { filename = "3160.bmp"; description = "Neg"; };
-	bitmap { filename = "6570.bmp"; description = "Neg"; };
-	bitmap { filename = "2750.bmp"; description = "Neg"; };
-	bitmap { filename = "9570.bmp"; description = "Neg"; };
-	bitmap { filename = "9220.bmp"; description = "Neg"; };
-	bitmap { filename = "2620.bmp"; description = "Neu"; };
-	bitmap { filename = "7004.bmp"; description = "Neu"; };
-	bitmap { filename = "7025.bmp"; description = "Neu"; };
-	bitmap { filename = "7140.bmp"; description = "Neu"; };
-	bitmap { filename = "2890.bmp"; description = "Neu"; };
-	bitmap { filename = "7002.bmp"; description = "Neu"; };
-	bitmap { filename = "1121.bmp"; description = "Neu"; };
-	bitmap { filename = "2383.bmp"; description = "Neu"; };
-	bitmap { filename = "2520.bmp"; description = "Neu"; };
-	bitmap { filename = "2480.bmp"; description = "Neu"; };
-	bitmap { filename = "6000.bmp"; description = "Neu"; };
-	bitmap { filename = "2515.bmp"; description = "Neu"; };
-	bitmap { filename = "2221.bmp"; description = "Neu"; };
-	bitmap { filename = "2440.bmp"; description = "Neu"; };
-	bitmap { filename = "2516.bmp"; description = "Neu"; };
-	bitmap { filename = "7100.bmp"; description = "Neu"; };
-	bitmap { filename = "2880.bmp"; description = "Neu"; };
-	bitmap { filename = "2870.bmp"; description = "Neu"; };
-	bitmap { filename = "2850.bmp"; description = "Neu"; };
-	bitmap { filename = "1670.bmp"; description = "Neu"; };
-	bitmap { filename = "2600.bmp"; description = "Neu"; };
-	bitmap { filename = "2570.bmp"; description = "Neu"; };
-	bitmap { filename = "7150.bmp"; description = "Neu"; };
-	bitmap { filename = "2210.bmp"; description = "Neu"; };
-	bitmap { filename = "7501.bmp"; description = "Pos"; };
-	bitmap { filename = "8502.bmp"; description = "Pos"; };
-	bitmap { filename = "5470.bmp"; description = "Pos"; };
-	bitmap { filename = "2303.bmp"; description = "Pos"; };
-	bitmap { filename = "4608.bmp"; description = "Pos"; };
-	bitmap { filename = "5621.bmp"; description = "Pos"; };
-	bitmap { filename = "5001.bmp"; description = "Pos"; };
-	bitmap { filename = "5831.bmp"; description = "Pos"; };
-	bitmap { filename = "8500.bmp"; description = "Pos"; };
-	bitmap { filename = "2550.bmp"; description = "Pos"; };
-	bitmap { filename = "8185.bmp"; description = "Pos"; };
-	bitmap { filename = "5480.bmp"; description = "Pos"; };
-	bitmap { filename = "5622.bmp"; description = "Pos"; };
-	bitmap { filename = "8200.bmp"; description = "Pos"; };
-	bitmap { filename = "1440.bmp"; description = "Pos"; };
-	bitmap { filename = "2080.bmp"; description = "Pos"; };
-	bitmap { filename = "5626.bmp"; description = "Pos"; };
-	bitmap { filename = "7502.bmp"; description = "Pos"; };
-	bitmap { filename = "2352.bmp"; description = "Pos"; };
-	bitmap { filename = "1811.bmp"; description = "Pos"; };
-	bitmap { filename = "5629.bmp"; description = "Pos"; };
-	bitmap { filename = "4689.bmp"; description = "Pos"; };
-	bitmap { filename = "8496.bmp"; description = "Pos"; };
-	bitmap { filename = "2341.bmp"; description = "Pos"; };
-} pics_set;
+} pos_pics_set;
 
 #Now we create a 1D array of the 3 digit Numbers stimuli w/ Interference
 #This is b/c we want the 3-digit #s to be randomly matched to each picture.
@@ -186,7 +117,7 @@ array {
 	text { caption = "020"; description = "NON"; };
 	text { caption = "003"; description = "NON"; };
 	text { caption = "100"; description = "NON"; };
-} nonint_num_set;
+} non_num_set;
 
 #Intro 1
 trial {
@@ -265,7 +196,7 @@ trial {
 	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
-			bitmap p;
+			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic_only;
 	} iaps_pre_event;
@@ -278,7 +209,7 @@ trial {
 	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
-			bitmap p;
+			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic;
 	} msit_iaps_event;
@@ -302,30 +233,62 @@ begin_pcl;
 
 #SET number of trials here
 int num_trials = 144;
+#SET proportion/# of Int and NonInt #s here
+int num_int = num_trials/2;
+int num_non = num_trials/2;
 
-#Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
+#Create full int and nonint number arrays
 array<text> int_num_array[0];
-loop int i = 1 until i > num_trials/2/int_num_set.count()
+loop int i = 1 until i > num_int/int_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin
-	int_num_array.append(int_num_set);
+	loop int x = 1 until x > int_num_set.count()
+	begin
+		if (int_num_array.count() == num_int) then
+			break;
+		end;
+		int_num_array.add(int_num_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
-array<text> nonint_num_array[0];
-loop int i = 1 until i > num_trials/2/nonint_num_set.count()
+	
+array<text> non_num_array[0];
+loop int i = 1 until i > num_non/non_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin
-	nonint_num_array.append(nonint_num_set);
+	loop int x = 1 until x > non_num_set.count()
+	begin
+		if (non_num_array.count() == num_non) then
+			break;
+		end;
+		non_num_array.add(int_num_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 #Now that we have our 2 arrays, we randomize the order of the IntNumbers and NonIntNumbers arrays
 int_num_array.shuffle();
-nonint_num_array.shuffle();
+non_num_array.shuffle();
 
 #We combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array
 #We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
 array<text>combined_num_array[1];
 combined_num_array.assign(int_num_array);
-combined_num_array.append(nonint_num_array);
+combined_num_array.append(non_num_array);
+
+#Make full pictures array from indiv pics set arrays, have them in the same order 2x since all pics are seen 2x and we want them displayed 1x w/ the int # and 1x w/ the nonint #
+array<bitmap> pics_array[0];
+loop int i = 1 until i > 2
+begin
+	loop int x = 1 until x > neg_pics_set.count()
+	begin
+		pics_array.add(neg_pics_set[x]);
+		pics_array.add(neu_pics_set[x]);
+		pics_array.add(pos_pics_set[x]);
+		i = i + 1;
+	end;
+	i = i + 1;
+end;
 
 #We now create a randomizer array containing #s 1-144 (1 up to # of total stimuli) to randomize the stimuli while keeping everything counterbalanced and in the correct corresponding order across the separate arrays
 array<int> randomizer_array[0]; 
@@ -347,10 +310,9 @@ get_ready_real.present();
 loop int x = 1 until x > num_trials
 begin
 	text num = combined_num_array[randomizer_array[x]];
-	iaps_pic.set_part(1, pics_set[randomizer_array[x]]);
-	iaps_pic_only.set_part(1, pics_set[randomizer_array[x]]);
+	iaps_pic.set_part(1, pics_array[randomizer_array[x]]);
+	iaps_pic_only.set_part(1, pics_array[randomizer_array[x]]);
 	iaps_pic.add_part(num,0,0);
-#	iaps_pre_event.set_event_code(pics_set[randomizer_array[x]].description());
 	#Set the correct response depending on the stimulus displayed
 	string c = num.caption();
 	if (c == "212" || c == "313" || c == "221" || c == "100" || c == "331") then
@@ -361,7 +323,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(num.description() + "," + pics_set[randomizer_array[x]].description());
+	msit_iaps_event.set_event_code(num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;

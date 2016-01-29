@@ -1,11 +1,13 @@
 #NOTE: display size is 1024 x 768 on old exptl laptop, so this expt is set to 1024 x 768 to match.
+#Point size of flankers stimuli for old expt = 56
 
 #Header
 response_matching = simple_matching;
-active_buttons = 3;
+#default_font = "Courier New"; #Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
+#default_formatted_text = true;
 #keys: 1 = c, 2 = m, 3 = spacebar
 button_codes = 1,2,3;
-stimulus_properties = condition,string;
+stimulus_properties = subjectID,string, condition,string;
 event_code_delimiter = ",";
 #End Header
 	
@@ -14,26 +16,26 @@ begin;
 
 #Display ERROR as default if proper stimuli are not retrieved
 array {
-	text { caption = "ERROR"; description = "ERROR"; font_size = 300;} err;
+	text { caption = "ERROR"; description = "ERROR"; font_size = 100;} err;
 } error;
 
 #Create 3 separate arrays: 1 with flankers only and 1 with flankers w/ targets per condition (con/inc).
 #NOTE: Make sure the order of each row in array 1 corresponds to array 2s and 3 i.e. that the flankers are the same in both.
 #There are in total 4 different kinds of target w/ flankers stimuli. 
 array {
-	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 200;};
-   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 200;};
+	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 56;};
+   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 56;};
 } flankers_set;
 
 array {
-	text { caption = "< < < < <"; description = "CON"; font_size = 200;};
-   text { caption = "> > > > >"; description = "CON"; font_size = 200;};
+	text { caption = "< < < < <"; description = "CON"; font_size = 56;};
+   text { caption = "> > > > >"; description = "CON"; font_size = 56;};
 } con_target_set;
 
 
 array {
-	text { caption = "< < > < <"; description = "INC"; font_size = 200;};
-	text { caption = "> > < > >"; description = "INC"; font_size = 200;};
+	text { caption = "< < > < <"; description = "INC"; font_size = 56;};
+	text { caption = "> > < > >"; description = "INC"; font_size = 56;};
 } inc_target_set;
 
 #Intro 1
@@ -43,7 +45,7 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "In this task, you will see 5 arrows presented. We want you to focus on the direction the CENTER arrow is facing.\n\nPress the spacebar to proceed."; 
+			caption = "In this task, you will see 5 arrows presented.\n\nWe want you to focus on the direction the CENTER arrow is facing.\n\nPress the spacebar to proceed."; 
 			font_size = 18; 
 		};
 		x = 0; y = 0;
@@ -77,7 +79,7 @@ trial {
 			x = 0; y = 250;
 			text { 
 				caption = "> > > > >"; 
-				font_size = 48; 
+				font_size = 56; 
 			};
 			x = 0; y = 100;
 			text { 
@@ -101,7 +103,7 @@ trial {
 		x = 0; y = 250;
 		text { 
 			caption = "< < > < <"; 
-			font_size = 48; 
+			font_size = 56; 
 		};
 		x = 0; y = 100;
 		text { 
@@ -125,7 +127,7 @@ trial {
 		x = 0; y = 250;		
 		text { 
 			caption = "< < < < <"; 
-			font_size = 48;
+			font_size = 56;
 		};
 		x = 0; y = 100;
 		text { 
@@ -144,7 +146,7 @@ trial {
 		picture {
 		text {
 			caption = "Example 4"; 
-			font_size = 24;
+			font_size = 56;
 		};
 		x = 0; y = 250;
 		text { 
@@ -307,29 +309,57 @@ int num_con_stimuli = num_inc_stimuli*2 - 2;
 int num_all_stimuli = 70;
 
 array<text> flankers_only[0];
-loop int i = 1 until i > num_all_stimuli/flankers_set.count()
+loop int i = 1 until i > num_all_stimuli/flankers_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin
-	flankers_only.append(flankers_set);
+	loop int x = 1 until x > flankers_set.count()
+	begin
+		if (flankers_only.count() == num_all_stimuli) then
+			break;
+		end;
+		flankers_only.add(flankers_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 array<text> flankers_target[0];
-loop int i = 1 until i > num_inc_stimuli/inc_target_set.count()
+loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-	flankers_target.append(inc_target_set);
+	loop int x = 1 until x > con_target_set.count()
+	begin
+		if (flankers_target.count() == num_con_stimuli) then
+			break;
+		end;
+		flankers_target.add(con_target_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
-loop int i = 1 until i > num_con_stimuli/con_target_set.count()
+loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-		flankers_target.append(con_target_set);
-		i = i + 1;
+	loop int x = 1 until x > inc_target_set.count()
+	begin
+		if (flankers_target.count() == num_all_stimuli) then
+			break;
+		end;
+	flankers_target.add(inc_target_set[x]);
+	x = x + 1;
+	end;
+	i = i + 1;
 end;
 
 array<int> ITIs[0];
-loop int i = 1 until i > num_inc_stimuli/ITI_set.count()
+loop int i = 1 until i > num_all_stimuli/ITI_set.count()	+ 1 #Add 1 b/c 32/3 doesn't divide evenly and will round down
 begin;
-	ITIs.append(ITI_set);
+	loop int x = 1 until x > ITI_set.count()
+	begin
+		if (ITI_set.count() == num_all_stimuli) then
+			break;
+		end;
+		ITIs.add(ITI_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
@@ -380,7 +410,7 @@ loop int b = 1 until b > num_blocks
 		flankersonly_trial.present();
 		flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 		target_trial.present();
-		target_event.set_event_code(target.description());
+		target_event.set_event_code(logfile.subject() + "," + target.description());
 		#If response too slow, display too slow
 		stimulus_data last = stimulus_manager.last_stimulus_data();
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then
