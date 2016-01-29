@@ -5,7 +5,7 @@ response_matching = simple_matching;
 default_font_size = 36; #Stim font size = 36 in old expt
 active_buttons = 3;
 button_codes = 1,2,3;
-stimulus_properties = letter,string, is_target,string;
+stimulus_properties = subjectID,string, nback,string, letter,string, is_target,string;
 event_code_delimiter = ",";
 #End Header
 
@@ -115,7 +115,7 @@ trial {
       } pic;
       time = 0;
       duration = 492;
-   } event1;
+   } n_back_event;
 } n_back_trial;
 
 #Conclusion: 1 back
@@ -125,14 +125,14 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "Great job! You have completed the 1-back practice.\n\nPress the spacebar to continue to the 2 back practice instructions."; 
+			caption = "Great job! You have completed the 1-back practice.\n\nPress the spacebar to continue to the 2-back practice instructions."; 
 			font_size = 14; 
 		};
 		x = 0; y = 0;
 		}; 
 } end_1back;
 
-#Conclusion
+#Conclusion: end task
 trial {
 	trial_duration = forever;
 	trial_type = specific_response;
@@ -162,7 +162,7 @@ end;
 #SET total # trials here
 int stim_count = 15;
 
-#Have 30% of stimuli be targets
+#SET 30% of stimuli as targets
 array<int> is_target[stim_count];
 loop int i = 1 until i > stim_count / 3 begin
    is_target[i] = 1;
@@ -172,12 +172,10 @@ end;
 #Randomize where the targets are in the array
 is_target.shuffle();
 
-#If 1-back: keep randomizing array until you have one where the first stimulus displayed cannot be a correct response.
-#If 2-back: Keep randomizing array until you have one where the first TWO stimuli displayed cannot be correct responses
-loop until is_target[1] == 0 && is_target[2] == 0 
-	begin
-		is_target.shuffle()
-   end;
+#For 1-back: Keep randomizing array until you have one where the first stimulus displayed cannot be correct responses
+loop until is_target[1] == 0
+begin
+	is_target.shuffle()
 end;
 
 #Present intro slides
@@ -186,8 +184,11 @@ intro_2.present();
 begin_1back.present();
 get_ready_practice.present();
 
-#SET total # of 1 and 2 back runs here
+#SET total # of combined 1 and 2 back runs here
 int num_runs = 2;
+
+#Use boolean to switch btwn code for one-back and 2-back tasks
+bool oneback = true;
 
 #Present n-back trials
 loop int x = 1 until x > num_runs
@@ -208,7 +209,8 @@ begin
 			else
 				index = two_back
 			end;
-			target_string = "yes" #Writes to the log file that letter is a target. 
+			target_string = "yes"; #Writes to the log file that letter is a target. 
+			n_back_event.set_target_button({1,2}); #Set the correct response button
 		#Otherwise randomly select any number in the Letters array EXCLUDING the previous letter
 		else
 			if (oneback == true) then
@@ -218,10 +220,11 @@ begin
 			end;
 		end;
 		pic.set_part( 1, letters_set[index] );
-		event1.set_event_code( letters_set[index].description() + "," + target_string );
 		if (oneback == true) then
+			n_back_event.set_event_code(logfile.subject() + "," + "1" + "," + letters_set[index].description() + "," + target_string );
 			previous = index;
 		else
+			n_back_event.set_event_code(logfile.subject() + "," + "2" + "," + letters_set[index].description() + "," + target_string );
 			two_back = previous;
 			previous = index;
 		end;
@@ -229,16 +232,17 @@ begin
 		i = i + 1;
 	end;
 	x = x + 1;
-	if (x == num_runs) then 
+	if (x > num_runs) then 
 		break;
 	end;
+	end_1back.present();
+	#Randomize stimuli order for 2-back
 	loop until is_target[1] == 0 && is_target[2] == 0 
 	begin
 		is_target.shuffle()
    end;
-	end_1back.present();
 	begin_2back.present();
-	get_ready_real.present();
+	get_ready_practice.present();
 	oneback = !oneback;
 end;
 

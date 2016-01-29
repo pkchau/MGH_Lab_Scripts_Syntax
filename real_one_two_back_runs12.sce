@@ -5,7 +5,7 @@ response_matching = simple_matching;
 default_font_size = 36; #Stim font size = 36 in old expt
 active_buttons = 3;
 button_codes = 1,2,3;
-stimulus_properties = letter, string, is_target, string;
+stimulus_properties = subjectID,string, nback,string, letter,string, is_target,string;
 event_code_delimiter = ",";
 #End Header
 
@@ -101,7 +101,7 @@ trial {
       } pic;
       time = 0;
       duration = 492;
-   } event1;
+   } n_back_event;
 } n_back_trial;
 
 #Conclusion: 1 back
@@ -111,7 +111,7 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "Great job! You have completed the 1-back task.\n\nPress the spacebar to continue to the 2 back instructions."; 
+			caption = "Great job! You have completed the 1-back task.\n\nPress the spacebar to continue to the 2-back instructions."; 
 			font_size = 14; 
 		};
 		x = 0; y = 0;
@@ -125,7 +125,7 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "Great job! You have completed the 2-back task.\n\nPress the spacebar to continue."; 
+			caption = "Great job! You have completed the 2-back task.\n\nPress the spacebar to continue to the next round of the 1-back."; 
 			font_size = 14; 
 		};
 		x = 0; y = 0;
@@ -139,7 +139,7 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "Great job! You have completed the all runs of the 1-back and 2-back tasks.\n\nPlease let the experimenter know."; 
+			caption = "Great job! You have completed all runs of the 1-back and 2-back tasks.\n\nPlease let the experimenter know."; 
 			font_size = 14; 
 		};
 		x = 0; y = 0;
@@ -162,32 +162,20 @@ end;
 #SET num trials here  
 int stim_count = 30;
 
-#Have 30% of stimuli be targets
+#SET 30% of stimuli as targets
 array<int> is_target[stim_count];
 loop int i = 1 until i > stim_count / 3 begin
    is_target[i] = 1;
    i = i + 1
 end;
 
-#Set variable to detect if 1back or 2back
-bool oneback = true;
-
 #Randomize where the targets are in the array
 is_target.shuffle();
-#If 1-back: keep randomizing array until you have one where the first stimulus displayed cannot be a correct response.
-#If 2-back: Keep randomizing array until you have one where the first TWO stimuli displayed cannot be correct responses
-if (oneback == true) then
-	loop until is_target[1] == 0 
-	begin
-		is_target.shuffle()
-	end;
-else
-	loop until is_target[1] == 0 && is_target[2] == 0 
-	begin
-		is_target.shuffle()
-   end;
+#1-back: keep randomizing array until you have one where the first stimulus displayed cannot be a correct response.
+loop until is_target[1] == 0 
+begin
+	is_target.shuffle();
 end;
-
 #Present Intro Slides
 intro_1.present();
 begin_1back.present();
@@ -195,6 +183,9 @@ get_ready_real.present();
 
 #SET total # of 1 and 2 back runs here
 int num_runs = 4;
+
+#Set variable to detect if 1back or 2back
+bool oneback = true;
 
 #Present n-back trials
 loop int x = 1 until x > num_runs
@@ -213,9 +204,10 @@ begin
 			if (oneback == true) then
 				index = previous;
 			else
-				index = two_back
+				index = two_back;
 			end;
-			target_string = "yes" #Writes to the log file that letter is a target. 
+			target_string = "yes"; #Writes to the log file that letter is a target. 
+			n_back_event.set_target_button({1,2});
 		#Otherwise randomly select any number in the Letters array EXCLUDING the previous letter
 		else
 			if (oneback == true) then
@@ -225,10 +217,12 @@ begin
 			end;
 		end;
 		pic.set_part( 1, letters_set[index] );
-		event1.set_event_code( letters_set[index].description() + "," + target_string );
+		n_back_event.set_event_code( letters_set[index].description() + "," + target_string );
 		if (oneback == true) then
+			n_back_event.set_event_code(logfile.subject() + "," + "1" + "," + letters_set[index].description() + "," + target_string );
 			previous = index;
 		else
+			n_back_event.set_event_code(logfile.subject() + "," + "2" + "," + letters_set[index].description() + "," + target_string );
 			two_back = previous;
 			previous = index;
 		end;
@@ -236,18 +230,22 @@ begin
 		i = i + 1;
 	end;
 	x = x + 1;
-	if (x == num_runs) then 
+	if (x > num_runs) then 
 		break;
 	end;
-	loop until is_target[1] == 0 && is_target[2] == 0 
-	begin
-		is_target.shuffle()
-   end;
 	if (oneback == true) then
 		end_1back.present();
+		loop until is_target[1] == 0 && is_target[2] == 0 
+		begin
+			is_target.shuffle()
+		end;
 		begin_2back.present();
 	else
 		end_2back.present();
+		loop until is_target[1] == 0 
+		begin
+			is_target.shuffle()
+		end;
 		begin_1back.present();
 	end;
 	get_ready_real.present();
