@@ -1,0 +1,581 @@
+<ver>18.1</ver>
+<efn>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\tDCS_MSIT_IAPS_practice_real.exp</efn>
+<author>Peggy Chau</author>
+<con>
+<pause>P</pause>
+<pause_code></pause_code>
+<port1>1</port1>
+<quit>Q</quit>
+<quit2>0</quit2>
+<quit_code></quit_code>
+<resume>R</resume>
+<resume_code></resume_code>
+<send_output>0</send_output>
+<start_code></start_code>
+</con>
+<dbi></dbi>
+<dbs>button</dbs>
+<ddi>0</ddi>
+<dds>
+<icm_profile></icm_profile>
+<use_icm>0</use_icm>
+</dds>
+<ddv>Primary Display Driver</ddv>
+<depchg>1</depchg>
+<discard_windows_messages>0</discard_windows_messages>
+<display_status_window>1</display_status_window>
+<dmd>32</dmd>
+<dmh>480</dmh>
+<dmr>60</dmr>
+<dmw>640</dmw>
+<docs>
+<args></args>
+<exfl></exfl>
+<lfn></lfn>
+</docs>
+<dp_list></dp_list>
+<dsd>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS</dsd>
+<dxv>8</dxv>
+<efs>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\tDCS_MSIT_IAPS_practice.sce</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\tDCS_MSIT_IAPS_real.sce</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1120.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1121.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1440.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1640.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1670.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\1811.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2020.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2080.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2120.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2190.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2200.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2209.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2210.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2214.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2221.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2271.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2303.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2341.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2352.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2372.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2383.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2385.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2440.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2480.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2485.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2495.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2514.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2515.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2516.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2518.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2520.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2550.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2570.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2580.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2600.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2620.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2750.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2800.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2850.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2870.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2880.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\2890.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3030.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3053.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3071.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3160.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3180.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3230.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3266.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3301.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\3350.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\4608.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\4689.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5001.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5470.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5480.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5535.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5621.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5622.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5626.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5629.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\5831.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\6000.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\6260.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\6370.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\6550.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\6570.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7002.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7004.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7009.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7010.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7025.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7031.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7050.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7100.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7140.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7150.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7211.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7283.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7501.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\7502.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8010.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8185.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8200.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8496.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8500.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\8502.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9000.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9190.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9210.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9220.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9253.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9440.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9570.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9571.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\9600.bmp</filename>
+<filename>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\a.bmp</filename>
+</efs>
+<exclusive_mouse>1</exclusive_mouse>
+<exp_version></exp_version>
+<exparam>
+<man>
+<cfg>
+<dcfg>
+<name>Default configuration</name>
+<ss>
+<sd></sd>
+<sid>-1</sid>
+</ss>
+</dcfg>
+</cfg>
+<cs>-1</cs>
+<dl>
+<grps>
+<grp>
+<gn></gn>
+<pl></pl>
+</grp>
+</grps>
+</dl>
+<parms>
+<parms></parms>
+<ssl></ssl>
+</parms>
+<pass></pass>
+<ssa>
+<asn>
+<sid>-1</sid>
+</asn>
+<asn>
+<sid>-2</sid>
+</asn>
+</ssa>
+</man>
+</exparam>
+<experiment_id>{0FD4C703-CA5D-4418-9205-1B1F299EA6F4}</experiment_id>
+<font_settings>
+<dpi>96</dpi>
+<font_smooth>1</font_smooth>
+<use_dpi>1</use_dpi>
+<use_font_smooth>1</use_font_smooth>
+</font_settings>
+<ftp>
+<ccc>0</ccc>
+<do_upload>
+<sce>1</sce>
+<sce>1</sce>
+</do_upload>
+<host></host>
+<id>{B4212B94-8D56-4247-BC6F-F6FEE01DE975}</id>
+<idle_timeout>0</idle_timeout>
+<login_timeout>0</login_timeout>
+<mode>0</mode>
+<no_upload></no_upload>
+<password></password>
+<pasv>0</pasv>
+<port>21</port>
+<remote_dir></remote_dir>
+<sync>1</sync>
+<testing>0</testing>
+<type>0</type>
+<upload>0</upload>
+<username></username>
+</ftp>
+<idc>0</idc>
+<idt>0</idt>
+<ip_chans></ip_chans>
+<isb>10000</isb>
+<lfd>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\Logfiles</lfd>
+<lnb>1</lnb>
+<lno>3</lno>
+<log>
+<append_counter>1</append_counter>
+<delimiter>9</delimiter>
+<general_list>1</general_list>
+<pien>0</pien>
+<set_def_file>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\MSIT_IAPS_practice_real.sdf</set_def_file>
+<stimulus_list>0</stimulus_list>
+<subject_id></subject_id>
+<subject_id_pol>1</subject_id_pol>
+<video_list>0</video_list>
+<warnings>1</warnings>
+</log>
+<lol>1</lol>
+<lpr></lpr>
+<maxpv></maxpv>
+<minpv></minpv>
+<mss>4</mss>
+<nam>tDCS_MSIT_IAPS_practice_real</nam>
+<one_processor>2</one_processor>
+<oports></oports>
+<out_encrypt_key></out_encrypt_key>
+<pi_list></pi_list>
+<port_devices></port_devices>
+<rdl>
+<device>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>18</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>Mouse</name>
+</device>
+<device>
+<device_type>3</device_type>
+<dx_device_type>19</dx_device_type>
+<name>Keyboard</name>
+</device>
+<device>
+<device_type>3</device_type>
+<dx_device_type>0</dx_device_type>
+<name>Standard PS/2 Keyboard</name>
+</device>
+<device>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>0</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>Synaptics PS/2 Port TouchPad</name>
+</device>
+<device>
+<device_type>9</device_type>
+<dx_device_type>0</dx_device_type>
+<name>sound device</name>
+</device>
+<device>
+<device_type>13</device_type>
+<dx_device_type>0</dx_device_type>
+<name>Speech Recognition</name>
+<speech>
+<engine_class></engine_class>
+<mc>0</mc>
+<rw>0</rw>
+<uwd>0</uwd>
+<vocab></vocab>
+</speech>
+</device>
+<device>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>x</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>y</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>5</device_type>
+<dx_device_type>0</dx_device_type>
+<inpc>1</inpc>
+<name>pointing device</name>
+<uoh>1</uoh>
+<upc>0</upc>
+<uvt>1</uvt>
+</device>
+<device>
+<axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</axis>
+<axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</axis>
+<device_type>6</device_type>
+<dx_device_type>0</dx_device_type>
+<name>gameport device</name>
+</device>
+</rdl>
+<refchg>1</refchg>
+<rep>1</rep>
+<require_name_match>0</require_name_match>
+<reschg>1</reschg>
+<rng>1</rng>
+<rts>0</rts>
+<sbs>100000</sbs>
+<sce>
+<idv>
+<device_type>3</device_type>
+<dx_device_type>19</dx_device_type>
+<ibn>Space</ibn>
+<ibn>Num 1</ibn>
+<ibn>Num 2</ibn>
+<ibn>Num 3</ibn>
+<ibn>1</ibn>
+<ibn>2</ibn>
+<ibn>3</ibn>
+<idn>Keyboard</idn>
+<index>0</index>
+<index>1</index>
+<index>2</index>
+<index>3</index>
+<index>4</index>
+<index>5</index>
+<index>6</index>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<offset>57</offset>
+<offset>79</offset>
+<offset>80</offset>
+<offset>81</offset>
+<offset>2</offset>
+<offset>3</offset>
+<offset>4</offset>
+</idv>
+<sfn>all_scenarios</sfn>
+</sce>
+<sce>
+<idv>
+<device_type>3</device_type>
+<dx_device_type>19</dx_device_type>
+<ibn>Space</ibn>
+<ibn>Num 1</ibn>
+<ibn>Num 2</ibn>
+<ibn>Num 3</ibn>
+<ibn>1</ibn>
+<ibn>2</ibn>
+<ibn>3</ibn>
+<idn>Keyboard</idn>
+<index>0</index>
+<index>1</index>
+<index>2</index>
+<index>3</index>
+<index>4</index>
+<index>5</index>
+<index>6</index>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<offset>57</offset>
+<offset>79</offset>
+<offset>80</offset>
+<offset>81</offset>
+<offset>2</offset>
+<offset>3</offset>
+<offset>4</offset>
+</idv>
+<sfn>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\tDCS_MSIT_IAPS_practice.sce</sfn>
+</sce>
+<sce>
+<idv>
+<device_type>3</device_type>
+<dx_device_type>19</dx_device_type>
+<ibn>Space</ibn>
+<ibn>Num 1</ibn>
+<ibn>Num 2</ibn>
+<ibn>Num 3</ibn>
+<ibn>1</ibn>
+<ibn>2</ibn>
+<ibn>3</ibn>
+<idn>Keyboard</idn>
+<index>0</index>
+<index>1</index>
+<index>2</index>
+<index>3</index>
+<index>4</index>
+<index>5</index>
+<index>6</index>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<label></label>
+<offset>57</offset>
+<offset>79</offset>
+<offset>80</offset>
+<offset>81</offset>
+<offset>2</offset>
+<offset>3</offset>
+<offset>4</offset>
+</idv>
+<sfn>C:\Users\Neuromod\Documents\My Experiments\tDCS_Presentation\MSIT_IAPS\tDCS_MSIT_IAPS_real.sce</sfn>
+</sce>
+<sct>
+<capture_device>
+<abort_on_max_drops>0</abort_on_max_drops>
+<bps></bps>
+<chan></chan>
+<do_rec_vol>1</do_rec_vol>
+<freq></freq>
+<ignore_drops>1</ignore_drops>
+<max_drops>250</max_drops>
+<name>None</name>
+<rec_vol>0</rec_vol>
+<show_drops>1</show_drops>
+</capture_device>
+<resp_dev>
+<combine>0</combine>
+<ignore></ignore>
+<max_rec_dur>10</max_rec_dur>
+<off_inter></off_inter>
+<off_thresh></off_thresh>
+<onset_mode>0</onset_mode>
+<rec_dur></rec_dur>
+<save>0</save>
+<thresh></thresh>
+</resp_dev>
+</sct>
+<sde>
+<buffer_length>1000</buffer_length>
+<custom_buf>primary</custom_buf>
+<dup_channels>0</dup_channels>
+<ex_period>10</ex_period>
+<halt_on_drop>1</halt_on_drop>
+<halt_on_drop_count>1</halt_on_drop_count>
+<halt_on_underrun>1</halt_on_underrun>
+<max_mix_length>50</max_mix_length>
+<min_mix_length>25</min_mix_length>
+<mixer>dx_software</mixer>
+<rewind_distance>10</rewind_distance>
+<sh_period>0</sh_period>
+<side_speakers>1</side_speakers>
+<use_rewind_distance>0</use_rewind_distance>
+</sde>
+<sdv>Primary Sound Driver</sdv>
+<show_dis>0</show_dis>
+<show_parm>0</show_parm>
+<show_term>1</show_term>
+<smc>2</smc>
+<smd>16</smd>
+<smr>44100</smr>
+<srs>1</srs>
+<ssb>2000</ssb>
+<sse>
+<s>
+<a></a>
+<ce>1</ce>
+<ep>1</ep>
+<p>0</p>
+</s>
+</sse>
+<svl>
+<attenuation>0</attenuation>
+<do_attenuation>0</do_attenuation>
+<do_volume>0</do_volume>
+<volume>1</volume>
+</svl>
+<swp>1</swp>
+<text_encoding>utf8</text_encoding>
+<trigger_mode>
+<cn></cn>
+<m>0</m>
+<v></v>
+<vt>0</vt>
+</trigger_mode>
+<udt>0</udt>
+<unc></unc>
+<upb>0</upb>
+<urp>0</urp>

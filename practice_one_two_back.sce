@@ -1,8 +1,9 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
+#Stim font size = 36 in old expt
 
 #Header
 response_matching = simple_matching;
-default_font_size = 36; #Stim font size = 36 in old expt
+default_font_size = 36;  
 active_buttons = 3;
 button_codes = 1,2,3;
 stimulus_properties = subjectID,string, nback,string, letter,string, is_target,string;

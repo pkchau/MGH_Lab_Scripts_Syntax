@@ -1,5 +1,5 @@
 #NOTE: display size is 1024 x 768 on old exptl laptop, so this expt is set to 1024 x 768 to match.
-#Point size of flankers stimuli for old expt = 56
+#Point size of flankers stimuli for old expt = 56 but can't do bolded New Courier font to match so will do 70.
 
 #Header
 response_matching = simple_matching;
@@ -24,19 +24,19 @@ array {
 #NOTE: Make sure the order of each row in array 1 corresponds to array 2s and 3 i.e. that the flankers are the same in both.
 #There are in total 4 different kinds of target w/ flankers stimuli. 
 array {
-	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 56;};
-   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 56;};
+	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 70;};
+   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 70;};
 } flankers_set;
 
 array {
-	text { caption = "< < < < <"; description = "CON"; font_size = 56;};
-   text { caption = "> > > > >"; description = "CON"; font_size = 56;};
+	text { caption = "< < < < <"; description = "CON"; font_size = 70;};
+   text { caption = "> > > > >"; description = "CON"; font_size = 70;};
 } con_target_set;
 
 
 array {
-	text { caption = "< < > < <"; description = "INC"; font_size = 56;};
-	text { caption = "> > < > >"; description = "INC"; font_size = 56;};
+	text { caption = "< < > < <"; description = "INC"; font_size = 70;};
+	text { caption = "> > < > >"; description = "INC"; font_size = 70;};
 } inc_target_set;
 
 #Intro 1
@@ -80,7 +80,7 @@ trial {
 			x = 0; y = 250;
 			text { 
 				caption = "> > > > >"; 
-				font_size = 56; 
+				font_size = 70; 
 			};
 			x = 0; y = 100;
 			text { 
@@ -104,7 +104,7 @@ trial {
 		x = 0; y = 250;
 		text { 
 			caption = "< < > < <"; 
-			font_size = 56; 
+			font_size = 70; 
 		};
 		x = 0; y = 100;
 		text { 
@@ -128,7 +128,7 @@ trial {
 			x = 0; y = 250;		
 			text { 
 				caption = "< < < < <"; 
-				font_size = 56;
+				font_size = 70;
 			};
 			x = 0; y = 100;
 			text { 
@@ -152,7 +152,7 @@ trial {
 			x = 0; y = 250;
 			text { 
 				caption = "> > < > >"; 
-				font_size = 56; 
+				font_size = 70; 
 			};
 			x = 0; y = 100;
 			text { 

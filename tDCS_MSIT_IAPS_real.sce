@@ -1,4 +1,5 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
+#Numbers font = 36 in old expt
 
 #Header
 response_matching = simple_matching;
@@ -114,9 +115,9 @@ array {
 
 #Create 1D array of 3 digit Numbers w/o Interference i.e. noninterference 
 array {
-	text { caption = "020"; description = "NON"; };
-	text { caption = "003"; description = "NON"; };
-	text { caption = "100"; description = "NON"; };
+	text { caption = "020"; font_size = 36; description = "NON"; };
+	text { caption = "003"; font_size = 36; description = "NON"; };
+	text { caption = "100"; font_size = 36; description = "NON"; };
 } non_num_set;
 
 #Intro 1

@@ -24,9 +24,6 @@ over5_count = count( unc_over_5 )
 #Create custom analysis table with variables we want to look at
 event_table custom_table (subjectID, trial, event_type, condition, time)
 
-#Matches stimulus w/ response (w/in 100-2000ms of first event)
-pair:: simple_match_all(100,2000,stimulus,response)
-
 #Classify event pairs
 main(rm_all) :: code1 == "INC" or code1 == "CON"
 CON(rm_all) :: code1 == "CON"
@@ -41,9 +38,7 @@ avg_rt = avg(rm_all, time_diff)
 correct_rt = avg(rm_hit, time_diff)
 incorrect_rt = avg(rm_incorrect, time_diff)
 
-#Define event pair properties
-event_pair_property congruency(CON, INC)
-
 #Create FINAL Analysis Table and print as file
-event_pair_table FINAL_table(subjectID1, trial1, congruency, code1, code2, time_diff)
-print FINAL_table (pair, "\t", "\n")
+event_pair_table FINAL_table(subjectID1, trial1, condition1, code1, rm_type, code2, time_diff)
+
+print FINAL_table (rm_all, "\t", "\n")

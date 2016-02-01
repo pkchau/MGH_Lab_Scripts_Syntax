@@ -4,7 +4,8 @@
 #Header
 response_matching = simple_matching;
 #default_font = "Courier New"; #Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
-#default_formatted_text = true;
+#default_formatted_text = true;5
+active_buttons = 3;
 #keys: 1 = c, 2 = m, 3 = spacebar
 button_codes = 1,2,3;
 stimulus_properties = subjectID,string, condition,string;
@@ -23,19 +24,19 @@ array {
 #NOTE: Make sure the order of each row in array 1 corresponds to array 2s and 3 i.e. that the flankers are the same in both.
 #There are in total 4 different kinds of target w/ flankers stimuli. 
 array {
-	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 56;};
-   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 56;};
+	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 70;};
+   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 70;};
 } flankers_set;
 
 array {
-	text { caption = "< < < < <"; description = "CON"; font_size = 56;};
-   text { caption = "> > > > >"; description = "CON"; font_size = 56;};
+	text { caption = "< < < < <"; description = "CON"; font_size = 70;};
+   text { caption = "> > > > >"; description = "CON"; font_size = 70;};
 } con_target_set;
 
 
 array {
-	text { caption = "< < > < <"; description = "INC"; font_size = 56;};
-	text { caption = "> > < > >"; description = "INC"; font_size = 56;};
+	text { caption = "< < > < <"; description = "INC"; font_size = 70;};
+	text { caption = "> > < > >"; description = "INC"; font_size = 70;};
 } inc_target_set;
 
 #Intro 1
@@ -79,7 +80,7 @@ trial {
 			x = 0; y = 250;
 			text { 
 				caption = "> > > > >"; 
-				font_size = 56; 
+				font_size = 70; 
 			};
 			x = 0; y = 100;
 			text { 
@@ -103,7 +104,7 @@ trial {
 		x = 0; y = 250;
 		text { 
 			caption = "< < > < <"; 
-			font_size = 56; 
+			font_size = 70; 
 		};
 		x = 0; y = 100;
 		text { 
@@ -122,12 +123,12 @@ trial {
 		picture {
 		text {
 			caption = "Example 3"; 
-			font_size = 24;
+			font_size = 18;
 		};
 		x = 0; y = 250;		
 		text { 
 			caption = "< < < < <"; 
-			font_size = 56;
+			font_size = 70;
 		};
 		x = 0; y = 100;
 		text { 
@@ -146,12 +147,12 @@ trial {
 		picture {
 		text {
 			caption = "Example 4"; 
-			font_size = 56;
+			font_size = 18;
 		};
 		x = 0; y = 250;
 		text { 
 			caption = "> > < > >"; 
-			font_size = 48; 
+			font_size = 70; 
 		};
 		x = 0; y = 100;
 		text { 
@@ -289,7 +290,7 @@ trial {
 	terminator_button = 3;
 	picture {
 	text { 
-		caption = "Great job! You have completed the practice task.\n\nPlease let the experimenter know."; 
+		caption = "Great job! You have completed the real task.\n\nPlease let the experimenter know."; 
 		font_size = 16; 
 	};
 	x = 0; y = 0;
