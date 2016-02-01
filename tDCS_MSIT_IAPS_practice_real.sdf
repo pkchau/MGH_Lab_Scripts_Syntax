@@ -19,7 +19,7 @@ over1_count = count( unc_over_1 )
 unc_over_5 : time_uncertainty > 5
 over5_count = count( unc_over_5 )
 
-event_table custom_table (code, condition, emotion, time)
+event_table custom_table (subjectID, code, condition, emotion, time)
 
 main(rm_all) :: condition1 == "INT" or condition1 == "NON"
 INT(rm_all) :: condition1 == "INT"
@@ -36,11 +36,6 @@ NEU_NON(rm_all) :: emotion1 == "Neu" and condition1 == "NON"
 event_pair_property interference(INT, NON)
 event_pair_property emotions(POS,NEG,NEU)
 
-event_pair_table custom_pair_table(condition1, emotion1, code2, time1, time_diff )
+event_pair_table custom_pair_table(subjectID1, trial1, condition1, code1, emotion1, code2, rm_type, time_diff )
 
-#Matches stimulus w/ response (w/in 100-2000ms of first event)
-pair:: simple_match_all(100,2000,stimulus,response)
-
-event_pair_property type (rm_hit, rm_incorrect, rm_miss)
-
-print custom_pair_table (pair, "\t", "\n")
+print custom_pair_table (rm_all, "\t", "\n")

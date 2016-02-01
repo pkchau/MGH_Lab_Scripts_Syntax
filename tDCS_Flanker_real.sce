@@ -75,7 +75,7 @@ trial {
 		picture {
 			text {
 				caption = "Example 1"; 
-				font_size = 18;
+				font_size = 22;
 			};
 			x = 0; y = 250;
 			text { 
@@ -99,7 +99,7 @@ trial {
 		picture {
 		text {
 			caption = "Example 2"; 
-			font_size = 18;
+			font_size = 22;
 		};
 		x = 0; y = 250;
 		text { 
@@ -123,7 +123,7 @@ trial {
 		picture {
 		text {
 			caption = "Example 3"; 
-			font_size = 18;
+			font_size = 22;
 		};
 		x = 0; y = 250;		
 		text { 
@@ -147,7 +147,7 @@ trial {
 		picture {
 		text {
 			caption = "Example 4"; 
-			font_size = 18;
+			font_size = 22;
 		};
 		x = 0; y = 250;
 		text { 
@@ -170,7 +170,7 @@ trial {
 	terminator_button = 3;
 		picture {
 		text { 
-			caption = "We will now begin the real version of the task.\n\Remember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
+			caption = "We will now begin the real version of the task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
 			font_size = 18; 
 		};
 		x = 0; y = 0;
@@ -185,7 +185,7 @@ trial {
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe task is about to start!"; 
-			font_size = 18; 
+			font_size = 24; 
 		};
 		x = 0; y = 0;
 		}; 
@@ -290,8 +290,8 @@ trial {
 	terminator_button = 3;
 	picture {
 	text { 
-		caption = "Great job! You have completed the real task.\n\nPlease let the experimenter know."; 
-		font_size = 16; 
+		caption = "Great job!\n\nYou have completed the real task.\n\nPlease let the experimenter know."; 
+		font_size = 24; 
 	};
 	x = 0; y = 0;
 	} conclusion_pic;	

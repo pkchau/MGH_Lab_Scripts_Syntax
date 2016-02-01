@@ -75,7 +75,7 @@ trial {
 		picture {
 			text {
 				caption = "Example 1"; 
-				font_size = 18;
+				font_size = 22;
 			};
 			x = 0; y = 250;
 			text { 
@@ -99,7 +99,7 @@ trial {
 		picture {
 		text {
 			caption = "Example 2"; 
-			font_size = 18;
+			font_size = 22;
 		};
 		x = 0; y = 250;
 		text { 
@@ -123,7 +123,7 @@ trial {
 		picture {
 			text {
 				caption = "Example 3"; 
-				font_size = 18;
+				font_size = 22;
 			};
 			x = 0; y = 250;		
 			text { 
@@ -147,7 +147,7 @@ trial {
 		picture {
 			text {
 				caption = "Example 4"; 
-				font_size = 18;
+				font_size = 22;
 			};
 			x = 0; y = 250;
 			text { 
@@ -185,7 +185,7 @@ trial {
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe practice is about to start!"; 
-			font_size = 18; 
+			font_size = 24; 
 		};
 		x = 0; y = 0;
 		}; 
@@ -249,7 +249,7 @@ trial {
 	picture {
 		text { 
 			caption = "Great job! You have completed the practice task.\n\nPlease let the experimenter know."; 
-			font_size = 18; 
+			font_size = 24; 
 		};
 		x = 0; y = 0;
 	} conclusion_pic;	
