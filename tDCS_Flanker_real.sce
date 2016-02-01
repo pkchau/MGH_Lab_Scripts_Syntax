@@ -8,7 +8,7 @@ response_matching = simple_matching;
 active_buttons = 3;
 #keys: 1 = c, 2 = m, 3 = spacebar
 button_codes = 1,2,3;
-stimulus_properties = subjectID,string, condition,string;
+stimulus_properties = subjectID,string, stim_arrows,string, condition,string;
 event_code_delimiter = ",";
 #End Header
 	
@@ -24,19 +24,19 @@ array {
 #NOTE: Make sure the order of each row in array 1 corresponds to array 2s and 3 i.e. that the flankers are the same in both.
 #There are in total 4 different kinds of target w/ flankers stimuli. 
 array {
-	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 70;};
-   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 70;};
+	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 100;};
+   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 100;};
 } flankers_set;
 
 array {
-	text { caption = "< < < < <"; description = "CON"; font_size = 70;};
-   text { caption = "> > > > >"; description = "CON"; font_size = 70;};
+	text { caption = "< < < < <"; description = "CON"; font_size = 100;};
+   text { caption = "> > > > >"; description = "CON"; font_size = 100;};
 } con_target_set;
 
 
 array {
-	text { caption = "< < > < <"; description = "INC"; font_size = 70;};
-	text { caption = "> > < > >"; description = "INC"; font_size = 70;};
+	text { caption = "< < > < <"; description = "INC"; font_size = 100;};
+	text { caption = "> > < > >"; description = "INC"; font_size = 100;};
 } inc_target_set;
 
 #Intro 1
@@ -196,7 +196,7 @@ trial {
 	trial_duration = 92; # request 100 instead of 92
 	stimulus_event {
 		picture {
-			text err; 		
+			text err; 	
 			x = 0; y = 0;
 		} flankersonly_pic;
 	} flankersonly_event;
@@ -411,7 +411,7 @@ loop int b = 1 until b > num_blocks
 		flankersonly_trial.present();
 		flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 		target_trial.present();
-		target_event.set_event_code(logfile.subject() + "," + target.description());
+		target_event.set_event_code(logfile.subject() + "," + target.caption() + "," + target.description());
 		#If response too slow, display too slow
 		stimulus_data last = stimulus_manager.last_stimulus_data();
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then

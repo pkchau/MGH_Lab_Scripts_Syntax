@@ -8,7 +8,7 @@ active_buttons = 3;
 #Keys: 1 = c, 2 = m, 3 = spacebar
 button_codes = 1,2,3;
 #Name of stimulus_property, type(string/number)
-stimulus_properties = subjectID,string, condition,string;
+stimulus_properties = subjectID,string, stim_arrows,string, condition,string;
 event_code_delimiter = ",";
 #End Header
 	
@@ -24,19 +24,19 @@ array {
 #NOTE: Make sure the order of each row in array 1 corresponds to array 2s and 3 i.e. that the flankers are the same in both.
 #There are in total 4 different kinds of target w/ flankers stimuli. 
 array {
-	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 70;};
-   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 70;};
+	text { caption = "< <   < <"; description = "FLANKERS"; font_size = 100;} fl;
+   text { caption = "> >   > >"; description = "FLANKERS"; font_size = 100;};
 } flankers_set;
 
 array {
-	text { caption = "< < < < <"; description = "CON"; font_size = 70;};
-   text { caption = "> > > > >"; description = "CON"; font_size = 70;};
+	text { caption = "< < < < <"; description = "CON"; font_size = 100;};
+   text { caption = "> > > > >"; description = "CON"; font_size = 100;};
 } con_target_set;
 
 
 array {
-	text { caption = "< < > < <"; description = "INC"; font_size = 70;};
-	text { caption = "> > < > >"; description = "INC"; font_size = 70;};
+	text { caption = "< < > < <"; description = "INC"; font_size = 100;};
+	text { caption = "> > < > >"; description = "INC"; font_size = 100;};
 } inc_target_set;
 
 #Intro 1
@@ -209,7 +209,7 @@ trial {
 	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
-			text err;
+			text fl;
 			x = 0; y = 0;
 		} target_pic;
 	duration = 42; #Request 42 instead of 50ms
@@ -328,7 +328,7 @@ begin
 	flankersonly_trial.present();
 	flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 	target_trial.present();
-	target_event.set_event_code(logfile.subject() + "," + target.description());
+	target_event.set_event_code(logfile.subject() + "," + target.caption() + "," + target.description());
 	ISI.present();
 	ITI_event.set_duration(ITIs[randomizer[i]]);
 	ITI.present();
