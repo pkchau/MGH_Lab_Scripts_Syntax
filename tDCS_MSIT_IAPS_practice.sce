@@ -6,7 +6,7 @@ response_matching = simple_matching;
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 7
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, condition,string, emotion,string,;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, condition,string, emotion,string,;
 event_code_delimiter = ",";
 #End Header	
 
@@ -239,18 +239,21 @@ begin_pcl;
 
 #SET number of trials here
 int num_trials = 48;
+#SET proportion/# of Int and NonInt #s here
+int num_int = num_trials/2;
+int num_non = num_trials/2;
 
 #Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
 #Have 23 Int #s: Int num array has 12 in set > each Int # should be displayed 1-2 times
 array<text> int_num_array[0];
-loop int i = 1 until i > num_trials/2/int_num_set.count() + 1
+loop int i = 1 until i > num_int/int_num_set.count() + 1
 begin
 	int_num_array.append(int_num_set);
 	i = i + 1;
 end;
 #Have 22 NonInt Stimuli: NonInt set has 3 in set > each NonInt # should be displayed 7-8 times 
 array<text> nonint_num_array[0];
-loop int i = 1 until i > num_trials/2/nonint_num_set.count() + 1
+loop int i = 1 until i > num_non/nonint_num_set.count() + 1
 begin
 	nonint_num_array.append(nonint_num_set);
 	i = i + 1;
@@ -262,7 +265,7 @@ nonint_num_array.shuffle();
 
 #We now combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array. 
 #We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
-array<text>combined_num_array[1];
+array<text>combined_num_array[0];
 combined_num_array.assign(int_num_array);
 combined_num_array.append(nonint_num_array);
 
@@ -277,7 +280,6 @@ randomize_pics_array.shuffle();
 
 #Make pictures array from randomized subset of pics set array
 array<bitmap> pics_array[0];
-
 loop int i = 1 until i > randomize_pics_array.count()
 begin
 	pics_array.add(neg_pics_set[randomize_pics_array[i]]);
@@ -319,7 +321,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(logfile.subject() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;

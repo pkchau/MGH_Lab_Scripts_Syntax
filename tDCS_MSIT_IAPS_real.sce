@@ -5,7 +5,7 @@
 response_matching = simple_matching;
 active_buttons = 7;
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = condition,string, emotion,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, condition,string, emotion,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -273,7 +273,7 @@ non_num_array.shuffle();
 
 #We combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array
 #We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
-array<text>combined_num_array[1];
+array<text>combined_num_array[0];
 combined_num_array.assign(int_num_array);
 combined_num_array.append(non_num_array);
 
@@ -286,7 +286,7 @@ begin
 		pics_array.add(neg_pics_set[x]);
 		pics_array.add(neu_pics_set[x]);
 		pics_array.add(pos_pics_set[x]);
-		i = i + 1;
+		x = x + 1;
 	end;
 	i = i + 1;
 end;
@@ -324,7 +324,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(num.description() + "," + pics_array[randomizer_array[x]].description());
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;
