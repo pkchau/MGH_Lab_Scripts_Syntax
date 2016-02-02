@@ -45,6 +45,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
+			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 150;
 			text { 
 				caption = "In this task, you will see 5 arrows presented.\n\nWe want you to focus on the direction the CENTER arrow is facing.\n\nPress the spacebar to proceed."; 
 				font_size = 18; 
@@ -59,11 +64,16 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
+			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 150;
 			text { 
 				caption = "You may place your left index finger on the 'c' key, and your right index finger on the 'm' key.\n\nIf the CENTER arrow is facing to the LEFT, press the 'c' key.\n\nIf the CENTER arrow is facing to the RIGHT, press the 'm' key.\n\nPress the spacebar to see some examples."; 
 				font_size = 18; 
 			};
-			x = 0; y = 0;
+			x = 0; y = -25;
 		}; 
 } intro_2;
 
@@ -74,20 +84,25 @@ trial {
 	terminator_button = 2;
 		picture {
 			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 175;
+			text {
 				caption = "Example 1"; 
 				font_size = 22;
 			};
-			x = 0; y = 250;
+			x = 0; y = 75;
 			text { 
 				caption = "> > > > >"; 
 				font_size = 70; 
 			};
-			x = 0; y = 100;
+			x = 0; y = -25;
 			text { 
 				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -100;
+			x = 0; y = -125;
 		};  
 } example_1;
 
@@ -97,22 +112,27 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 2;
 		picture {
-		text {
-			caption = "Example 2"; 
-			font_size = 22;
-		};
-		x = 0; y = 250;
-		text { 
-			caption = "< < > < <"; 
-			font_size = 70; 
-		};
-		x = 0; y = 100;
-		text { 
-			caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
-			font_size = 18; 
-		};
-		x = 0; y = -100;
-		}; 
+			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 175;
+			text {
+				caption = "Example 2"; 
+				font_size = 22;
+			};
+			x = 0; y = 75;
+			text { 
+				caption = "< < > < <"; 
+				font_size = 70; 
+			};
+			x = 0; y = -25;
+			text { 
+				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
+				font_size = 18; 
+			};
+			x = 0; y = -125;
+			}; 
 } example_2;
 
 #Example 3
@@ -122,20 +142,25 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 175;
+			text {
 				caption = "Example 3"; 
 				font_size = 22;
 			};
-			x = 0; y = 250;		
+			x = 0; y = 75;		
 			text { 
 				caption = "< < < < <"; 
 				font_size = 70;
 			};
-			x = 0; y = 100;
+			x = 0; y = -25;
 			text { 
 				caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -100;
+			x = 0; y = -125;
 		};  
 } example_3;
 
@@ -146,20 +171,25 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 175;
+			text {
 				caption = "Example 4"; 
 				font_size = 22;
 			};
-			x = 0; y = 250;
+			x = 0; y = 75;
 			text { 
 				caption = "> > < > >"; 
 				font_size = 70; 
 			};
-			x = 0; y = 100;
+			x = 0; y = -25;
 			text { 
 				caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -100;
+			x = 0; y = -125;
 		};  
 } example_4;
 
@@ -249,7 +279,7 @@ trial {
 	picture {
 		text { 
 			caption = "Great job! You have completed the practice task.\n\nPlease let the experimenter know."; 
-			font_size = 24; 
+			font_size = 18; 
 		};
 		x = 0; y = 0;
 	} conclusion_pic;	

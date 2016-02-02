@@ -126,11 +126,16 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
-		text { 
-				caption = "In this task, you will see 3 digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
-				font_size =14; 
-		};
-		x = 0; y = 0;
+			text {
+					caption = "Real MSIT IAPS"; 
+					font_size = 18;
+				};
+				x = 0; y = 120;
+			text { 
+					caption = "In this task, you will see 3 digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
+					font_size = 14; 
+			};
+			x = 0; y = 0;
 		}; 
 } intro_1;
 
@@ -140,6 +145,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
+			text {
+					caption = "Real MSIT IAPS"; 
+					font_size = 18;
+				};
+				x = 0; y = 120;
 			text { 
 				caption = "You may place your pointer, middle and ring fingers on the 1, 2 and 3 keys.\n\nYou may use either the numeric keypad on your right OR\n\nyou may use the numeric keys above the QWERTY letters on your left.\n\nPress the spacebar to continue."; 
 				font_size = 14; 
@@ -154,11 +164,16 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
+			text {
+					caption = "Real MSIT IAPS"; 
+					font_size = 18;
+				};
+				x = 0; y = 120;
 			text { 
 				caption = "Your task is to identify the number that is different.\n\nFor example, if you see the number '100', press the '1' key.\n\nIf you see the number '232', press the '3' key.\n\nWe are now going to begin the task.\n\nPress the spacebar to continue."; 
 				font_size = 14; 
 			};
-		x = 0; y = 0;
+		x = 0; y = -20;
 		}; 
 } intro_3;
 
@@ -168,6 +183,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
+			text {
+					caption = "Real MSIT IAPS"; 
+					font_size = 18;
+				};
+				x = 0; y = 120;
 		text { 
 			caption = "We will now begin the real version of the task.\n\nTry to be as QUICK and ACCURATE as possible.\n\nPress the spacebar when you are ready to start!"; 
 			font_size = 14; 
@@ -184,7 +204,7 @@ trial {
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe practice is about to start!"; 
-			font_size = 14; 
+			font_size = 20; 
 		};
 		x = 0; y = 0;
 		}; 
