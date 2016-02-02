@@ -41,6 +41,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
+			text {
+				caption = "Real n-back"; 
+				font_size = 18;
+			};
+			x = 0; y = 120;
 		text { 
 			caption = "We will now move on to the real versions of the 1-back and 2-back tasks\n\nThere will be 2 rounds of the 1-back task and 2 rounds of the 2-back task.\n\nPress the spacebar to proceed."; 
 			font_size = 14; 
@@ -55,11 +60,16 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
+			text {
+				caption = "Real n-back"; 
+				font_size = 18;
+			};
+			x = 0; y = 120;
 		text { 
 			caption = "'1-back'\n\nFor the 1-back task, press '1' if the letter you see is the same as the one before it.\n\nWe will now begin the real 1-back task.\n\nRemember to be as QUICK and ACCURATE as you can\n\nPress the spacebar when you are ready to start the task!"; 
 			font_size = 14; 
 		};
-		x = 0; y = 0;
+		x = 0; y = -20;
 		}; 
 } begin_1back;
 
@@ -69,11 +79,16 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
-		text { 
-			caption = "'2-back'\n\nFor the 2-back task, press '1' if the letter you see is the same as TWO letters before it.\n\nWe will now begin the real 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text {
+				caption = "Real n-back"; 
+				font_size = 18;
+			};
+			x = 0; y = 120;
+			text { 
+				caption = "'2-back'\n\nFor the 2-back task, press '1' if the letter you see is the same as TWO letters before it.\n\nWe will now begin the real 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
+				font_size = 14; 
+			};
+			x = 0; y = -20;
 		}; 
 } begin_2back;
 
@@ -85,7 +100,7 @@ trial {
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe task is about to start!"; 
-			font_size = 14; 
+			font_size = 18; 
 		};
 		x = 0; y = 0;
 		}; 
