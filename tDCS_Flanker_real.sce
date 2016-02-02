@@ -290,7 +290,7 @@ trial {
 	terminator_button = 3;
 	picture {
 	text { 
-		caption = "Great job!\n\nYou have completed the real task.\n\nPlease let the experimenter know."; 
+		caption = "Great job!\n\nYou have completed the task.\n\nPlease let the experimenter know."; 
 		font_size = 24; 
 	};
 	x = 0; y = 0;

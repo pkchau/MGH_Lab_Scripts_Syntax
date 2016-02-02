@@ -22,7 +22,7 @@ unc_over_5 : time_uncertainty > 5
 over5_count = count( unc_over_5 )
 
 #Create custom analysis table with variables we want to look at
-event_table custom_table (subjectID, trial, event_type, condition, time)
+event_table custom_table (subjectID, trial, stim_arrows, event_type, condition, time)
 
 #Classify event pairs
 main(rm_all) :: code1 == "INC" or code1 == "CON"
@@ -39,6 +39,6 @@ correct_rt = avg(rm_hit, time_diff)
 incorrect_rt = avg(rm_incorrect, time_diff)
 
 #Create FINAL Analysis Table and print as file
-event_pair_table FINAL_table(subjectID1, trial1, condition1, code1, rm_type, code2, time_diff)
+event_pair_table FINAL_table(subjectID1, trial1, stim_arrows1, condition1, code1, rm_type, code2, time_diff)
 
 print FINAL_table (rm_all, "\t", "\n")
