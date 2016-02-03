@@ -12,7 +12,7 @@ stimulus: (picture) and (condition == "INC") or (condition == "CON")
 stim_count = count( stimulus )
 
 #Event set 'response' contains all events that are responses and for which immediately preceding event is in the event set "stimulus". 
-response: event_type == "Response" and rel_index_range(-1, -1) is stimulus
+response: event_type == "Response" and rel_index_range(-1,-1) is stimulus
 resp_count = count( response )
 
 #Timing uncertainty
@@ -23,11 +23,6 @@ over5_count = count( unc_over_5 )
 
 #Create custom analysis table with variables we want to look at
 event_table custom_table (subjectID, trial, stim_arrows, event_type, condition, time)
-
-#Classify event pairs
-main(rm_all) :: code1 == "INC" or code1 == "CON"
-CON(rm_all) :: code1 == "CON"
-INC(rm_all) :: code1 == "INC"
 
 #Calculate averages
 correct_count = count(rm_hit)

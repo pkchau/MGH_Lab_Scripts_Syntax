@@ -6,9 +6,9 @@ response_matching = simple_matching;
 #default_font = "Courier New"; #Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
 active_buttons = 3;
 #Keys: 1 = c, 2 = m, 3 = spacebar
-button_codes = 1,2,3;
+#button_codes = 1,2,3;
 #Name of stimulus_property, type(string/number)
-stimulus_properties = subjectID,string, stim_arrows,string, condition,string;
+stimulus_properties = subjectID,string, stim_arrows,string, condition,string, key_pressed,string;
 event_code_delimiter = ",";
 #End Header
 	
@@ -102,7 +102,7 @@ trial {
 				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 		};  
 } example_1;
 
@@ -131,7 +131,7 @@ trial {
 				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 			}; 
 } example_2;
 
@@ -160,7 +160,7 @@ trial {
 				caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 		};  
 } example_3;
 
@@ -189,7 +189,7 @@ trial {
 				caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 		};  
 } example_4;
 
@@ -210,8 +210,7 @@ trial {
 #Get Ready - practice
 trial {
 	trial_duration = 2992; #Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request 3000 - 16.7/2 = request 2992ms trial duration
-	trial_type = specific_response;
-	terminator_button = 3;
+	trial_type = fixed;
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe practice is about to start!"; 
@@ -224,6 +223,7 @@ trial {
 #Flanker practice
 trial {
 	trial_duration = 92; #Request 100 - 8 = 92ms duration
+	trial_type = fixed;
 	stimulus_event {
 		picture {
 			text err; 		
@@ -234,30 +234,16 @@ trial {
 
 #Flanker practice
 trial {
-	trial_duration = 600; #600ms = response window for subject, so keep that the same
-	trial_type = first_response;
-	clear_active_stimuli = true;
+	trial_duration = 1442; #Will combine this trial w/ ISI (1400ms) since response window is 1500 in old expt. This will allow for slower responses but also not add to the 'blank screen' time.
+	trial_type = fixed;
 	stimulus_event {
 		picture {
 			text fl;
 			x = 0; y = 0;
 		} target_pic;
-	duration = 42; #Request 42 instead of 50ms
-	response_active = true;
+		duration = 42; #Request 42 instead of 50ms
 	} target_event;
 } target_trial;
-		
-#ISI
-trial {
-   trial_duration = stimuli_length;
-   all_responses = false;
-   stimulus_event {
-      picture {
-      } pic_ISI;
-      time = 0;
-      duration = 1392; #Request 1400 - 8 = 1392
-   } ISI_event;
-} ISI;
 
 #ITI
 trial {
@@ -297,29 +283,57 @@ int num_all_stimuli = num_inc_stimuli + num_con_stimuli;
 
 #Make arrays of ALL stimuli in task
 array<text> flankers_only[0];
-loop int i = 1 until i > num_all_stimuli/flankers_set.count()
+loop int i = 1 until i > num_all_stimuli/flankers_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin
-	flankers_only.append(flankers_set);
+	loop int x = 1 until x > flankers_set.count()
+	begin
+		if (flankers_only.count() == num_all_stimuli) then
+			break;
+		end;
+		flankers_only.add(flankers_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 array<text> flankers_target[0];
-loop int i = 1 until i > num_con_stimuli/con_target_set.count()
+loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-	flankers_target.append(con_target_set);
+	loop int x = 1 until x > con_target_set.count()
+	begin
+		if (flankers_target.count() == num_con_stimuli) then
+			break;
+		end;
+		flankers_target.add(con_target_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
-loop int i = 1 until i > num_inc_stimuli/inc_target_set.count()
+loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
-	flankers_target.append(inc_target_set);
+	loop int x = 1 until x > inc_target_set.count()
+	begin
+		if (flankers_target.count() == num_all_stimuli) then
+			break;
+		end;
+	flankers_target.add(inc_target_set[x]);
+	x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 array<int> ITIs[0];
 loop int i = 1 until i > num_all_stimuli/ITI_set.count()	+ 1 #Add 1 b/c 32/3 doesn't divide evenly and will round down
 begin;
-	ITIs.append(ITI_set);
+	loop int x = 1 until x > ITI_set.count()
+	begin
+		if (ITI_set.count() == num_all_stimuli) then
+			break;
+		end;
+		ITIs.add(ITI_set[x]);
+		x = x + 1;
+	end;
 	i = i + 1;
 end;
 
@@ -349,17 +363,20 @@ begin
 	text target = flankers_target[randomizer[i]];
 	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]); #Set the randomized Flankers only stimulus
 	target_pic.set_part(1, target); #Set the randomized Flankers w/ target stimulus
+	flankersonly_trial.present();
+	flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 	#Set the correct response depending on the stimulus displayed
 	if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
 		target_event.set_target_button(1);
-	elseif (target.caption() == "> > > > >" || target.caption() == "> > < > >") then
+	elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
 		target_event.set_target_button(2);
 	end;
-	flankersonly_trial.present();
-	flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
-	target_trial.present();
 	target_event.set_event_code(logfile.subject() + "," + target.caption() + "," + target.description());
-	ISI.present();
+	# + "," + string(last.button())
+	target_trial.present();
+	stimulus_data last = stimulus_manager.last_stimulus_data();
+	term.print_line(string(last.button()));
+#	ISI.present();
 	ITI_event.set_duration(ITIs[randomizer[i]]);
 	ITI.present();
 	i = i + 1;

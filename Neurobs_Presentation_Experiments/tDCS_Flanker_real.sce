@@ -102,7 +102,7 @@ trial {
 				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 		};  
 } example_1;
 
@@ -131,7 +131,7 @@ trial {
 				caption = "In this example, you would press the 'm' key as the CENTER arrow is facing to the RIGHT.\n\nPress the 'm' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 			}; 
 } example_2;
 
@@ -160,7 +160,7 @@ trial {
 			caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 			font_size = 18; 
 		};
-		x = 0; y = -125;
+		x = 0; y = -150;
 		};  
 } example_3;
 
@@ -189,7 +189,7 @@ trial {
 				caption = "For this example, you would press the 'c' key as the CENTER arrow is facing to the LEFT.\n\nPress the 'c' key to proceed."; 
 				font_size = 18; 
 			};
-			x = 0; y = -125;
+			x = 0; y = -150;
 			};  
 } example_4;
 
@@ -210,8 +210,7 @@ trial {
 #Get Ready - Real Task
 trial {
 	trial_duration = 2992; #Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request 3000 - 16.7/2 = request 2992ms trial duration
-	trial_type = specific_response;
-	terminator_button = 3;
+	trial_type = fixed;
 		picture {
 		text { 
 			caption = "Get ready!\n\nThe task is about to start!"; 
@@ -224,6 +223,7 @@ trial {
 #Flanker task
 trial {
 	trial_duration = 92; # request 100 instead of 92
+	trial_type = fixed;
 	stimulus_event {
 		picture {
 			text err; 	
@@ -234,31 +234,17 @@ trial {
 
 #Flanker task: target
 trial {
-	trial_duration = 600; #600ms = response window for subject so keep this the same
+	trial_duration = 1442; #Will combine this trial w/ ISI (1400ms) since response window is 1500 in old expt. This will allow for slower responses but also not add to the 'blank screen' time
 	trial_type = fixed;
-	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
 			text err;
 			x = 0; y = 0;
 		} target_pic;
 	duration = 42; #Request 42 instead of 50ms
-	response_active = true;
 	} target_event;
 } target_trial;
 		
-#ISI
-trial {
-   trial_duration = stimuli_length;
-   all_responses = false;
-   stimulus_event {
-      picture {
-      } pic_ISI;
-      time = 0;
-      duration = 1392; #Request 1392 instead of 1400
-   } ISI_event;
-} ISI;
-
 #ITI
 trial {
    trial_duration = stimuli_length;
@@ -432,23 +418,21 @@ loop int b = 1 until b > num_blocks
 		text target = flankers_target[randomizer[i]];
 		flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);
 		target_pic.set_part(1, target);
+		flankersonly_trial.present();
+		flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 		#Set the correct response depending on the stimulus displayed
 		if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
 			target_event.set_target_button(1);
-		elseif (target.caption() == "> > > > >" || target.caption() == "> > < > >") then
+		elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
 			target_event.set_target_button(2);
 		end;
-		flankersonly_trial.present();
-		flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
-		target_trial.present();
 		target_event.set_event_code(logfile.subject() + "," + target.caption() + "," + target.description());
+		target_trial.present();
 		#If response too slow, display too slow
 		stimulus_data last = stimulus_manager.last_stimulus_data();
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then
-			ISI.present();
 			feedback_tooslow.present();
 		else
-			ISI.present();
 			feedback_blank.present();
 		end;
 		ITI_event.set_duration(ITIs[randomizer[i]]);
