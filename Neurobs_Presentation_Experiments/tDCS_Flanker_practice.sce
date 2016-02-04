@@ -8,8 +8,7 @@ active_buttons = 3;
 #Keys: 1 = c, 2 = m, 3 = spacebar
 #button_codes = 1,2,3;
 #Name of stimulus_property, type(string/number)
-stimulus_properties = subjectID,string, stim_arrows,string, condition,string, key_pressed,string;
-event_code_delimiter = ",";
+stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string;
 #End Header
 	
 #Begin SDL
@@ -296,6 +295,7 @@ begin
 	i = i + 1;
 end;
 
+#Make array with all flankers stimuli: 1st add con stimuli
 array<text> flankers_target[0];
 loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
@@ -309,7 +309,7 @@ begin;
 	end;
 	i = i + 1;
 end;
-
+#Add inc stimuli
 loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > inc_target_set.count()
@@ -363,20 +363,17 @@ begin
 	text target = flankers_target[randomizer[i]];
 	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]); #Set the randomized Flankers only stimulus
 	target_pic.set_part(1, target); #Set the randomized Flankers w/ target stimulus
-	flankersonly_trial.present();
-	flankersonly_event.set_event_code(flankers_only[randomizer[i]].description());
 	#Set the correct response depending on the stimulus displayed
 	if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
 		target_event.set_target_button(1);
 	elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
 		target_event.set_target_button(2);
 	end;
-	target_event.set_event_code(logfile.subject() + "," + target.caption() + "," + target.description());
-	# + "," + string(last.button())
+	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description());
+	flankersonly_trial.present();
 	target_trial.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();
 	term.print_line(string(last.button()));
-#	ISI.present();
 	ITI_event.set_duration(ITIs[randomizer[i]]);
 	ITI.present();
 	i = i + 1;
