@@ -46,11 +46,11 @@ trial {
 				font_size = 18;
 			};
 			x = 0; y = 120;
-		text { 
-			caption = "In this task, random letters appear one at a time in the center of the screen.\n\nThere will be 2 different kinds of tasks: the 1-back and the 2-back.\n\nPress the spacebar to proceed."; 
-			font_size = 14; 
-			};
-		x = 0; y = 0;
+			text { 
+				caption = "In this task, random letters appear one at a time in the center of the screen.\n\nThere will be 2 different kinds of tasks: the 1-back and the 2-back.\n\nPress the spacebar to proceed."; 
+				font_size = 14; 
+				};
+			x = 0; y = 0;
 		}; 
 } intro_1;
 
@@ -65,11 +65,11 @@ trial {
 				font_size = 18;
 			};
 			x = 0; y = 120;
-		text { 
-			caption = "For BOTH the 1-back and 2-back tasks, you use the '1' key on the keyboard.\n\nYou may use the '1' key on the numberpad OR\n\nYou may use the '1' key above the QWERTY letters.\n\nPlease choose whichever would be preferable for you.\n\nPress the spacebar to proceed."; 
-			font_size = 14; 
-		};
-		x = 0; y = -25;
+			text { 
+				caption = "For BOTH the 1-back and 2-back tasks, you use the '1' key on the keyboard.\n\nYou may use the '1' key on the numberpad OR\n\nYou may use the '1' key above the QWERTY letters.\n\nPlease choose whichever would be preferable for you.\n\nPress the spacebar to proceed."; 
+				font_size = 14; 
+			};
+			x = 0; y = -25;
 		}; 
 } intro_2;
 
@@ -84,11 +84,11 @@ trial {
 				font_size = 18;
 			};
 			x = 0; y = 120;
-		text { 
-			caption = "'1-back: Practice'\n\nFor the 1-back task, press '1' if the letter you see is the same as the one before it.\n\nWe will now practice the 1-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
-			font_size = 14; 
-		};
-		x = 0; y = -25;
+			text { 
+				caption = "'1-back: Practice'\n\nFor the 1-back task, press '1' if the letter you see is the same as the one before it.\n\nWe will now practice the 1-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
+				font_size = 14; 
+			};
+			x = 0; y = -25;
 		}; 
 } begin_1back;
 
@@ -103,11 +103,11 @@ trial {
 				font_size = 18;
 			};
 			x = 0; y = 120;
-		text { 
-			caption = "'2-back: Practice'\n\nFor the 2-back task, press '1' if the letter you see is the same as TWO letters before it.\n\nWe will now practice the 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
-			font_size = 14; 
-		};
-		x = 0; y = -25;
+			text { 
+				caption = "'2-back: Practice'\n\nFor the 2-back task, press '1' if the letter you see is the same as TWO letters before it.\n\nWe will now practice the 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
+				font_size = 14; 
+			};
+			x = 0; y = -25;
 		}; 
 } begin_2back;
 
@@ -117,17 +117,18 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
-		text { 
-			caption = "Get ready!\n\nThe practice is about to start!"; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Get ready!\n\nThe practice is about to start!"; 
+				font_size = 18; 
+			};
+			x = 0; y = 0;
 		}; 
 } get_ready_practice;
 
 #1-back/2-back task
 trial {
    trial_duration = 2492;
+	trial_type = fixed;
    all_responses = false;
    stimulus_event {
       picture {
@@ -145,11 +146,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
-		text { 
-			caption = "Great job! You have completed the 1-back practice.\n\nPress the spacebar to continue to the 2-back practice instructions."; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Great job! You have completed the 1-back practice.\n\nPress the spacebar to continue to the 2-back practice instructions."; 
+				font_size = 14; 
+			};
+			x = 0; y = 0;
 		}; 
 } end_1back;
 
@@ -159,11 +160,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 3;
 		picture {
-		text { 
-			caption = "Great job! You have completed the practice 2-back task.\n\nPlease let the experimenter know."; 
-			font_size = 14;
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Great job! You have completed the practice 2-back task.\n\nPlease let the experimenter know."; 
+				font_size = 14;
+			};
+			x = 0; y = 0;
 		}; 
 } conclusion;
 
