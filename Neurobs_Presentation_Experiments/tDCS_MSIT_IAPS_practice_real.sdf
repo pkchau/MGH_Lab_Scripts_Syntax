@@ -2,7 +2,7 @@
 
 picture: event_type == "Picture"
 
-stimulus: (picture) and (condition == "INT") or (condition == "NON") 
+stimulus: (picture) and (interference == "INT") or (interference == "NON") 
 stimulus_count = count( stimulus )
 
 response: event_type == "Response"
@@ -19,23 +19,23 @@ over1_count = count( unc_over_1 )
 unc_over_5 : time_uncertainty > 5
 over5_count = count( unc_over_5 )
 
-event_table custom_table (subjectID, code, condition, emotion, time)
+event_table custom_table (subjectID, num_stim, pic_stim, interference, emotion, targ_buttons, time, code)
 
-main(rm_all) :: condition1 == "INT" or condition1 == "NON"
-INT(rm_all) :: condition1 == "INT"
-NON(rm_all) :: condition1 == "NON"
+main(rm_all) :: interference1 == "INT" or interference1 == "NON"
+INT(rm_all) :: interference1 == "INT"
+NON(rm_all) :: interference1 == "NON"
 POS(rm_all) :: emotion1 == "Pos"
 NEG(rm_all) :: emotion1 == "Neg"
 NEU(rm_all) :: emotion1 == "Neu"
-POS_INT(rm_all) :: emotion1 == "Pos" and condition1 == "INT"
-POS_NON(rm_all) :: emotion1 == "Pos" and condition1 == "NON"
-NEG_INT(rm_all):: emotion1 == "Neg" and condition1 == "INT"
-NEG_NON(rm_all) :: emotion1 == "Neg" and condition1 == "NON"
-NEU_INT(rm_all) :: emotion1 == "Neu" and condition1 == "INT"
-NEU_NON(rm_all) :: emotion1 == "Neu" and condition1 == "NON"
-event_pair_property interference(INT, NON)
+POS_INT(rm_all) :: emotion1 == "Pos" and interference1 == "INT"
+POS_NON(rm_all) :: emotion1 == "Pos" and interference1 == "NON"
+NEG_INT(rm_all):: emotion1 == "Neg" and interference1 == "INT"
+NEG_NON(rm_all) :: emotion1 == "Neg" and interference1 == "NON"
+NEU_INT(rm_all) :: emotion1 == "Neu" and interference1 == "INT"
+NEU_NON(rm_all) :: emotion1 == "Neu" and interference1 == "NON"
+event_pair_property int_condition(INT, NON)
 event_pair_property emotions(POS,NEG,NEU)
 
-event_pair_table custom_pair_table(subjectID1, trial1, condition1, code1, emotion1, code2, rm_type, time_diff )
+event_pair_table FINAL_table(subjectID1, trial1, num_stim1, pic_stim1, interference1, emotion1, rm_type, code2, targ_buttons1, time_diff, code1)
 
-print custom_pair_table (rm_all, "\t", "\n")
+print FINAL_table (rm_all, "\t", "\n")

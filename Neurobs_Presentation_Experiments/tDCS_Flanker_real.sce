@@ -8,7 +8,7 @@ response_matching = simple_matching;
 active_buttons = 3;
 #keys: 1 = c, 2 = m, 3 = spacebar
 button_codes = 1,2,3;
-stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string;
+stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string;
 event_code_delimiter = ",";
 #End Header
 	
@@ -403,6 +403,8 @@ get_ready_real.present();
 
 #SET # blocks here
 int num_blocks = 2;
+
+array<int> targ_buttons[0]; #Array to contain target buttons/correct responses
 #Present Flanker trials
 loop int b = 1 until b > num_blocks
 	begin
@@ -417,7 +419,8 @@ loop int b = 1 until b > num_blocks
 		elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
 			target_event.set_target_button(2);
 		end;
-		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description());
+		target_event.get_target_buttons(targ_buttons);
+		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description() + "," + string(targ_buttons[1]));
 		flankersonly_trial.present();
 		target_trial.present();
 		#If response too slow, display too slow

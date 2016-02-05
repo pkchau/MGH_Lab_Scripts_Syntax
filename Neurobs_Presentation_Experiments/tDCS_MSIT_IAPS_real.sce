@@ -4,8 +4,9 @@
 #Header
 response_matching = simple_matching;
 active_buttons = 7;
+#2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, condition,string, emotion,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -130,9 +131,9 @@ trial {
 					caption = "Real MSIT IAPS"; 
 					font_size = 18;
 				};
-				x = 0; y = 120;
+			x = 0; y = 120;
 			text { 
-					caption = "In this task, you will see 3 digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
+					caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
 					font_size = 14; 
 			};
 			x = 0; y = 0;
@@ -149,12 +150,12 @@ trial {
 					caption = "Real MSIT IAPS"; 
 					font_size = 18;
 				};
-				x = 0; y = 120;
+			x = 0; y = 120;
 			text { 
 				caption = "You may place your pointer, middle and ring fingers on the 1, 2 and 3 keys.\n\nYou may use either the numeric keypad on your right OR\n\nyou may use the numeric keys above the QWERTY letters on your left.\n\nPress the spacebar to continue."; 
 				font_size = 14; 
 			};
-		x = 0; y = 0;
+			x = 0; y = 0;
 		}; 
 } intro_2;
 
@@ -168,12 +169,12 @@ trial {
 					caption = "Real MSIT IAPS"; 
 					font_size = 18;
 				};
-				x = 0; y = 120;
+			x = 0; y = 120;
 			text { 
 				caption = "Your task is to identify the number that is different.\n\nFor example, if you see the number '100', press the '1' key.\n\nIf you see the number '232', press the '3' key.\n\nWe are now going to begin the task.\n\nPress the spacebar to continue."; 
 				font_size = 14; 
 			};
-		x = 0; y = -20;
+			x = 0; y = -20;
 		}; 
 } intro_3;
 
@@ -188,11 +189,11 @@ trial {
 					font_size = 18;
 				};
 				x = 0; y = 120;
-		text { 
-			caption = "We will now begin the real version of the task.\n\nTry to be as QUICK and ACCURATE as possible.\n\nPress the spacebar when you are ready to start!"; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "We will now begin the real version of the task.\n\nTry to be as QUICK and ACCURATE as possible.\n\nPress the spacebar when you are ready to start!"; 
+				font_size = 14; 
+			};
+			x = 0; y = 0;
 		}; 
 } begin_real;
 
@@ -202,11 +203,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
-		text { 
-			caption = "Get ready!\n\nThe practice is about to start!"; 
-			font_size = 20; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Get ready!\n\nThe task is about to start!"; 
+				font_size = 18; 
+			};
+			x = 0; y = 0;
 		}; 
 } get_ready_real;
 
@@ -242,11 +243,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
-		text { 
-			caption = "Great job! You have completed the real version of this task.\n\nPlease let the experimenter know."; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Great job! You have completed the real version of this task.\n\nPlease let the experimenter know."; 
+				font_size = 14; 
+			};
+			x = 0; y = 0;
 		}; 
 } conclusion;
 		
@@ -258,31 +259,31 @@ int num_trials = 144;
 int num_int = num_trials/2;
 int num_non = num_trials/2;
 
-#Create full int and nonint number arrays
+#Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
 array<text> int_num_array[0];
-loop int i = 1 until i > num_int/int_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
-begin
+loop int i = 1 until i > num_int/int_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
+begin;
 	loop int x = 1 until x > int_num_set.count()
 	begin
 		if (int_num_array.count() == num_int) then
 			break;
 		end;
-		int_num_array.add(int_num_set[x]);
-		x = x + 1;
+	int_num_array.add(int_num_set[x]);
+	x = x + 1;
 	end;
 	i = i + 1;
 end;
-	
+#Create nonint stim array
 array<text> non_num_array[0];
-loop int i = 1 until i > num_non/non_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
-begin
+loop int i = 1 until i > num_non/non_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
+begin;
 	loop int x = 1 until x > non_num_set.count()
 	begin
 		if (non_num_array.count() == num_non) then
 			break;
 		end;
-		non_num_array.add(int_num_set[x]);
-		x = x + 1;
+	non_num_array.add(non_num_set[x]);
+	x = x + 1;
 	end;
 	i = i + 1;
 end;
@@ -327,6 +328,7 @@ intro_3.present();
 begin_real.present();
 get_ready_real.present();
 
+array<int> targ_buttons[0];
 #Show MSIT IAPS Trials
 loop int x = 1 until x > num_trials
 begin
@@ -343,8 +345,9 @@ begin
 	elseif (c == "311" || c == "232" || c == "322" || c == "131" || c == "003" ) then
 		msit_iaps_event.set_target_button({4,7});
 	end;
+	msit_iaps_event.get_target_buttons(targ_buttons);
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(72,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;

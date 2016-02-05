@@ -8,7 +8,7 @@ active_buttons = 3;
 #Keys: 1 = c, 2 = m, 3 = spacebar
 #button_codes = 1,2,3;
 #Name of stimulus_property, type(string/number)
-stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string;
+stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string; 
 #End Header
 	
 #Begin SDL
@@ -357,6 +357,7 @@ example_4.present();
 begin_practice.present();
 get_ready_practice.present();
 
+array<int> targ_buttons[0]; #Array to contain target buttons/correct responses
 #Show Flanker Trials
 loop int i = 1 until i > num_all_stimuli
 begin
@@ -369,7 +370,8 @@ begin
 	elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
 		target_event.set_target_button(2);
 	end;
-	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description());
+	target_event.get_target_buttons(targ_buttons);
+	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description()+ "," + string(targ_buttons[1]));
 	flankersonly_trial.present();
 	target_trial.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();

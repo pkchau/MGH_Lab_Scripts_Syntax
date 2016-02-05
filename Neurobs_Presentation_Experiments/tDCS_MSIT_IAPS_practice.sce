@@ -4,9 +4,9 @@
 #Header
 response_matching = simple_matching;
 active_buttons = 7;
-#2,5 = number 1; 3,6 = number 2; 4,7 = number 7
+#2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, condition,string, emotion,string,;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -123,7 +123,7 @@ array {
 	text { caption = "020"; font_size = 36; description = "NON"; };
 	text { caption = "003"; font_size = 36; description = "NON"; };
 	text { caption = "100"; font_size = 36; description = "NON"; };
-} nonint_num_set;
+} non_num_set;
 
 #Intro 1
 trial {
@@ -137,7 +137,7 @@ trial {
 			};
 			x = 0; y = 120;
 			text { 
-				caption = "In this task, you will see 3 digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
+				caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
 				font_size = 14; 
 			};
 			x = 0; y = -10;
@@ -207,11 +207,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
-		text { 
-			caption = "Get ready!\n\nThe practice is about to start!"; 
-			font_size = 20; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Get ready!\n\nThe practice is about to start!"; 
+				font_size = 18; 
+			};
+			x = 0; y = 0;
 		}; 
 } get_ready_practice;
 
@@ -247,11 +247,11 @@ trial {
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
-		text { 
-			caption = "Great job! You have completed the practice task.\n\nPlease let the experimenter know."; 
-			font_size = 14; 
-		};
-		x = 0; y = 0;
+			text { 
+				caption = "Great job! You have completed the practice task.\n\nPlease let the experimenter know."; 
+				font_size = 14; 
+			};
+			x = 0; y = 0;
 		}; 
 } conclusion;
 		
@@ -264,30 +264,43 @@ int num_int = num_trials/2;
 int num_non = num_trials/2;
 
 #Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
-#Have 23 Int #s: Int num array has 12 in set > each Int # should be displayed 1-2 times
 array<text> int_num_array[0];
-loop int i = 1 until i > num_int/int_num_set.count() + 1
-begin
-	int_num_array.append(int_num_set);
+loop int i = 1 until i > num_int/int_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
+begin;
+	loop int x = 1 until x > int_num_set.count()
+	begin
+		if (int_num_array.count() == num_int) then
+			break;
+		end;
+	int_num_array.add(int_num_set[x]);
+	x = x + 1;
+	end;
 	i = i + 1;
 end;
-#Have 22 NonInt Stimuli: NonInt set has 3 in set > each NonInt # should be displayed 7-8 times 
-array<text> nonint_num_array[0];
-loop int i = 1 until i > num_non/nonint_num_set.count() + 1
-begin
-	nonint_num_array.append(nonint_num_set);
+#Create nonint stim array
+array<text> non_num_array[0];
+loop int i = 1 until i > num_non/non_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
+begin;
+	loop int x = 1 until x > non_num_set.count()
+	begin
+		if (non_num_array.count() == num_non) then
+			break;
+		end;
+	non_num_array.add(non_num_set[x]);
+	x = x + 1;
+	end;
 	i = i + 1;
 end;
 
 #Now that we have our 2 arrays, we randomize the order of the IntNumbers and NonIntNumbers arrays
 int_num_array.shuffle();
-nonint_num_array.shuffle();
+non_num_array.shuffle();
 
 #We now combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array. 
 #We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
 array<text>combined_num_array[0];
 combined_num_array.assign(int_num_array);
-combined_num_array.append(nonint_num_array);
+combined_num_array.append(non_num_array);
 
 #Randomly choose picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
 array<int>randomize_pics_array[0];
@@ -324,6 +337,7 @@ intro_3.present();
 begin_practice.present();
 get_ready_practice.present();
 
+array<int> targ_buttons[0];
 #Show MSIT trials 
 loop int x = 1 until x > num_trials
 begin
@@ -340,8 +354,9 @@ begin
 	elseif (c == "311" || c == "232" || c == "322" || c == "131" || c == "003" ) then
 		msit_iaps_event.set_target_button({4,7});
 	end;
+	msit_iaps_event.get_target_buttons(targ_buttons);
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(72,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
 	iaps_pre_trial.present();
-	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename() + "," + num.description() + "," + pics_array[randomizer_array[x]].description());
 	msit_iaps_trial.present();
 	x = x + 1;
 end;
