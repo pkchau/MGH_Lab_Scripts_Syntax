@@ -208,7 +208,7 @@ destring(interference), replace
 label define interference 1 "Int" 2 "Non"
 label values interference interference
 
-//Restructure data for graph of ActL, ActR, Sham x Interference, Noninterference with indiv bars of Pos, Neg, Neu w/ means and error bars listed.
+//Restructure data for graphs of ActL, ActR, Sham x Interference, Noninterference with indiv bars of Pos, Neg, Neu w/ means and error bars listed.
 expand 3
 
 move stim_cond emotion
@@ -221,49 +221,158 @@ bysort Sub_Ses: replace interference = 1 if _n == 1 | _n == 3 | _n == 5
 bysort Sub_Ses: replace interference = 2 if _n == 2 | _n == 4 | _n == 6
 
 //Have PostStim acc, RT and correct RT variables by condition for: StimCond x Emotion x Int/NonInt
-gen acc_stimxemoxint_post = acc_Neg_Int_post if emotion == 1 & interference == 1
-replace acc_stimxemoxint_post = acc_Neg_Non_post if emotion == 1 & interference == 2
-replace acc_stimxemoxint_post = acc_Pos_Int_post if emotion == 2 & interference == 1
-replace acc_stimxemoxint_post = acc_Pos_Non_post if emotion == 2 & interference == 2
-replace acc_stimxemoxint_post = acc_Neu_Int_post if emotion == 3 & interference == 1
-replace acc_stimxemoxint_post = acc_Neu_Non_post if emotion == 3 & interference == 2
+//acc for Stim_Cond x Int (emotions)
+gen acc_sham_Intxemo_post = acc_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 1
+replace acc_sham_Intxemo_post = acc_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 1
+replace acc_sham_Intxemo_post = acc_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 1
 
-gen avg_RT_stimxemoxint_post = avg_RT_Neg_Int_post if emotion == 1 & interference == 1
-replace avg_RT_stimxemoxint_post = avg_RT_Neg_Non_post if emotion == 1 & interference == 2
-replace avg_RT_stimxemoxint_post = avg_RT_Pos_Int_post if emotion == 2 & interference == 1
-replace avg_RT_stimxemoxint_post = avg_RT_Pos_Non_post if emotion == 2 & interference == 2
-replace avg_RT_stimxemoxint_post = avg_RT_Neu_Int_post if emotion == 3 & interference == 1
-replace avg_RT_stimxemoxint_post = avg_RT_Neu_Non_post if emotion == 3 & interference == 2
+gen acc_sham_Nonxemo_post = acc_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 1
+replace acc_sham_Nonxemo_post = acc_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 1
+replace acc_sham_Nonxemo_post = acc_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 1
 
-gen avg_RT_cor_stimxemoxint_post = avg_RT_Neg_Int_cor_post if emotion == 1 & interference == 1
-replace avg_RT_cor_stimxemoxint_post = avg_RT_Neg_Non_cor_post if emotion == 1 & interference == 2
-replace avg_RT_cor_stimxemoxint_post = avg_RT_Pos_Int_cor_post if emotion == 2 & interference == 1
-replace avg_RT_cor_stimxemoxint_post = avg_RT_Pos_Non_cor_post if emotion == 2 & interference == 2
-replace avg_RT_cor_stimxemoxint_post = avg_RT_Neu_Int_cor_post if emotion == 3 & interference == 1
-replace avg_RT_cor_stimxemoxint_post = avg_RT_Neu_Non_cor_post if emotion == 3 & interference == 2
+gen acc_actL_Intxemo_post = acc_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 2
+replace acc_actL_Intxemo_post = acc_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 2
+replace acc_actL_Intxemo_post = acc_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 2
+
+gen acc_actL_Nonxemo_post = acc_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 2
+replace acc_actL_Nonxemo_post = acc_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 2
+replace acc_actL_Nonxemo_post = acc_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen acc_actR_Intxemo_post = acc_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 3
+replace acc_actR_Intxemo_post = acc_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 3
+replace acc_actR_Intxemo_post = acc_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen acc_actR_Nonxemo_post = acc_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 3
+replace acc_actR_Nonxemo_post = acc_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 3
+replace acc_actR_Nonxemo_post = acc_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 3
+
+//avg_RT vars
+gen avg_RT_sham_Intxemo_post = avg_RT_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 1
+replace avg_RT_sham_Intxemo_post = avg_RT_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 1
+replace avg_RT_sham_Intxemo_post = avg_RT_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 1
+
+gen avg_RT_sham_Nonxemo_post = avg_RT_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 1
+replace avg_RT_sham_Nonxemo_post = avg_RT_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 1
+replace avg_RT_sham_Nonxemo_post = avg_RT_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 1
+
+gen avg_RT_actL_Intxemo_post = avg_RT_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 2
+replace avg_RT_actL_Intxemo_post = avg_RT_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 2
+replace avg_RT_actL_Intxemo_post = avg_RT_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 2
+
+gen avg_RT_actL_Nonxemo_post = avg_RT_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 2
+replace avg_RT_actL_Nonxemo_post = avg_RT_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 2
+replace avg_RT_actL_Nonxemo_post = avg_RT_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen avg_RT_actR_Intxemo_post = avg_RT_Neg_Int_post if emotion == 1 & interference == 1 & stim_cond == 3
+replace avg_RT_actR_Intxemo_post = avg_RT_Pos_Int_post if emotion == 2 & interference == 1 & stim_cond == 3
+replace avg_RT_actR_Intxemo_post = avg_RT_Neu_Int_post if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen avg_RT_actR_Nonxemo_post = avg_RT_Neg_Non_post if emotion == 1 & interference == 2 & stim_cond == 3
+replace avg_RT_actR_Nonxemo_post = avg_RT_Pos_Non_post if emotion == 2 & interference == 2 & stim_cond == 3
+replace avg_RT_actR_Nonxemo_post = avg_RT_Neu_Non_post if emotion == 3 & interference == 2 & stim_cond == 3
+
+//avg_RT_cor vars
+gen avg_RT_cor_sham_Intxemo_post = avg_RT_Neg_Int_cor_post if emotion == 1 & interference == 1 & stim_cond == 1
+replace avg_RT_cor_sham_Intxemo_post = avg_RT_Pos_Int_cor_post if emotion == 2 & interference == 1 & stim_cond == 1
+replace avg_RT_cor_sham_Intxemo_post = avg_RT_Neu_Int_cor_post if emotion == 3 & interference == 1 & stim_cond == 1
+
+gen avg_RT_cor_sham_Nonxemo_post = avg_RT_Neg_Non_cor_post if emotion == 1 & interference == 2 & stim_cond == 1
+replace avg_RT_cor_sham_Nonxemo_post = avg_RT_Pos_Non_cor_post if emotion == 2 & interference == 2 & stim_cond == 1
+replace avg_RT_cor_sham_Nonxemo_post = avg_RT_Neu_Non_cor_post if emotion == 3 & interference == 2 & stim_cond == 1
+
+gen avg_RT_cor_actL_Intxemo_post = avg_RT_Neg_Int_cor_post if emotion == 1 & interference == 1 & stim_cond == 2
+replace avg_RT_cor_actL_Intxemo_post = avg_RT_Pos_Int_cor_post if emotion == 2 & interference == 1 & stim_cond == 2
+replace avg_RT_cor_actL_Intxemo_post = avg_RT_Neu_Int_cor_post if emotion == 3 & interference == 1 & stim_cond == 2
+
+gen avg_RT_cor_actL_Nonxemo_post = avg_RT_Neg_Non_cor_post if emotion == 1 & interference == 2 & stim_cond == 2
+replace avg_RT_cor_actL_Nonxemo_post = avg_RT_Pos_Non_cor_post if emotion == 2 & interference == 2 & stim_cond == 2
+replace avg_RT_cor_actL_Nonxemo_post = avg_RT_Neu_Non_cor_post if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen avg_RT_cor_actR_Intxemo_post = avg_RT_Neg_Non_cor_post if emotion == 1 & interference == 1 & stim_cond == 3
+replace avg_RT_cor_actR_Intxemo_post = avg_RT_Pos_Int_cor_post if emotion == 2 & interference == 1 & stim_cond == 3
+replace avg_RT_cor_actR_Intxemo_post = avg_RT_Neu_Int_cor_post if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen avg_RT_cor_actR_Nonxemo_post = avg_RT_Neg_Non_cor_post if emotion == 1 & interference == 2 & stim_cond == 3
+replace avg_RT_cor_actR_Nonxemo_post = avg_RT_Pos_Non_cor_post if emotion == 2 & interference == 2 & stim_cond == 3
+replace avg_RT_cor_actR_Nonxemo_post = avg_RT_Neu_Non_cor_post if emotion == 3 & interference == 2 & stim_cond == 3
 
 //Have Raw Change (Post - Pre Stim) acc, RT and correct RT variables by condition for: StimCond x Emotion x Int/NonInt
-gen ch_acc_stimxemoxint = ch_acc_Neg_Int if emotion == 1 & interference == 1
-replace ch_acc_stimxemoxint = ch_acc_Neg_Non if emotion == 1 & interference == 2
-replace ch_acc_stimxemoxint = ch_acc_Pos_Int if emotion == 2 & interference == 1
-replace ch_acc_stimxemoxint = ch_acc_Pos_Non if emotion == 2 & interference == 2
-replace ch_acc_stimxemoxint = ch_acc_Neu_Int if emotion == 3 & interference == 1
-replace ch_acc_stimxemoxint = ch_acc_Neu_Non if emotion == 3 & interference == 2
+//acc vars
+gen ch_acc_sham_Intxemo = ch_acc_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 1
+replace ch_acc_sham_Intxemo = ch_acc_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 1
+replace ch_acc_sham_Intxemo = ch_acc_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 1
 
-gen ch_avg_RT_stimxemoxint = ch_avg_RT_Neg_Int if emotion == 1 & interference == 1
-replace ch_avg_RT_stimxemoxint = ch_avg_RT_Neg_Non if emotion == 1 & interference == 2
-replace ch_avg_RT_stimxemoxint = ch_avg_RT_Pos_Int if emotion == 2 & interference == 1
-replace ch_avg_RT_stimxemoxint = ch_avg_RT_Pos_Non if emotion == 2 & interference == 2
-replace ch_avg_RT_stimxemoxint = ch_avg_RT_Neu_Int if emotion == 3 & interference == 1
-replace ch_avg_RT_stimxemoxint = ch_avg_RT_Neu_Non if emotion == 3 & interference == 2
+gen ch_acc_sham_Nonxemo = ch_acc_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 1
+replace ch_acc_sham_Nonxemo = ch_acc_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 1
+replace ch_acc_sham_Nonxemo = ch_acc_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 1
 
-gen ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Neg_Int_cor if emotion == 1 & interference == 1
-replace ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Neg_Non_cor if emotion == 1 & interference == 2
-replace ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Pos_Int_cor if emotion == 2 & interference == 1
-replace ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Pos_Non_cor if emotion == 2 & interference == 2
-replace ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Neu_Int_cor if emotion == 3 & interference == 1
-replace ch_avg_RT_cor_stimxemoxint = ch_avg_RT_Neu_Non_cor if emotion == 3 & interference == 2
+gen ch_acc_actL_Intxemo = ch_acc_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 2
+replace ch_acc_actL_Intxemo = ch_acc_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 2
+replace ch_acc_actL_Intxemo = ch_acc_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 2
 
+gen ch_acc_actL_Nonxemo = ch_acc_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 2
+replace ch_acc_actL_Nonxemo = ch_acc_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 2
+replace ch_acc_actL_Nonxemo = ch_acc_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen ch_acc_actR_Intxemo = ch_acc_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 3
+replace ch_acc_actR_Intxemo = ch_acc_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 3
+replace ch_acc_actR_Intxemo = ch_acc_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen ch_acc_actR_Nonxemo = ch_acc_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 3
+replace ch_acc_actR_Nonxemo = ch_acc_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 3
+replace ch_acc_actR_Nonxemo = ch_acc_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 3
+
+//avg_RT vars
+gen ch_avg_RT_sham_Intxemo = ch_avg_RT_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 1
+replace ch_avg_RT_sham_Intxemo = ch_avg_RT_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 1
+replace ch_avg_RT_sham_Intxemo = ch_avg_RT_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 1
+
+gen ch_avg_RT_sham_Nonxemo = ch_avg_RT_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 1
+replace ch_avg_RT_sham_Nonxemo = ch_avg_RT_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 1
+replace ch_avg_RT_sham_Nonxemo = ch_avg_RT_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 1
+
+gen ch_avg_RT_actL_Intxemo = ch_avg_RT_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 2
+replace ch_avg_RT_actL_Intxemo = ch_avg_RT_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 2
+replace ch_avg_RT_actL_Intxemo = ch_avg_RT_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 2
+
+gen ch_avg_RT_actL_Nonxemo = ch_avg_RT_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 2
+replace ch_avg_RT_actL_Nonxemo = ch_avg_RT_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 2
+replace ch_avg_RT_actL_Nonxemo = ch_avg_RT_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen ch_avg_RT_actR_Intxemo = ch_avg_RT_Neg_Int if emotion == 1 & interference == 1 & stim_cond == 3
+replace ch_avg_RT_actR_Intxemo = ch_avg_RT_Pos_Int if emotion == 2 & interference == 1 & stim_cond == 3
+replace ch_avg_RT_actR_Intxemo = ch_avg_RT_Neu_Int if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen ch_avg_RT_actR_Nonxemo = ch_avg_RT_Neg_Non if emotion == 1 & interference == 2 & stim_cond == 3
+replace ch_avg_RT_actR_Nonxemo = ch_avg_RT_Pos_Non if emotion == 2 & interference == 2 & stim_cond == 3
+replace ch_avg_RT_actR_Nonxemo = ch_avg_RT_Neu_Non if emotion == 3 & interference == 2 & stim_cond == 3
+
+//cor avg_RT vars
+gen ch_avg_RT_cor_sham_Intxemo = ch_avg_RT_Neg_Int_cor if emotion == 1 & interference == 1 & stim_cond == 1
+replace ch_avg_RT_cor_sham_Intxemo = ch_avg_RT_Pos_Int_cor if emotion == 2 & interference == 1 & stim_cond == 1
+replace ch_avg_RT_cor_sham_Intxemo = ch_avg_RT_Neu_Int_cor if emotion == 3 & interference == 1 & stim_cond == 1
+
+gen ch_avg_RT_cor_sham_Nonxemo = ch_avg_RT_Neg_Non_cor if emotion == 1 & interference == 2 & stim_cond == 1
+replace ch_avg_RT_cor_sham_Nonxemo = ch_avg_RT_Pos_Non_cor if emotion == 2 & interference == 2 & stim_cond == 1
+replace ch_avg_RT_cor_sham_Nonxemo = ch_avg_RT_Neu_Non_cor if emotion == 3 & interference == 2 & stim_cond == 1
+
+gen ch_avg_RT_cor_actL_Intxemo = ch_avg_RT_Neg_Int_cor if emotion == 1 & interference == 1 & stim_cond == 2
+replace ch_avg_RT_cor_actL_Intxemo = ch_avg_RT_Pos_Int_cor if emotion == 2 & interference == 1 & stim_cond == 2
+replace ch_avg_RT_cor_actL_Intxemo = ch_avg_RT_Neu_Int_cor if emotion == 3 & interference == 1 & stim_cond == 2
+
+gen ch_avg_RT_cor_actL_Nonxemo = ch_avg_RT_Neg_Non_cor if emotion == 1 & interference == 2 & stim_cond == 2
+replace ch_avg_RT_cor_actL_Nonxemo = ch_avg_RT_Pos_Non_cor if emotion == 2 & interference == 2 & stim_cond == 2
+replace ch_avg_RT_cor_actL_Nonxemo = ch_avg_RT_Neu_Non_cor if emotion == 3 & interference == 2 & stim_cond == 2
+
+gen ch_avg_RT_cor_actR_Intxemo = ch_avg_RT_Neg_Non_cor if emotion == 1 & interference == 1 & stim_cond == 3
+replace ch_avg_RT_cor_actR_Intxemo = ch_avg_RT_Pos_Int_cor if emotion == 2 & interference == 1 & stim_cond == 3
+replace ch_avg_RT_cor_actR_Intxemo = ch_avg_RT_Neu_Int_cor if emotion == 3 & interference == 1 & stim_cond == 3
+
+gen ch_avg_RT_cor_actR_Nonxemo = ch_avg_RT_Neg_Non_cor if emotion == 1 & interference == 2 & stim_cond == 3
+replace ch_avg_RT_cor_actR_Nonxemo = ch_avg_RT_Pos_Non_cor if emotion == 2 & interference == 2 & stim_cond == 3
+replace ch_avg_RT_cor_actR_Nonxemo = ch_avg_RT_Neu_Non_cor if emotion == 3 & interference == 2 & stim_cond == 3
+
+/*
 generate stimxemoxint = interference if emotion == 1 & stim_cond == 1
 replace stimxemoxint = interference + 5 if emotion == 1 & stim_cond == 2
 replace stimxemoxint = interference + 10 if emotion == 1 & stim_cond == 3
@@ -274,33 +383,37 @@ replace stimxemoxint = interference + 30 if emotion == 3 & stim_cond == 1
 replace stimxemoxint = interference + 35 if emotion == 3 & stim_cond == 2
 replace stimxemoxint = interference + 40 if emotion == 3 & stim_cond == 3
 sort stimxemoxint
+*/
 
-local stimxemoxint_vars "acc_stimxemoxint_post avg_RT_stimxemoxint_post avg_RT_cor_stimxemoxint_post ch_acc_stimxemoxint ch_avg_RT_stimxemoxint ch_avg_RT_cor_stimxemoxint"
+local stimxemoxint_vars "acc_sham_Intxemo_post acc_sham_Nonxemo_post acc_actL_Intxemo_post acc_actL_Nonxemo_post acc_actR_Intxemo_post acc_actR_Nonxemo_post avg_RT_sham_Intxemo_post avg_RT_sham_Nonxemo_post avg_RT_actL_Intxemo_post avg_RT_actL_Nonxemo_post avg_RT_actR_Intxemo_post avg_RT_actR_Nonxemo_post avg_RT_cor_sham_Intxemo_post avg_RT_cor_sham_Nonxemo_post avg_RT_cor_actL_Intxemo_post avg_RT_cor_actL_Nonxemo_post avg_RT_cor_actR_Intxemo_post avg_RT_cor_actR_Nonxemo_post ch_acc_sham_Intxemo ch_acc_sham_Nonxemo ch_acc_actL_Intxemo ch_acc_actL_Nonxemo ch_acc_actR_Intxemo ch_acc_actR_Nonxemo ch_avg_RT_sham_Intxemo ch_avg_RT_sham_Nonxemo ch_avg_RT_actL_Intxemo ch_avg_RT_actL_Nonxemo ch_avg_RT_actR_Intxemo ch_avg_RT_actR_Nonxemo ch_avg_RT_cor_sham_Intxemo ch_avg_RT_cor_sham_Nonxemo ch_avg_RT_cor_actL_Intxemo ch_avg_RT_cor_actL_Nonxemo ch_avg_RT_cor_actR_Intxemo ch_avg_RT_cor_actR_Nonxemo"
 
 //Make mean and standard deviation variables
 foreach x in `stimxemoxint_vars' {
-	egen m_`x' = mean(`x'), by(stimxemoxint)
-	egen sd_`x' = std(`x')
-	egen n_`x' = count(`x')
+	egen m_`x' = mean(`x'), by(emotion)
+	egen sd_`x' = sd(`x'), by(emotion)
+	egen n_`x' = count(`x'), by(emotion)
 }
+
+//CHECK SD calculations
 
 foreach x in `stimxemoxint_vars' {
 	generate hi_`x' = m_`x' + invttail(n_`x' - 1,0.025)*(sd_`x' / sqrt(n_`x'))
 	generate lo_`x' = m_`x' - invttail(n_`x' - 1,0.025)*(sd_`x' / sqrt(n_`x'))
 }
 
-twoway bar m_acc_stimxemoxint_post stimxemoxint if emotion == 1 || bar m_acc_stimxemoxint_post stimxemoxint if emotion == 2 || bar m_acc_stimxemoxint_post stimxemoxint if emotion == 3, legend(row(1) order(1 "Neg" 2 "Pos" 3 "Neu")) xtitle("Stim_Cond x Int x Emotion") ytitle("acc_stimxemoxint_post")
-
+//TEST and REFINE
+twoway bar m_acc_actR_Intxemo_post emotion|| rcap hi_acc_actR_Intxemo_post lo_acc_actR_Intxemo_post emotion 
+|| scatter m_acc_actR_Intxemo_post emotion, 
+mlabel(m_acc_actR_Intxemo_post) mlabpos(2) mlabcolor(black) msymbol(i) 
+legend(off) xlabel(1 "Neg" 2 "Pos" 3 "Neu") xtitle("Acc of ActR with Int x Emotions")
 
 
 //Create bar graphs
 foreach x in `stimxemoxint_vars' {
-	twoway bar `x' stimxemoxint if emotion == 1
-	|| bar `x' stimxemoxint if emotion == 2)
-	|| bar `x' stimxemoxint if emotion == 3)
-	(rcap hi_`x' lo_`x' stimxemoxint),
-    legend(row(1) order(1 "Neg" 2 "Pos" 3 "Neu")
-	xtitle ("Bar Graphs of Stim_Cond x Int x Emotion") ytitle(`x')
+	twoway bar m_`x' emotion
+	|| rcap hi_`x' lo_`x' emotion
+	|| scatter m_`x' emotion, mlabel(m_`x') mlabpos(2) mlabcolor(black) msymbol(i) legend(off) 
+	xlabel(1 "Neg" 2 "Pos" 3 "Neu")
 }
 
 
