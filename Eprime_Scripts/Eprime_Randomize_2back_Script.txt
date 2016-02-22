@@ -1,0 +1,50 @@
+'Script to randomize 2-back task while keeping track of correct responses + setting proportion of correct responses
+'This script makes the stimuli displayed in List2 random and makes it so that the 'correctresp' is coded based on whether the letter that was TWO letters before is the same.
+'The # of correct responses is currently set as 10 and the # of total stimuli set as 30 as defined in the OnebackRun1 script.
+
+'The entire set of Letters you want displayed were all defined in the OnebackRun1 script.
+'The # of total letters you want displayed in 1 run of the 1-back or 2-back were already defined in previous script
+
+'Create a randomized array of integers for the TWO-back where 1/3 of the total # of stimuli = correct responses
+'Although we made a version of this array for the 1-back, we need a different version for the 2-back (see below for more details)
+'First create an array of the size of the stimcount variable
+Dim is_target_twoback(stimcount) As Integer
+Dim k As Integer
+'Now have it so 1/3 of the elements of this array = 1
+For k = 1 To stimcount/3
+	is_target_twoback(k) = 1
+Next k 
+'Randomize this array
+RandomizeArray is_target_twoback, 1, UBound(is_target_twoback)
+'Keep randomizing the array Until you have one where the first AND second stimulus displayed cannot be a correct response (impossible for the 2-back)
+While is_target_twoback(1) = 1 Or is_target_twoback(2) = 1
+	RandomizeArray is_target_twoback, 1, UBound(is_target_twoback)
+Wend
+
+'i, previous, index, currentletter variables were all defined in the OnebackRun1 script.
+'reset the 'previous' variable to = 0
+previous = 0
+
+'This will be the variable we use to keep track of the stimulus that was TWO before the current letter.
+Dim two_back As Integer
+two_back = 1
+'This is the loop that will run from start to end of the trial.
+For i = 1 To stimcount
+	'Check the is_target_twoback array to see if this trial is a target. If it is, set the upcoming letter to be displayed to be the same as the letter TWO letters before it. Also code this response as 'correct'.
+	If is_target_twoback(i) = 1 Then
+		index = two_back
+		currentletter = Letters(index)
+		List2.SetAttrib i, "Stimuli", currentletter
+		List2.SetAttrib i, "correctresp", "{END},1"
+	'Otherwise if NOT a target, then randomly select letters excluding the letter TWO letters before it
+	Else
+		'the random_exclude sub-statement is written in the 'User Script'. If we decide that this particular trial will NOT contain a target, then we will make exclude the previous letter from being called (in the 1-back) or the letter 2 letters before (in the 2-back) and will choose a different random letter from our list instead.
+		index = random_exclude (1, UBound(Letters), two_back)
+		currentletter = Letters(index)
+		List2.SetAttrib i, "Stimuli", currentletter
+		List2.SetAttrib i, "correctresp", ""
+	End If 
+	two_back = previous
+	previous = index
+Next i
+

@@ -1,0 +1,78 @@
+'Script to randomize n-back task while keeping track of correct responses + setting proportion of correct responses
+'This script makes the stimuli displayed in List1 random and makes it so that the 'correctresp' is coded based on whether the preceding letter is the same.
+'The # of correct responses is currently set as 10 and the # of total stimuli set as 30.
+
+'Put the entire set of letters you want displayed in a String array. These letters are all the letters included in Laura's 'Triggers' Script.
+'This arrray is defined in this script and will be referenced in the other scripts for 2nd, 3rd and 4th blocks of the n-back.
+'ANY changes made to this list of Letters will affect the set of letters in ALL blocks
+Dim Letters(18) As String
+Letters(1) = "H"
+Letters(2) = "D"
+Letters(3) = "C"
+Letters(4) = "G"
+Letters(5) = "M"
+Letters(6) = "W"
+Letters(7) = "T"
+Letters(8) = "N"
+Letters(9) = "R"
+Letters(10) = "V"
+Letters(11) = "P"
+Letters(12) = "K"
+Letters(13) = "J"
+Letters(14) = "L"
+Letters(15) = "Q"
+Letters(16) = "Z"
+Letters(17) = "S"
+Letters(18) = "B"
+
+'Define the # of total letters you want displayed in 1 run of the 1-back.
+'The number is set here and referenced in future scripts for the 2nd, 3rd and 4th blocks.
+'Changes to this # will change the # of stimuli in ALL blocks
+Dim stimcount As Integer
+stimcount = 30
+
+'Create a randomized array of integers where 1/3 of the total # of stimuli = correct responses
+'First, create an array that is the same size as the total # of stimuli you want
+Dim is_target(stimcount) As Integer
+'Now make it so that 1/3 (stimcount/3) of the array will = 1
+Dim j As Integer
+For j = 1 To stimcount/3
+	is_target(j) = 1
+Next j 
+'Now randomize where the 1s appear in the array.
+'NOTE: normally arrays go from 0 --> the size of the array - 1 BUT based on the code for the loop below, since 'i' is used to index into this is_target array AND to loop through the List1 levels (which start at 1), we'll IGNORE the 0th element of this array.
+RandomizeArray is_target, 1, UBound(is_target)
+'Keep randomizing the array until you have one where the first stimulus displayed cannot be a correct response (impossible for the 1-back)
+While is_target(1) = 1
+	RandomizeArray is_target, 1, UBound(is_target)
+Wend
+
+'Now we loop through the List of stimuli from 1 until the stimcount.
+'We set a variable to iterate down the List and down the is_target array
+Dim i As Integer
+'We set a variable to keep track of the previous stimulus
+Dim previous As Integer
+previous = 0
+'This will be the variable that we use to keep track of where we are in the Letters array/to index into our Letters array
+Dim index As Integer
+'This will be the actual letter that we get after we index into our Letters array
+Dim currentletter As String
+'For loop that goes from 1 until total # of trials desired. It sets the random stimulus displayed and codes the correct response
+For i = 1 To stimcount
+	'Check the is_target array to see if this trial is a target. If it is, set the upcoming letter to be displayed to be the same as the previous letter. Also code the '1' keys as the correct response.
+	If is_target(i) = 1 Then
+		index = previous
+		currentletter = Letters(index)
+		List1.SetAttrib i, "Stimuli", currentletter
+		List1.SetAttrib i, "correctresp", "{END},1"
+	'Otherwise randomly select any letter in the Letters array excluding previous letter (since this will NOT be a target).
+	Else
+		'the random_exclude sub-statement is written in the 'User Script'. If we decide that this particular trial will NOT contain a target, then we will make exclude the previous letter from being called and will choose a different random letter from our Letters array instead.
+		index = random_exclude (1, UBound(Letters), previous)
+		currentletter = Letters(index)
+		List1.SetAttrib i, "Stimuli", currentletter
+		List1.SetAttrib i, "correctresp", ""
+	End If 
+	previous = index
+Next i
+
