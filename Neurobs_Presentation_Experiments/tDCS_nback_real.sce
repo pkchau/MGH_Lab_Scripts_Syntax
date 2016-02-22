@@ -3,9 +3,10 @@
 
 #Header
 response_matching = simple_matching;
+default_font = "Arial"; #Closest Font to old expt font which is Courier New bolded + keep consistent w/ Flanker
 default_font_size = 36; 
-active_buttons = 3;
-button_codes = 1,2,3;
+active_buttons = 5;
+button_codes = 1,2,3,4,5;
 stimulus_properties = subjectID,string, nback,string, letter,string, is_target,string;
 event_code_delimiter = ",";
 #End Header
@@ -66,7 +67,7 @@ trial {
 			};
 			x = 0; y = 120;
 			text { 
-				caption = "'1-back'\n\nFor the 1-back task, press '1' if the letter you see is the same as the one before it.\n\nWe will now begin the real 1-back task.\n\nRemember to be as QUICK and ACCURATE as you can\n\nPress the spacebar when you are ready to start the task!"; 
+				caption = "'1-back'\n\nPress '1' if the letter you see is the same as the one before it.\n\nWe will now begin the real 1-back task.\n\nRemember to be as QUICK and ACCURATE as you can\n\nPress the spacebar when you are ready to start the task!"; 
 				font_size = 14; 
 			};
 			x = 0; y = -20;
@@ -85,7 +86,7 @@ trial {
 			};
 			x = 0; y = 120;
 			text { 
-				caption = "'2-back'\n\nFor the 2-back task, press '1' if the letter you see is the same as TWO letters before it.\n\nWe will now begin the real 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
+				caption = "'2-back'\n\nPress '1' if the letter you see is the same as TWO letters before it.\n\nWe will now begin the real 2-back task.\n\nRemember to be as QUICK and ACCURATE as you can.\n\nPress the spacebar when you are ready to start!"; 
 				font_size = 14; 
 			};
 			x = 0; y = -20;
@@ -224,7 +225,7 @@ begin
 				index = two_back;
 			end;
 			target_string = "yes"; #Writes to the log file that letter is a target. 
-			n_back_event.set_target_button({1,2});
+			n_back_event.set_target_button({1,2,4,5});
 		#Otherwise randomly select any number in the Letters array EXCLUDING the previous letter
 		else
 			if (oneback == true) then
