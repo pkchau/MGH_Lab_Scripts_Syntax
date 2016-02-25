@@ -7,7 +7,7 @@ default_font = "Arial"; #Closest Font to old expt font which is Courier New bold
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, levelr1,string, levelr2,string, pic_dur,string, stim_dur,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, level,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -134,7 +134,7 @@ trial {
 			};
 			x = 0; y = 120;
 			text { 
-				caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
+				caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
 				font_size = 14; 
 			};
 			x = 0; y = 0;
@@ -369,13 +369,13 @@ begin
 			msit_iaps_event.set_target_button({4,7});
 		end;
 		msit_iaps_event.get_target_buttons(targ_buttons);
-		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(lvl_round1) + "," + string(lvl_round1) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
+		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(lvl_round1) + ";" + string(lvl_round2) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
 		if (y == 1) then
 			iaps_pre_trial.set_duration(picdur_set[lvl_round1]);
-			msit_iaps_event.set_duration(stimdur_set[lvl_round1]);
+			msit_iaps_trial.set_duration(stimdur_set[lvl_round1]);
 		elseif (y == 2) then
 			iaps_pre_trial.set_duration(picdur_set[lvl_round2]);
-			msit_iaps_event.set_duration(stimdur_set[lvl_round2]);
+			msit_iaps_trial.set_duration(stimdur_set[lvl_round2]);
 		end;		
 		iaps_pre_trial.present();
 		msit_iaps_trial.present();

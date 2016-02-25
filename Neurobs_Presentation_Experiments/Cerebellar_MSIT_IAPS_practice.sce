@@ -347,31 +347,29 @@ end;
 array<int> picdur_set[6] = {490,392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
 array<int> stimdur_set[6] = {1592,1292,992,692,592,392};
 
-#Since we will most likely be using < the full set of 144 stimuli for the practice task: Randomize order of picture stimuli keeping a 1:1:1 ratio of Pos:Neg:Neu the same for each level
-array<int>randomize_pics_array[0];
-loop int i = 1 until i > neg_pics_set.count()
-begin
-	randomize_pics_array.add(i);
-	i = i + 1;
-end;
-randomize_pics_array.shuffle();
+neg_pics_set.shuffle();
+neu_pics_set.shuffle();
+pos_pics_set.shuffle();
 
 #Make the randomized pictures array 
 array<bitmap> pics_array[0];
-loop int i = 1 until i > randomize_pics_array.count()
+loop int j = 1 until j > 2
 begin
-	pics_array.add(neg_pics_set[randomize_pics_array[i]]);
-	pics_array.add(neu_pics_set[randomize_pics_array[i]]);
-	pics_array.add(pos_pics_set[randomize_pics_array[i]]);
-	i = i + 1;
+	loop int i = 1 until i > neg_pics_set.count()
+	begin
+		pics_array.add(neg_pics_set[i]);
+		pics_array.add(neu_pics_set[i]);
+		pics_array.add(pos_pics_set[i]);
+		i = i + 1;
+	end;
+	j = j + 1
 end;
-pics_array.append(pics_array);
 
 #Randomize num and pic order within each level
 loop int i = 1; int j = num_trials*i; until i > num_levels
 begin
-	pics_array.shuffle(num_trials*(i-1)+1,num_trials*i);
-	combined_num_array.shuffle(num_trials*(i-1)+1,num_trials*i);
+	pics_array.shuffle(j - num_trials + 1,j);
+	combined_num_array.shuffle(j - num_trials + 1,j);
 	i = i + 1;
 end;
 
@@ -389,9 +387,10 @@ loop int y = 1 until y > num_levels
 begin
 	loop int x = 1 until x > num_trials
 	begin
-		text num = combined_num_array[x];
-		iaps_pic.set_part(1, pics_array[x]);
-		iaps_pic_only.set_part(1, pics_array[x]);
+		int z = x + (num_trials*y - num_trials);
+		text num = combined_num_array[z];
+		iaps_pic.set_part(1, pics_array[z]);
+		iaps_pic_only.set_part(1, pics_array[z]);
 		iaps_pic.add_part(num,0,0);
 		#Set the correct response depending on the stimulus displayed
 		string c = num.caption();
@@ -405,7 +404,7 @@ begin
 		iaps_pre_trial.set_duration(picdur_set[y]);
 		msit_iaps_event.set_duration(stimdur_set[y]);
 		msit_iaps_event.get_target_buttons(targ_buttons);
-		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[x].filename().substring(71,8) + "," + num.description() + "," + pics_array[x].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(y) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
+		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[z].filename().substring(71,8) + "," + num.description() + "," + pics_array[z].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(y) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
 		iaps_pre_trial.present();
 		msit_iaps_trial.present();
 		x = x + 1;
