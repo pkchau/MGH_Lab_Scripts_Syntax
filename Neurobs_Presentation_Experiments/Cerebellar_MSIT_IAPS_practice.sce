@@ -176,7 +176,7 @@ trial {
 			};
 			x = 0; y = 120;
 			text { 
-				caption = "This task has 6 levels.\n\nYou will start at an easy level and it will get harder with each level.\n\nWith each level, you will have less time to respond.\n\nPress the spacebar to continue."; 
+				caption = "This task has 6 levels.\n\nYou will start at an easy level and move on to more difficult levels.\n\nWith each level, you will have less time to respond.\n\nPress the spacebar to continue."; 
 				font_size = 14; 
 			};
 		x = 0; y = -20;
@@ -256,7 +256,7 @@ trial {
 			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic;
-		duration = 1292; #Will replace with random durations
+		duration = 1292; #Will replace with 6 different durations
 	} msit_iaps_event;
 } msit_iaps_trial;
 
@@ -274,7 +274,6 @@ trial {
 		}; 
 } get_ready_next_level;
 
-
 #Conclusion
 trial {
 	trial_duration = forever;
@@ -291,9 +290,9 @@ trial {
 		
 begin_pcl;
 
-#SET number of trials here
-int num_trials = 10;
-#SET difficulty levels (# different durations) here
+#SET # trials per level here
+int num_trials = 15;
+#SET # difficulty levels (# different durations) here
 int num_levels = 6;
 int num_all_trials = num_trials*num_levels;
 #SET proportion/# of Int and NonInt #s here
@@ -302,7 +301,7 @@ int num_non = num_trials/2;
 int num_all_int = num_all_trials/2; 
 int num_all_non = num_all_trials/2;
 
-#Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the # of trials.
+#Create int and nonint number arrays that repeat the sets of int and nonint #s until they match the total # of trials in the task.
 array<text> int_num_array[0];
 loop int i = 1 until i > num_all_int/int_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
@@ -318,7 +317,7 @@ begin;
 end;
 #Create nonint stim array
 array<text> non_num_array[0];
-loop int i = 1 until i > num_all_non/non_num_set.count() + 1 #Note: may need to add/subtract 1 if #s don't divide out evenly
+loop int i = 1 until i > num_all_non/non_num_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > non_num_set.count()
 	begin
@@ -331,22 +330,25 @@ begin;
 	i = i + 1;
 end;
 
-#Now that we have our 2 arrays, we randomize the order of the IntNumbers and NonIntNumbers arrays
+#Have order of these stimuli seen randomized
 int_num_array.shuffle();
 non_num_array.shuffle();
 
-#We now combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array. 
-#We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
+#We now combine the 2 arrays into 1 by interlacing int and nonint numbers to ensure each level has a mix of both
 array<text>combined_num_array[0];
-combined_num_array.assign(int_num_array);
-combined_num_array.append(non_num_array);
+loop int i = 1 until i > non_num_array.count()  
+begin
+	combined_num_array.add(int_num_array[i]);
+	combined_num_array.add(non_num_array[i]);
+	i = i + 1;
+end;
 
 #Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
 #Order of increasing vs. decreasing difficulty? ask PI
-array<int> picdur_set[6] = {490,392,305,213,182,151}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[6] = {1592,1292,992,692,592,492};
+array<int> picdur_set[6] = {490,392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[6] = {1592,1292,992,692,592,392};
 
-#Randomly choose picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
+#Since we will most likely be using < the full set of 144 stimuli for the practice task: Randomize order of picture stimuli keeping a 1:1:1 ratio of Pos:Neg:Neu the same for each level
 array<int>randomize_pics_array[0];
 loop int i = 1 until i > neg_pics_set.count()
 begin
@@ -355,7 +357,7 @@ begin
 end;
 randomize_pics_array.shuffle();
 
-#Make pictures array from randomized subset of pics set array
+#Make the randomized pictures array 
 array<bitmap> pics_array[0];
 loop int i = 1 until i > randomize_pics_array.count()
 begin
@@ -364,15 +366,15 @@ begin
 	pics_array.add(pos_pics_set[randomize_pics_array[i]]);
 	i = i + 1;
 end;
+pics_array.append(pics_array);
 
-#We now create a randomizer array containing #s 1-48 (1 up to # of total stimuli) to randomize the stimuli while keeping everything counterbalanced and in the correct corresponding order across the separate arrays
-array<int> randomizer_array[0];
-loop int i = 1 until i > num_all_trials
+#Randomize num and pic order within each level
+loop int i = 1; int j = num_trials*i; until i > num_levels
 begin
-	randomizer_array.add(i);
+	pics_array.shuffle(num_trials*(i-1)+1,num_trials*i);
+	combined_num_array.shuffle(num_trials*(i-1)+1,num_trials*i);
 	i = i + 1;
-end; 
-randomizer_array.shuffle();
+end;
 
 #Begin the experiment
 intro_1.present();
@@ -382,15 +384,15 @@ intro_4.present();
 begin_practice.present();
 get_ready_practice.present();
 
-array<int> targ_buttons[0];
+array<int> targ_buttons[0]; #make array to hold target buttons for analysis file
 #Show MSIT trials 
 loop int y = 1 until y > num_levels
 begin
 	loop int x = 1 until x > num_trials
 	begin
-		text num = combined_num_array[randomizer_array[x]];
-		iaps_pic.set_part(1, pics_array[randomizer_array[x]]);
-		iaps_pic_only.set_part(1, pics_array[randomizer_array[x]]);
+		text num = combined_num_array[x];
+		iaps_pic.set_part(1, pics_array[x]);
+		iaps_pic_only.set_part(1, pics_array[x]);
 		iaps_pic.add_part(num,0,0);
 		#Set the correct response depending on the stimulus displayed
 		string c = num.caption();
@@ -404,12 +406,11 @@ begin
 		iaps_pre_trial.set_duration(picdur_set[y]);
 		msit_iaps_event.set_duration(stimdur_set[y]);
 		msit_iaps_event.get_target_buttons(targ_buttons);
-		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(y) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
+		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[x].filename().substring(71,8) + "," + num.description() + "," + pics_array[x].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(y) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
 		iaps_pre_trial.present();
 		msit_iaps_trial.present();
 		x = x + 1;
 	end;
-	randomizer_array.shuffle();
 	y = y + 1;
 	if (y < num_levels) then
 		get_ready_next_level.present();
