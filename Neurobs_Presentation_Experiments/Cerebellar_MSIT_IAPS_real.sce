@@ -7,7 +7,7 @@ default_font = "Arial"; #Closest Font to old expt font which is Courier New bold
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, levelr1,string, levelr2,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -129,13 +129,13 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
-					caption = "Real MSIT IAPS"; 
-					font_size = 18;
-				};
+				caption = "Real MSIT IAPS"; 
+				font_size = 18;
+			};
 			x = 0; y = 120;
 			text { 
-					caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
-					font_size = 14; 
+				caption = "In this task, you will see 3-digit numbers in the middle of different pictures.\n\nSome of these pictures may be upsetting to you.\n\nIf they are too upsetting at any point, let the experimenter know to end the task.\n\nPress the spacebar to proceed."; 
+				font_size = 14; 
 			};
 			x = 0; y = 0;
 		}; 
@@ -148,9 +148,9 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
-					caption = "Real MSIT IAPS"; 
-					font_size = 18;
-				};
+				caption = "Real MSIT IAPS"; 
+				font_size = 18;
+			};
 			x = 0; y = 120;
 			text { 
 				caption = "You may place your pointer, middle and ring fingers on the 1, 2 and 3 keys.\n\nYou may use either the numeric keypad on your right OR\n\nyou may use the numeric keys above the QWERTY letters on your left.\n\nPress the spacebar to continue."; 
@@ -167,9 +167,9 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
-					caption = "Real MSIT IAPS"; 
-					font_size = 18;
-				};
+				caption = "Real MSIT IAPS"; 
+				font_size = 18;
+			};
 			x = 0; y = 120;
 			text { 
 				caption = "Your task is to identify the number that is different.\n\nFor example, if you see the number '100', press the '1' key.\n\nIf you see the number '232', press the '3' key.\n\nWe are now going to begin the task.\n\nPress the spacebar to continue."; 
@@ -186,10 +186,10 @@ trial {
 	terminator_button = 1;
 		picture {
 			text {
-					caption = "Real MSIT IAPS"; 
-					font_size = 18;
-				};
-				x = 0; y = 120;
+				caption = "Real MSIT IAPS"; 
+				font_size = 18;
+			};
+			x = 0; y = 120;
 			text { 
 				caption = "We will now begin the real version of the task.\n\nTry to be as QUICK and ACCURATE as possible.\n\nPress the spacebar when you are ready to start!"; 
 				font_size = 14; 
@@ -216,7 +216,6 @@ trial {
 trial {
 	trial_duration = 392; #400 - 8 = request 392ms due to 60Hz refresh rate
 	trial_type = fixed;
-	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
 			bitmap neg;
@@ -229,7 +228,6 @@ trial {
 trial {
 	trial_duration = 1292; #Request 1292 instead of 1300
 	trial_type = fixed;
-	clear_active_stimuli = true;
 	stimulus_event {
 		picture {
 			bitmap neg;
@@ -274,7 +272,7 @@ preset int lvl_round2; #user enters in which level (stim dur) we should set the 
 #SET number of trials per level here
 int num_trials = 144;
 #SET difficulty levels (# different durations) here
-int num_levels = 6;
+int num_levels = 2;
 int num_all_trials = num_trials*num_levels;
 #SET proportion/# of Int and NonInt #s here
 int num_int = num_trials/2;
@@ -321,22 +319,17 @@ array<text>combined_num_array[0];
 combined_num_array.assign(int_num_array);
 combined_num_array.append(non_num_array);
 
-#Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
-#Order of increasing vs. decreasing difficulty? ask PI
-array<int> picdur_set[6] = {490,392,305,213,182,151}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[6] = {1592,1292,992,692,592,492};
+#Set array of varying Stim durations from longer to shorter NOTE: request duration - 8 to adjust for refresh rate
+array<int> picdur_set[6] = {490,392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[6] = {1592,1292,992,692,592,392};
 
 #Make full pictures array from indiv pics set arrays, have them in the same order 2x since all pics are seen 2x and we want them displayed 1x w/ the int # and 1x w/ the nonint #
 array<bitmap> pics_array[0];
-loop int i = 1 until i > 2
+loop int i = 1 until i > 2 #Set # times same pic will be seen in task here
 begin
-	loop int x = 1 until x > neg_pics_set.count()
-	begin
-		pics_array.add(neg_pics_set[x]);
-		pics_array.add(neu_pics_set[x]);
-		pics_array.add(pos_pics_set[x]);
-		x = x + 1;
-	end;
+	pics_array.append(neg_pics_set);
+	pics_array.append(neu_pics_set);
+	pics_array.append(pos_pics_set);
 	i = i + 1;
 end;
 
@@ -376,7 +369,7 @@ begin
 			msit_iaps_event.set_target_button({4,7});
 		end;
 		msit_iaps_event.get_target_buttons(targ_buttons);
-		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
+		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(lvl_round1) + "," + string(lvl_round1) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
 		if (y == 1) then
 			iaps_pre_trial.set_duration(picdur_set[lvl_round1]);
 			msit_iaps_event.set_duration(stimdur_set[lvl_round1]);

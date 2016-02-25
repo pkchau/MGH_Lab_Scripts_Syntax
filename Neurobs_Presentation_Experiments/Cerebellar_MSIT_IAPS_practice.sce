@@ -7,7 +7,7 @@ default_font = "Arial"; #Closest Font to old expt font which is Courier New bold
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, level,string, stim_dur,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, level,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -343,8 +343,7 @@ begin
 	i = i + 1;
 end;
 
-#Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
-#Order of increasing vs. decreasing difficulty? ask PI
+#Set array of varying Stim durations from longer to shorter NOTE: request duration - 8 to adjust for refresh rate
 array<int> picdur_set[6] = {490,392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
 array<int> stimdur_set[6] = {1592,1292,992,692,592,392};
 
