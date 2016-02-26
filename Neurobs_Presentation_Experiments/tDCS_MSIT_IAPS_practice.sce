@@ -3,6 +3,7 @@
 
 #Header
 response_matching = simple_matching;
+default_font = "Arial"; #Closest Font to old expt font which is Courier New bolded + keep consistent w/ Flanker
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
@@ -296,13 +297,16 @@ end;
 int_num_array.shuffle();
 non_num_array.shuffle();
 
-#We now combine the 2 arrays into 1 by adding the non_int_stimuli_array array to the end of the int_stimuli_array. 
-#We kept the arrays separate so each pic is displayed 1x with the int # and 1x with the nonint #. 
+#We now combine the 2 arrays into 1 by interlacing int and nonint numbers to ensure the practice trial has a mix of both
 array<text>combined_num_array[0];
-combined_num_array.assign(int_num_array);
-combined_num_array.append(non_num_array);
+loop int i = 1 until i > non_num_array.count()  
+begin
+	combined_num_array.add(int_num_array[i]);
+	combined_num_array.add(non_num_array[i]);
+	i = i + 1;
+end;
 
-#Randomly choose picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
+#Randomly order picture stimuli to be used keeping a 1:1:1 ratio of Pos:Neg:Neu 
 array<int>randomize_pics_array[0];
 loop int i = 1 until i > neg_pics_set.count()
 begin
@@ -311,7 +315,7 @@ begin
 end;
 randomize_pics_array.shuffle();
 
-#Make pictures array from randomized subset of pics set array
+#Make pictures array from randomized pics set array
 array<bitmap> pics_array[0];
 loop int i = 1 until i > randomize_pics_array.count()
 begin
@@ -355,7 +359,7 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	msit_iaps_event.get_target_buttons(targ_buttons);
-	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(72,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
 	iaps_pre_trial.present();
 	msit_iaps_trial.present();
 	x = x + 1;
