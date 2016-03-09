@@ -320,8 +320,8 @@ combined_num_array.assign(int_num_array);
 combined_num_array.append(non_num_array);
 
 #Set array of varying Stim durations from longer to shorter NOTE: request duration - 8 to adjust for refresh rate
-array<int> picdur_set[6] = {490,392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[6] = {1592,1292,992,692,592,392};
+array<int> picdur_set[5] = {392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[5] = {1292,992,692,592,392};
 
 #Make full pictures array from indiv pics set arrays, have them in the same order 2x since all pics are seen 2x and we want them displayed 1x w/ the int # and 1x w/ the nonint #
 array<bitmap> pics_array[0];
