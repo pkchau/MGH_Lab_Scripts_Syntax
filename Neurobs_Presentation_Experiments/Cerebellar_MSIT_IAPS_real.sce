@@ -234,6 +234,12 @@ trial {
 			x = 0; y = 0;	
 		} iaps_pic;
 	} msit_iaps_event;
+	stimulus_event {
+		picture {
+		} blank_pic;
+		time = 1292; #Will set to vary based on duration of the stimulus prior to it
+		duration = 792; #800ms
+	} blank_event;	
 } msit_iaps_trial;
 
 #Get ready - next level
@@ -266,13 +272,16 @@ trial {
 		
 begin_pcl;
 
-preset int lvl_round1; #user enters in which level (stim dur) we should set the task to based on performance on practice task
-preset int lvl_round2; #user enters in which level (stim dur) we should set the task to based on performance on practice task
+preset int level; #user enters in which level (stim dur) we should set the task to based on performance on practice task
+
+#Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
+array<int> picdur_set[5] = {392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[5] = {1292,992,692,592,392};
 
 #SET number of trials per level here
 int num_trials = 144;
 #SET difficulty levels (# different durations) here
-int num_levels = 2;
+int num_levels = 1;
 int num_all_trials = num_trials*num_levels;
 #SET proportion/# of Int and NonInt #s here
 int num_int = num_trials/2;
@@ -319,10 +328,6 @@ array<text>combined_num_array[0];
 combined_num_array.assign(int_num_array);
 combined_num_array.append(non_num_array);
 
-#Set array of varying Stim durations from longer to shorter NOTE: request duration - 8 to adjust for refresh rate
-array<int> picdur_set[5] = {392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[5] = {1292,992,692,592,392};
-
 #Make full pictures array from indiv pics set arrays, have them in the same order 2x since all pics are seen 2x and we want them displayed 1x w/ the int # and 1x w/ the nonint #
 array<bitmap> pics_array[0];
 loop int i = 1 until i > 2 #Set # times same pic will be seen in task here
@@ -351,41 +356,32 @@ get_ready_real.present();
 
 array<int> targ_buttons[0];
 #Show MSIT IAPS Trials
-loop int y = 1 until y > num_levels
+loop int x = 1 until x > num_trials
 begin
-	loop int x = 1 until x > num_trials
-	begin
-		text num = combined_num_array[randomizer_array[x]];
-		iaps_pic.set_part(1, pics_array[randomizer_array[x]]);
-		iaps_pic_only.set_part(1, pics_array[randomizer_array[x]]);
-		iaps_pic.add_part(num,0,0);
-		#Set the correct response depending on the stimulus displayed
-		string c = num.caption();
-		if (c == "212" || c == "313" || c == "221" || c == "100" || c == "331") then
-			msit_iaps_event.set_target_button({2,5});
-		elseif (c == "332" || c == "112" || c == "211" || c == "233" || c == "020") then
-			msit_iaps_event.set_target_button({3,6});
-		elseif (c == "311" || c == "232" || c == "322" || c == "131" || c == "003" ) then
-			msit_iaps_event.set_target_button({4,7});
-		end;
-		msit_iaps_event.get_target_buttons(targ_buttons);
-		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(lvl_round1) + ";" + string(lvl_round2) + "," + string(picdur_set[y]) + "," + string(stimdur_set[y]));
-		if (y == 1) then
-			iaps_pre_trial.set_duration(picdur_set[lvl_round1]);
-			msit_iaps_trial.set_duration(stimdur_set[lvl_round1]);
-		elseif (y == 2) then
-			iaps_pre_trial.set_duration(picdur_set[lvl_round2]);
-			msit_iaps_trial.set_duration(stimdur_set[lvl_round2]);
-		end;		
-		iaps_pre_trial.present();
-		msit_iaps_trial.present();
-		x = x + 1;
+	text num = combined_num_array[randomizer_array[x]];
+	iaps_pic.set_part(1, pics_array[randomizer_array[x]]);
+	iaps_pic_only.set_part(1, pics_array[randomizer_array[x]]);
+	iaps_pic.add_part(num,0,0);
+	#Set the correct response depending on the stimulus displayed
+	string c = num.caption();
+	if (c == "212" || c == "313" || c == "221" || c == "100" || c == "331") then
+		msit_iaps_event.set_target_button({2,5});
+	elseif (c == "332" || c == "112" || c == "211" || c == "233" || c == "020") then
+		msit_iaps_event.set_target_button({3,6});
+	elseif (c == "311" || c == "232" || c == "322" || c == "131" || c == "003" ) then
+		msit_iaps_event.set_target_button({4,7});
 	end;
-	randomizer_array.shuffle();
-	y = y + 1;
-	if (y < num_levels) then
-		get_ready_next_level.present();
-	end;	
+	msit_iaps_event.get_target_buttons(targ_buttons);
+	system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
+	system_keyboard.set_time_out(500);
+	string key = system_keyboard.get_input();
+	iaps_pre_trial.set_duration(picdur_set[level]);
+	msit_iaps_trial.set_duration(stimdur_set[level]);
+	blank_event.set_time(stimdur_set[level]);
+	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(picdur_set[level]) + "," + string(stimdur_set[level]));
+	iaps_pre_trial.present();
+	msit_iaps_trial.present();
+	x = x + 1;
 end;
 
 conclusion.present();
