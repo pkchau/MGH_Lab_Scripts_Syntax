@@ -1,5 +1,6 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
 #Numbers font = 36 in old expt
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
@@ -218,7 +219,7 @@ trial {
 
 #IAPS picture only 
 trial {
-	trial_duration = 392; #400 - 8 = request 392ms due to 60Hz refresh rate
+	trial_duration = 392;  
 	trial_type = fixed;
 	clear_active_stimuli = true;
 	stimulus_event {
@@ -231,7 +232,7 @@ trial {
 
 #MSIT IAPS task
 trial {
-	trial_duration = 1292; #Request 1292 instead of 1300ms
+	trial_duration = 1292; 
 	trial_type = fixed;
 	clear_active_stimuli = true;
 	stimulus_event {

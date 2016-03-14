@@ -1,12 +1,14 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
 #Numbers font = 36 in old expt
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
+default_font = "Arial"; #Closest Font to old expt font which is Courier New bolded + keep consistent w/ Flanker
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -199,7 +201,7 @@ trial {
 
 #Get Ready - Real Task
 trial {
-	trial_duration = 2992; #Request 2992 instead of 3000
+	trial_duration = 2992; 
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
@@ -213,7 +215,7 @@ trial {
 
 #IAPS picture only 
 trial {
-	trial_duration = 392; #400 - 8 = request 392ms due to 60Hz refresh rate
+	trial_duration = 392;  
 	trial_type = fixed;
 	clear_active_stimuli = true;
 	stimulus_event {
@@ -226,7 +228,7 @@ trial {
 
 #MSIT IAPS task
 trial {
-	trial_duration = 1292; #Request 1292 instead of 1300
+	trial_duration = 1292;  
 	trial_type = fixed;
 	clear_active_stimuli = true;
 	stimulus_event {
@@ -252,6 +254,18 @@ trial {
 } conclusion;
 		
 begin_pcl;
+
+int num_levels = 2; #SET # levels for real task here.
+preset int lvl_round1; #user enters in which level (stim dur) we should set the task to based on performance on practice task
+preset int lvl_round2; #user enters in which level (stim dur) we should set the task to based on performance on practice task
+
+array<int>lvls[0];
+loop int i = 1 until i > num_levels
+begin
+	lvls.add(lvl_round1);
+	lvls.add(lvl_round2);
+	i = i + 1;
+end;
 
 #SET number of trials here
 int num_trials = 144;
@@ -346,6 +360,9 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	msit_iaps_event.get_target_buttons(targ_buttons);
+	system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
+	system_keyboard.set_time_out(1000);
+	string key = system_keyboard.get_input();	
 	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(72,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]));
 	iaps_pre_trial.present();
 	msit_iaps_trial.present();

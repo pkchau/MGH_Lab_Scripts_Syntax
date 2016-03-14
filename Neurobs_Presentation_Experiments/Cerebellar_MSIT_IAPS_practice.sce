@@ -1,6 +1,6 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
 #Numbers font = 36 in old expt
-#For all durations, will ask for target duration - 8 due to 60Hz refresh rate
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
@@ -257,7 +257,7 @@ trial {
 		picture {
 		} blank_pic;
 		time = 1292; #Will set to vary based on duration of the stimulus prior to it
-		duration = 792; #800ms
+		duration = 492; 
 	} blank_event;	
 } msit_iaps_trial;
 
@@ -344,9 +344,9 @@ begin
 	i = i + 1;
 end;
 
-#Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
-array<int> picdur_set[5] = {392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[5] = {1292,992,692,592,392};
+#Set array of varying Stim durations  
+array<int> picdur_set[5] = {392,271,149,89,28}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[5] = {1292,892,492,292,92};
 
 neg_pics_set.shuffle();
 neu_pics_set.shuffle();
@@ -433,7 +433,7 @@ begin
 		blank_event.set_time(stimdur_array[randomizer_array[x]]);
 		msit_iaps_event.get_target_buttons(targ_buttons);
 		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(1000);
+		system_keyboard.set_time_out(500);
 		string key = system_keyboard.get_input();
 		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(picdur_array[randomizer_array[x]]) + "," + string(stimdur_array[randomizer_array[x]]));
 		iaps_pre_trial.present();

@@ -1,5 +1,6 @@
 #NOTE: display size is 640 x 480 on old exptl laptop, so this expt is set to 640 x 480 to match.
 #Numbers font = 36 in old expt
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
@@ -200,7 +201,7 @@ trial {
 
 #Get Ready - Real Task
 trial {
-	trial_duration = 2992; #Request 2992 instead of 3000
+	trial_duration = 2992; 
 	trial_type = specific_response;
 	terminator_button = 1;
 		picture {
@@ -214,7 +215,7 @@ trial {
 
 #IAPS picture only 
 trial {
-	trial_duration = 392; #400 - 8 = request 392ms due to 60Hz refresh rate
+	trial_duration = 392; 
 	trial_type = fixed;
 	stimulus_event {
 		picture {
@@ -226,7 +227,7 @@ trial {
 
 #MSIT IAPS task
 trial {
-	trial_duration = 1292; #Request 1292 instead of 1300
+	trial_duration = 1292;  
 	trial_type = fixed;
 	stimulus_event {
 		picture {
@@ -238,7 +239,7 @@ trial {
 		picture {
 		} blank_pic;
 		time = 1292; #Will set to vary based on duration of the stimulus prior to it
-		duration = 792; #800ms
+		duration = 792; 
 	} blank_event;	
 } msit_iaps_trial;
 
@@ -274,9 +275,9 @@ begin_pcl;
 
 preset int level; #user enters in which level (stim dur) we should set the task to based on performance on practice task
 
-#Set array of varying Stim durations NOTE: request duration - 8 to adjust for refresh rate
-array<int> picdur_set[5] = {392,305,213,182,120}; #Set to 400(original)/1300(original) x durations
-array<int> stimdur_set[5] = {1292,992,692,592,392};
+#Set array of varying Stim durations  
+array<int> picdur_set[5] = {392,271,149,89,28}; #Set to 400(original)/1300(original) x durations
+array<int> stimdur_set[5] = {1292,892,492,292,92};
 
 #SET number of trials per level here
 int num_trials = 144;
