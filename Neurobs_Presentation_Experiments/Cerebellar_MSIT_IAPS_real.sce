@@ -8,7 +8,7 @@ default_font = "Arial"; #Closest Font to old expt font which is Courier New bold
 active_buttons = 7;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
 button_codes = 1,2,3,4,5,6,7;
-stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, level,string, pic_dur,string, stim_dur,string;
+stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
 
@@ -227,21 +227,23 @@ trial {
 
 #MSIT IAPS task
 trial {
-	trial_duration = 1292;  
+	trial_duration = stimuli_length; 
 	trial_type = fixed;
 	stimulus_event {
 		picture {
 			bitmap neg;
 			x = 0; y = 0;	
 		} iaps_pic;
+		duration = 1292; #Will replace with 5 different durations
 	} msit_iaps_event;
 	stimulus_event {
 		picture {
 		} blank_pic;
 		time = 1292; #Will set to vary based on duration of the stimulus prior to it
-		duration = 792; 
+		duration = 692; 
 	} blank_event;	
 } msit_iaps_trial;
+
 
 #Get ready - next level
 trial {
@@ -374,10 +376,10 @@ begin
 	end;
 	msit_iaps_event.get_target_buttons(targ_buttons);
 	system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-	system_keyboard.set_time_out(500);
+	system_keyboard.set_time_out(82);
 	string key = system_keyboard.get_input();
 	iaps_pre_trial.set_duration(picdur_set[level]);
-	msit_iaps_trial.set_duration(stimdur_set[level]);
+	msit_iaps_event.set_duration(stimdur_set[level]);
 	blank_event.set_time(stimdur_set[level]);
 	msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description() + "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(picdur_set[level]) + "," + string(stimdur_set[level]));
 	iaps_pre_trial.present();
