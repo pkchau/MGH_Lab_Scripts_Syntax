@@ -1,13 +1,18 @@
 #NOTE: display size is 1024 x 768 on old exptl laptop, so this expt is set to 1024 x 768 to match.
 #Point size of flankers stimuli for old expt = 56
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
-#default_font = "Courier New"; #Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
-#default_formatted_text = true;5
-active_buttons = 3;
+
+#Closest Font to old expt font which is Courier New bolded. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
+default_font = "Arial"; 
+
 #keys: 1 = c, 2 = m, 3 = spacebar
+active_buttons = 3;
 button_codes = 1,2,3;
+
+#Log file setup
 stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string;
 event_code_delimiter = ",";
 #End Header
@@ -209,7 +214,7 @@ trial {
 
 #Get Ready - Real Task
 trial {
-	trial_duration = 2992; #Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request 3000 - 16.7/2 = request 2992ms trial duration
+	trial_duration = 2992; 
 	trial_type = fixed;
 		picture {
 		text { 
@@ -222,7 +227,7 @@ trial {
 
 #Flanker task
 trial {
-	trial_duration = 92; # request 100 instead of 92
+	trial_duration = 92; 
 	trial_type = fixed;
 	stimulus_event {
 		picture {
@@ -230,7 +235,7 @@ trial {
 			x = 0; y = 0;
 		} flankersonly_pic;
 	} flankersonly_event;
-} flankersonly_trial;
+} flankersonly;
 
 #Flanker task: target
 trial {
@@ -241,9 +246,9 @@ trial {
 			text err;
 			x = 0; y = 0;
 		} target_pic;
-	duration = 42; #Request 42 instead of 50ms
+	duration = 42; 
 	} target_event;
-} target_trial;
+} target;
 		
 #ITI
 trial {
@@ -265,7 +270,7 @@ trial {
       picture {
       } pic_blank;
       time = 0;
-      duration = 292; #Request 292 instead of 300
+      duration = 292; 
    } feedback_blank_event;
 } feedback_blank;
 
@@ -281,7 +286,7 @@ trial {
          x = 0; y = 0;
       } pic_tooslow;
       time = 0;
-      duration = 292; #Request 292 instead of 300
+      duration = 292;
    } feedback_tooslow_event;
 } feedback_tooslow;
 
@@ -313,7 +318,28 @@ trial {
 	} conclusion_pic;	
 } conclusion; 
 
+#LSL trigger error
+trial {
+	trial_duration = forever;
+	trial_type = specific_response;
+	terminator_button = 3;
+	picture {
+	text { 
+		caption = "There is a problem w/ the cxn btwn the 2 computers.\n\nPlease restart the task.\n\nCheck that both computers are connected to the internet.\n\nCheck that the correct IP address is entered below.\n\nOtherwise restart NIC and/or the computers and unplug and replug the cxns"; 
+		font_size = 18; 
+	};
+	x = 0; y = 0;
+	} LSL_err_pic;	
+} LSL_err; 
+
 begin_pcl;
+
+preset string IP_address_of_NIC_laptop;
+
+#LSL code
+bool isConnected = false;
+#Create socket
+socket s = new socket();
 
 #Set array of varying ITIs (200, 300, 400)
 #Request 192, 292, 392 instead.
@@ -391,6 +417,13 @@ end;
 #Randomize the order of the stimuli while maintaining the flanker x flanker w/ target pairs
 randomizer.shuffle();
 
+#Connect to NIC server. enter in IP address of NIC computer. NIC server runs on port 1234. SET time-out time
+#8 bits for codification and no encryption
+isConnected = s.open(IP_address_of_NIC_laptop,1234,5000,socket::ANSI,socket::UNENCRYPTED);
+if isConnected == false then
+	LSL_err.present();
+end;
+
 #Present intro slides
 intro_1.present();
 intro_2.present();
@@ -405,26 +438,47 @@ get_ready_real.present();
 int num_blocks = 2;
 
 array<int> targ_buttons[0]; #Array to contain target buttons/correct responses
+
 #Present Flanker trials
 loop int b = 1 until b > num_blocks
 	begin
 	loop int i = 1 until i > num_all_stimuli
 	begin
-		text target = flankers_target[randomizer[i]];
+		text t = flankers_target[randomizer[i]];
 		flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);
-		target_pic.set_part(1, target);
+		target_pic.set_part(1, t);
+		if isConnected == true then
 		#Set the correct response depending on the stimulus displayed
-		if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
-			target_event.set_target_button(1);
-		elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
-			target_event.set_target_button(2);
+			if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
+				target_event.set_target_button(1);
+				if t.caption() == "< < < < <" then
+					s.send("<TRIGGER>11</TRIGGER>"); #NIC server processes a trigger whenever it receives a string with the following format: <TRIGGER>xxx</TRIGGER> with xxx = any # other than 0
+				else
+					s.send("<TRIGGER>12</TRIGGER>");
+				end;
+			elseif (t.caption() == "> > > > >" || t.caption() == "< < > < <") then
+				target_event.set_target_button(2);
+				if t.caption() == "> > > > >" then
+					s.send("<TRIGGER>22</TRIGGER>");
+				else
+					s.send("<TRIGGER>21</TRIGGER>");
+				end;
+			else 
+				s.send("<TRIGGER>100</TRIGGER>")
+			end;
 		end;
 		target_event.get_target_buttons(targ_buttons);
-		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description() + "," + string(targ_buttons[1]));
-		flankersonly_trial.present();
-		target_trial.present();
-		#If response too slow, display too slow
+		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description() + "," + string(targ_buttons[1]));
+		flankersonly.present();
+		target.present();
+		#Set triggers for subject responses: '1' for 'c' and '2' for 'm'
 		stimulus_data last = stimulus_manager.last_stimulus_data();
+		if last.button() == 1 then
+			s.send("<TRIGGER>1</TRIGGER>");
+		elseif last.button() == 2 then 
+			s.send("<TRIGGER>2</TRIGGER>");
+		end;
+		#If response too slow, display too slow slide, otherwise display a blank slide
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then
 			feedback_tooslow.present();
 		else
