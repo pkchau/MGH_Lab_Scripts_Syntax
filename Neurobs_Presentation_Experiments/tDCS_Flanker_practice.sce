@@ -1,13 +1,18 @@
 #NOTE: display size is 1024 x 768 on old exptl laptop, so this expt is set to 1024 x 768 to match.
 #Point size of flankers stimuli for old expt = 56 but can't do bolded New Courier font to match so will do 70.
+#Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request desired duration - 16.7/2 = request desired duration - 8 for all durations
 
 #Header
 response_matching = simple_matching;
-#default_font = "Courier New"; #Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
-active_buttons = 3;
+
+#Font = Courier New in old expt. CANNOT do this b/c in old expt all text was bolded. Bolding text requires HTML tags so < > MUST be used as tags in order to format any text in this expt; incompatible w/ stimuli.
+default_font = "Arial"; 
+
 #Keys: 1 = c, 2 = m, 3 = spacebar
 #button_codes = 1,2,3;
-#Name of stimulus_property, type(string/number)
+active_buttons = 3;
+
+#Log file setup
 stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string; 
 #End Header
 	
@@ -208,7 +213,7 @@ trial {
 
 #Get Ready - practice
 trial {
-	trial_duration = 2992; #Note: monitor's refresh rate is: 60Hz = 60 frames of data per second/1 per 16.7ms --> request 3000 - 16.7/2 = request 2992ms trial duration
+	trial_duration = 2992; 
 	trial_type = fixed;
 		picture {
 		text { 
@@ -219,9 +224,9 @@ trial {
 		}; 
 } get_ready_practice;
 
-#Flanker practice
+#Flankers only
 trial {
-	trial_duration = 92; #Request 100 - 8 = 92ms duration
+	trial_duration = 92; 
 	trial_type = fixed;
 	stimulus_event {
 		picture {
@@ -229,9 +234,9 @@ trial {
 			x = 0; y = 0;
 		} flankersonly_pic;
 	} flankersonly_event;
-} flankersonly_trial;
+} flankersonly;
 
-#Flanker practice
+#Flankers w/ target
 trial {
 	trial_duration = 1442; #Will combine this trial w/ ISI (1400ms) since response window is 1500 in old expt. This will allow for slower responses but also not add to the 'blank screen' time.
 	trial_type = fixed;
@@ -240,9 +245,9 @@ trial {
 			text fl;
 			x = 0; y = 0;
 		} target_pic;
-		duration = 42; #Request 42 instead of 50ms
+		duration = 42; 
 	} target_event;
-} target_trial;
+} target;
 
 #ITI
 trial {
@@ -282,7 +287,7 @@ int num_all_stimuli = num_inc_stimuli + num_con_stimuli;
 
 #Make arrays of ALL stimuli in task
 array<text> flankers_only[0];
-loop int i = 1 until i > num_all_stimuli/flankers_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
+loop int i = 1 until i > num_all_stimuli/flankers_set.count() #Note: may need to add 1 if #s don't divide out evenly
 begin
 	loop int x = 1 until x > flankers_set.count()
 	begin
@@ -297,7 +302,7 @@ end;
 
 #Make array with all flankers stimuli: 1st add con stimuli
 array<text> flankers_target[0];
-loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
+loop int i = 1 until i > num_con_stimuli/con_target_set.count() #Note: may need to addt 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > con_target_set.count()
 	begin
@@ -310,7 +315,7 @@ begin;
 	i = i + 1;
 end;
 #Add inc stimuli
-loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add/subtract 1 if #s don't divide out evenly
+loop int i = 1 until i > num_inc_stimuli/inc_target_set.count() #Note: may need to add 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > inc_target_set.count()
 	begin
@@ -324,7 +329,7 @@ begin;
 end;
 
 array<int> ITIs[0];
-loop int i = 1 until i > num_all_stimuli/ITI_set.count()	+ 1 #Add 1 b/c 32/3 doesn't divide evenly and will round down
+loop int i = 1 until i > num_all_stimuli/ITI_set.count()	+ 1 #Note: may need to add 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > ITI_set.count()
 	begin
@@ -337,17 +342,16 @@ begin;
 	i = i + 1;
 end;
 
-#Create a randomizer array 
+#Create a randomizer array to randomize the order of the stimuli while maintaining the flanker x flanker w/ target pairs
 array<int> randomizer[0];
 loop int i = 1 until i > num_all_stimuli
 begin;
 	randomizer.add(i);
 	i = i + 1;
 end;
-#Randomize the order of the stimuli while maintaining the flanker x flanker w/ target pairs
 randomizer.shuffle();
 
-#Present all the intro slides
+#Present all the Intro Slides
 intro_1.present();
 intro_2.present();
 example_1.present();
@@ -358,12 +362,13 @@ begin_practice.present();
 get_ready_practice.present();
 
 array<int> targ_buttons[0]; #Array to contain target buttons/correct responses
+
 #Show Flanker Trials
 loop int i = 1 until i > num_all_stimuli
 begin
 	text target = flankers_target[randomizer[i]];
-	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]); #Set the randomized Flankers only stimulus
-	target_pic.set_part(1, target); #Set the randomized Flankers w/ target stimulus
+	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);  
+	target_pic.set_part(1, target);  
 	#Set the correct response depending on the stimulus displayed
 	if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
 		target_event.set_target_button(1);
@@ -372,10 +377,9 @@ begin
 	end;
 	target_event.get_target_buttons(targ_buttons);
 	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description()+ "," + string(targ_buttons[1]));
-	flankersonly_trial.present();
-	target_trial.present();
+	flankersonly.present();
+	target.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();
-	term.print_line(string(last.button()));
 	ITI_event.set_duration(ITIs[randomizer[i]]);
 	ITI.present();
 	i = i + 1;
