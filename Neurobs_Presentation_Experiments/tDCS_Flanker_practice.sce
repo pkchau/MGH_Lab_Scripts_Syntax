@@ -366,17 +366,17 @@ array<int> targ_buttons[0]; #Array to contain target buttons/correct responses
 #Show Flanker Trials
 loop int i = 1 until i > num_all_stimuli
 begin
-	text target = flankers_target[randomizer[i]];
+	text t = flankers_target[randomizer[i]];
 	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);  
-	target_pic.set_part(1, target);  
+	target_pic.set_part(1, t);  
 	#Set the correct response depending on the stimulus displayed
-	if (target.caption() == "< < < < <" || target.caption() == "> > < > >") then
+	if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
 		target_event.set_target_button(1);
-	elseif (target.caption() == "> > > > >" || target.caption() == "< < > < <") then
+	elseif (t.caption() == "> > > > >" || t.caption() == "< < > < <") then
 		target_event.set_target_button(2);
 	end;
 	target_event.get_target_buttons(targ_buttons);
-	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + target.caption() + "," + target.description()+ "," + string(targ_buttons[1]));
+	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]));
 	flankersonly.present();
 	target.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();
