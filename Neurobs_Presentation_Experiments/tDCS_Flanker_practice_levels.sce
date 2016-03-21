@@ -197,6 +197,26 @@ trial {
 		};  
 } example_4;
 
+#Intro 3
+trial {
+	trial_duration = forever;
+	trial_type = specific_response;
+	terminator_button = 3;
+		picture {
+			text {
+				caption = "Practice Flanker"; 
+				font_size = 22;
+			};
+			x = 0; y = 150;
+			text { 
+				caption = "How much time you have to see the arrows and respond will be random.\n\nSometimes you will have more time and sometimes you will have less time.\n\nJust do the best you can!\n\nPress the spacebar to continue."; 
+				font_size = 18; 
+			};
+			x = 0; y = -20;
+		}; 
+} intro_3;
+
+
 #Begin Practice
 trial {
 	trial_duration = forever;
@@ -250,8 +270,9 @@ trial {
 	stimulus_event {
 		picture {
 		} ISI_pic;
-		time = 42; #Will set to vary based on duration of the stimulus prior to it
-		duration = 692; 
+		time = 1000; #Will set to vary based on duration of the stimulus prior to it
+		duration = 1992;
+		#duration = 692; 
 	} ISI_event;	
 } target;
 
@@ -287,23 +308,23 @@ begin_pcl;
 array<int> ITI_set[3] = {192, 292, 392};
 
 #SET # trials per level here
-int num_trials = 15;
+int num_trials = 16;
 #SET # difficulty levels (# different durations) here
 int num_levels = 5;
 int num_all_trials = num_trials*num_levels;
 #SET proportion/# of inc and con #s here
-int num_inc = num_trials/2 + 1;
-int num_con = num_trials/2 + 1;
-int num_all_inc = num_all_trials/2 + 1; 
-int num_all_con = num_all_trials/2 + 1;
+int num_inc = num_trials/2;
+int num_con = num_trials/2;
+int num_all_inc = num_inc*num_levels; 
+int num_all_con = num_con*num_levels;
 
 #Make arrays of all flankers stimuli in task
 array<text> flankers_only[0];
-loop int i = 1 until i > num_all_trials/flankers_set.count() + 1 #Note: may need to add 1 if #s don't divide out evenly
+loop int i = 1 until i > num_all_trials/flankers_set.count() #Note: may need to add 1 if #s don't divide out evenly
 begin
 	loop int x = 1 until x > flankers_set.count()
 	begin
-		if (flankers_only.count() == num_all_trials/2 + 1) then
+		if (flankers_only.count() == num_all_trials) then
 			break;
 		end;
 		flankers_only.add(flankers_set[x]);
@@ -341,7 +362,7 @@ begin;
 end;
 
 array<int> ITIs[0];
-loop int i = 1 until i > num_all_trials/ITI_set.count()	+ 1 #Note: may need to add 1 if #s don't divide out evenly
+loop int i = 1 until i > num_all_trials/ITI_set.count() + 1 #Note: may need to add 1 if #s don't divide out evenly
 begin;
 	loop int x = 1 until x > ITI_set.count()
 	begin
@@ -403,6 +424,7 @@ example_1.present();
 example_2.present();
 example_3.present();
 example_4.present();
+intro_3.present();
 begin_practice.present();
 get_ready_practice.present();
 
@@ -425,6 +447,7 @@ begin
 	target_event.get_target_buttons(targ_buttons);
 	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]));
 	flankersonly.present();
+	ISI_event.set_time(targetdur_array[randomizer[i]] + 8);
 	target.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();
 	ITI_event.set_duration(ITIs[randomizer[i]]);
