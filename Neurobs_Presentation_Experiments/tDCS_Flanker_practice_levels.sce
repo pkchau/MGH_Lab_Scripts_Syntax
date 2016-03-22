@@ -271,8 +271,7 @@ trial {
 		picture {
 		} ISI_pic;
 		time = 1000; #Will set to vary based on duration of the stimulus prior to it
-		duration = 1992;
-		#duration = 692; 
+		duration = 492; 
 	} ISI_event;	
 } target;
 
@@ -436,8 +435,6 @@ begin
 	text t = flankers_target[randomizer[i]];
 	flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);  
 	target_pic.set_part(1, t);  
-	flankersonly.set_duration(flankerdur_array[randomizer[i]]);
-	target.set_duration(targetdur_array[randomizer[i]]);
 	#Set the correct response depending on the stimulus displayed
 	if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
 		target_event.set_target_button(1);
@@ -446,8 +443,10 @@ begin
 	end;
 	target_event.get_target_buttons(targ_buttons);
 	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]));
+	flankersonly.set_duration(flankerdur_array[randomizer[i]]);
+	target_event.set_duration(targetdur_array[randomizer[i]]);
+	ISI_event.set_time(targetdur_array[randomizer[i]]);
 	flankersonly.present();
-	ISI_event.set_time(targetdur_array[randomizer[i]] + 8);
 	target.present();
 	stimulus_data last = stimulus_manager.last_stimulus_data();
 	ITI_event.set_duration(ITIs[randomizer[i]]);
