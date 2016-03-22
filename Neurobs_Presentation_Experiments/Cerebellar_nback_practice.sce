@@ -132,7 +132,7 @@ trial {
 
 #1-back/2-back task
 trial {
-   trial_duration = 2492;
+   trial_duration = stimuli_length;
 	trial_type = fixed;
    all_responses = false;
    stimulus_event {
@@ -143,6 +143,12 @@ trial {
       time = 0;
       duration = 492;
    } n_back_event;
+	stimulus_event {
+		picture {
+		} blank_pic;
+		time = 492;  
+		duration = 1492; 
+	} blank_event;	
 } n_back_trial;
 
 #Next level
@@ -186,6 +192,8 @@ begin
    return rval
 end;
 
+#SET total # of n-back levels here
+int num_levels = 5;
 #SET total # trials here
 int stim_count = 30;
 
@@ -212,9 +220,6 @@ intro_2.present();
 begin_1back.present();
 get_ready_practice.present();
 
-#SET total # of n-back levels here
-int num_levels = 5;
-
 #Present n-back trials
 loop int x = 1 until x > num_levels
 begin
@@ -237,7 +242,7 @@ begin
 		end;
 		pic.set_part( 1, letters_set[index] );
 		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(1000);
+		system_keyboard.set_time_out(50);
 		string key = system_keyboard.get_input();
 		n_back_event.set_event_code(logfile.subject() + "," + string(x) + "," + letters_set[index].description() + "," + target_string);
 		if (x > 1) then
