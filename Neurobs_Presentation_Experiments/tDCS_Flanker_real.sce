@@ -446,8 +446,9 @@ loop int b = 1 until b > num_blocks
 	begin
 		text t = flankers_target[randomizer[i]];
 		flankersonly_pic.set_part(1, flankers_only[randomizer[i]]);
-		target_pic.set_part(1, t);
-		if isConnected == true then
+		target_pic.set_part(1, t);		
+		flankersonly.present();
+		if isConnected == true then 
 		#Set the correct response depending on the stimulus displayed
 			if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
 				target_event.set_target_button(1);
@@ -455,9 +456,9 @@ loop int b = 1 until b > num_blocks
 					s.send("<TRIGGER>11</TRIGGER>"); #NIC server processes a trigger whenever it receives a string with the following format: <TRIGGER>xxx</TRIGGER> with xxx = any # other than 0
 				else
 					s.send("<TRIGGER>12</TRIGGER>");
-				end;
+				end;		
 			elseif (t.caption() == "> > > > >" || t.caption() == "< < > < <") then
-				target_event.set_target_button(2);
+				target_event.set_target_button(2);				
 				if t.caption() == "> > > > >" then
 					s.send("<TRIGGER>22</TRIGGER>");
 				else
@@ -465,19 +466,12 @@ loop int b = 1 until b > num_blocks
 				end;
 			else 
 				s.send("<TRIGGER>100</TRIGGER>")
-			end;
+			end;	
 		end;
 		target_event.get_target_buttons(targ_buttons);
 		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description() + "," + string(targ_buttons[1]));
-		flankersonly.present();
 		target.present();
-		#Set triggers for subject responses: '1' for 'c' and '2' for 'm'
 		stimulus_data last = stimulus_manager.last_stimulus_data();
-		if last.button() == 1 then
-			s.send("<TRIGGER>1</TRIGGER>");
-		elseif last.button() == 2 then 
-			s.send("<TRIGGER>2</TRIGGER>");
-		end;
 		#If response too slow, display too slow slide, otherwise display a blank slide
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then
 			feedback_tooslow.present();
@@ -485,7 +479,7 @@ loop int b = 1 until b > num_blocks
 			feedback_blank.present();
 		end;
 		ITI_event.set_duration(ITIs[randomizer[i]]);
-		ITI.present();
+		ITI.present();		
 		i = i + 1;
 	end;	
 	#If there are more blocks to present, then present end of block message and randomize the stimuli again
