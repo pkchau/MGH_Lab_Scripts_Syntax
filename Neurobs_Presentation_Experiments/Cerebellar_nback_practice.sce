@@ -242,7 +242,7 @@ begin
 		end;
 		pic.set_part( 1, letters_set[index] );
 		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(50);
+		system_keyboard.set_time_out(40);
 		string key = system_keyboard.get_input();
 		n_back_event.set_event_code(logfile.subject() + "," + string(x) + "," + letters_set[index].description() + "," + target_string);
 		if (x > 1) then

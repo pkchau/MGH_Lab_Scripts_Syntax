@@ -46,31 +46,26 @@ correct_1back(pair) :: (nback1 == "1") and ((is_target1 == "yes" and (code2 == "
 correct_1back_count = count(correct_1back)
 oneback(pair):: (nback1 == "1") 
 oneback_count = count(oneback)
-oneback_resp(pair) :: (nback1 == "1") and (code2 == "1" or code2 == "2")
 
 correct_2back(pair) :: (nback1 == "2") and ((is_target1 == "yes" and (code2 == "1" or code2 == "2")) or (is_target1 == "no" and code2 == ""))
 correct_2back_count = count(correct_2back)
 twoback(pair):: (nback1 == "2")
 twoback_count = count(twoback)
-twoback_resp(pair) :: (nback1 == "2") and (code2 == "1" or code2 == "2")
 
 correct_3back(pair) :: (nback1 == "3") and ((is_target1 == "yes" and (code2 == "1" or code2 == "2")) or (is_target1 == "no" and code2 == ""))
 correct_3back_count = count(correct_3back)
 threeback(pair):: (nback1 == "3")
 threeback_count = count(threeback)
-threeback_resp(pair) :: (nback1 == "3") and (code2 == "1" or code2 == "2")
 
 correct_4back(pair) :: (nback1 == "4") and ((is_target1 == "yes" and (code2 == "1" or code2 == "2")) or (is_target1 == "no" and code2 == ""))
 correct_4back_count = count(correct_4back)
 fourback(pair):: (nback1 == "4")
 fourback_count = count(fourback)
-fourback_resp(pair) :: (nback1 == "4") and (code2 == "1" or code2 == "2")
 
 correct_5back(pair) :: (nback1 == "5") and ((is_target1 == "yes" and (code2 == "1" or code2 == "2")) or (is_target1 == "no" and code2 == ""))
 correct_5back_count = count(correct_5back)
 fiveback(pair):: (nback1 == "5")
 fiveback_count = count(fiveback)
-fiveback_resp(pair) :: (nback1 == "5") and (code2 == "1" or code2 == "2")
 
 miss(target):: code2 == "" and is_target1 == "yes"
 miss_count = count(miss)
@@ -80,6 +75,12 @@ false_alarm_count = count (false_alarm)
 #Check event pairs
 #check = stim_count - correct_count - miss_count - false_alarm_count
 
+RT_1(rm_all) :: (time_diff > 0) and (nback1 == "1")
+RT_2(rm_all) :: (time_diff > 0) and (nback1 == "2")
+RT_3(rm_all) :: (time_diff > 0) and (nback1 == "3")
+RT_4(rm_all) :: (time_diff > 0) and (nback1 == "4")
+RT_5(rm_all) :: (time_diff > 0) and (nback1 == "5")
+
 #Calculate averages
 avg_overall_acc = correct_count/stim_count
 avg_1back_acc = correct_1back_count/oneback_count
@@ -88,9 +89,11 @@ avg_3back_acc = correct_3back_count/threeback_count
 avg_4back_acc = correct_4back_count/fourback_count
 avg_5back_acc = correct_5back_count/fiveback_count
 
-avg_rt = avg(all_resp, time_diff)
-avg_1back_rt = avg(oneback_resp, time_diff)
-avg_2back_rt = avg(twoback_resp, time_diff)
+avg_1back_rt = avg(RT_1, time_diff)
+avg_2back_rt = avg(RT_2, time_diff)
+avg_3back_rt = avg(RT_3, time_diff)
+avg_4back_rt = avg(RT_4, time_diff)
+avg_5back_rt = avg(RT_5, time_diff)
 
 #Define event pair property
 event_pair_property accuracy (correct, miss, false_alarm)
@@ -98,3 +101,14 @@ event_pair_property accuracy (correct, miss, false_alarm)
 #Create FINAL Analysis Table and print as file
 event_pair_table FINAL_table(subjectID1, nback1, trial1, letter1, is_target1, code2, accuracy, time_diff)
 print FINAL_table (pair, "\t", "\n")
+print "avg acc over all nbacks= ", avg_overall_acc
+print "avg lvl 1 acc = ", avg_1back_acc
+print "avg lvl 2 acc = ", avg_2back_acc
+print "avg lvl 3 acc = ", avg_3back_acc
+print "avg lvl 4 acc = ", avg_4back_acc
+print "avg lvl 5 acc = ", avg_5back_acc
+print "avg lvl 1 RT = ", avg_1back_rt
+print "avg lvl 2 RT = ", avg_2back_rt
+print "avg lvl 3 RT = ", avg_3back_rt
+print "avg lvl 4 RT = ", avg_4back_rt
+print "avg lvl 5 RT = ", avg_5back_rt

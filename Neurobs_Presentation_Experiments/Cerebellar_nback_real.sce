@@ -93,7 +93,7 @@ trial {
 		}; 
 } get_ready_real;
 
-#1-back task
+#n-back task
 trial {
    trial_duration = 2492;
 	trial_type = fixed;
@@ -216,7 +216,7 @@ begin
 		end;
 		pic.set_part( 1, letters_set[index] );
 		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(1000);
+		system_keyboard.set_time_out(40);
 		string key = system_keyboard.get_input();
 		n_back_event.set_event_code(logfile.subject() + "," + string(lvls[x]) + "," + letters_set[index].description() + "," + target_string );
 		if (lvls[x] > 1) then

@@ -257,7 +257,7 @@ trial {
 		picture {
 		} blank_pic;
 		time = 1292; #Will set to vary based on duration of the stimulus prior to it
-		duration = 492; 
+		duration = 692; 
 	} blank_event;	
 } msit_iaps_trial;
 
@@ -365,7 +365,7 @@ begin
 	j = j + 1;
 end;
 
-#Make the randomized stim durations array
+#Make the randomized stim durations arrays
 array<int> picdur_array[0];
 loop int i = 1 until i > num_all_trials/picdur_set.count()
 begin
@@ -433,7 +433,7 @@ begin
 		blank_event.set_time(stimdur_array[randomizer_array[x]]);
 		msit_iaps_event.get_target_buttons(targ_buttons);
 		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(500);
+		system_keyboard.set_time_out(40);
 		string key = system_keyboard.get_input();
 		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(picdur_array[randomizer_array[x]]) + "," + string(stimdur_array[randomizer_array[x]]));
 		iaps_pre_trial.present();
