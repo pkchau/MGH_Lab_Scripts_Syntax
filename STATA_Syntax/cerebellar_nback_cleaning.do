@@ -2,10 +2,7 @@ clear all
 capture log close
 set more off
 
-/*
-//Create a 'blank' .txt file first that has variables but no data
-import delimited "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles\Cerebellar_Merged.csv"
-
+/*  ~~SYNTAX TO CREATE MERGED DATASET~~
 //Get list of all Subject directories 
 local dir_list: dir "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles" dirs "*"
 
@@ -25,6 +22,12 @@ foreach dir in `dir_list' {
 	}
 }
 
+//MANUALLY: Create a 'blank' .txt file first that has variables but no data
+//Get rid of the current dataset in memory to avoid duplicates
+cd "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles"
+clear all
+import delimited "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles\Cerebellar_Merged.txt"
+
 foreach dir in `dir_list' {
 	local subject_folder = "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles\" + "`dir'"
 	local subject_folder_data: dir "`subject_folder'" files "*.dta"
@@ -38,7 +41,10 @@ cd "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard
 save Cerebellar_Merged, replace
 */
 
+//Start actual cleaning
 use "C:\Users\Neuromod\Cerebellar_Study\cerebTMS study files (yroh@mclean.harvard.edu )\Subject Data\N-back logfiles\Cerebellar_Merged.dta"
+
+drop if subjectid1 =="TEST"
 
 /*
 // For future datsets: Get rid of all the avg statements
@@ -55,7 +61,6 @@ replace pre_post_stim = "2" if strpos(subjectid1, "post") > 0
 gen session = substr(subjectid1,-1,1)
 
 gen subject_session = subjectid + "_" + session + "_" + pre_post_stim
-order subjectid session pre_post_stim subject_session
 
 gen stim_cond = 0
 label define stim_conds 0 "Unknown/Not completed" 1 "Sham" 2 "Inhibitory (T)" 3 "Excitatory (I)"
@@ -72,10 +77,8 @@ drop if completed == 0
 
 replace time_diff = . if time_diff < 0
 
-gen acc2 = "1" if accuracy == "correct"
-replace acc2 = "0" if accuracy == "false_alarm" || accuracy == "miss"
-encode acc2, generate(acc)
-drop acc2
+gen acc = 1 if accuracy == "correct"
+replace acc = 0 if accuracy == "false_alarm" || accuracy == "miss"
 
 //Find avg RT for 1 back and 2 back for all trials
 egen avg_RT_12back_all = mean(time_diff), by(subject_session)
@@ -106,7 +109,7 @@ egen num_2back_all = count(acc) if nback1 == 2, by(subject_session)
 replace acc_2back_all = acc_2back_all/num_2back_all
 
 //Fill in missing indiv trial values
-foreach var of varlist acc_2back_all avg_RT_2back_correct avg_RT_2back_all { 
+foreach var of varlist acc_* avg_RT_* { 
 	gsort subject_session `var'
 	by subject_session: replace `var' = `var'[1]
 }
@@ -122,4 +125,6 @@ foreach var of varlist acc_* avg_RT_* {
 
 //Now that we have all the averages that we want, we can arbitrarily remove the excess rows/individual trial data and individual trial variables so we only have 1 row/1 observation per Subject's Session
 bysort subject_session: drop if _n != 1  
-drop completed is_target1 letter1 code2 trial1 nback1 subject session RT_* num_* acc accuracy time_diff  
+drop completed is_target1 letter1 code2 trial1 nback1 subjectid session RT_* num_* acc accuracy time_diff  
+
+order subjectid session pre_post_stim subject_session
