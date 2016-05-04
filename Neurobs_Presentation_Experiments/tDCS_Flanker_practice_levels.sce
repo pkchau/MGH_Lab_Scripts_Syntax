@@ -13,7 +13,7 @@ default_font = "Arial";
 active_buttons = 3;
 
 #Log file setup
-stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string; 
+stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string, flanker_dur,string, target_dur,string; 
 #End Header
 	
 #Begin SDL
@@ -287,6 +287,20 @@ trial {
    } ITI_event;
 } ITI;
 
+#Break
+trial {
+   trial_duration = forever;
+	trial_type = specific_response;
+	terminator_button = 3;
+	picture {
+		text {
+			caption = "You're halfway done!\n\nPlease take a moment to relax.\n\nPress the spacebar when you are ready to continue.";
+			font_size = 18;
+		};
+		x = 0; y = 0;
+	} break_pic;
+} break_trial;
+
 #Conclusion
 trial {
 	trial_duration = forever;
@@ -442,7 +456,7 @@ begin
 		target_event.set_target_button(2);
 	end;
 	target_event.get_target_buttons(targ_buttons);
-	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]));
+	target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]) + "," + string(flankerdur_array[randomizer[i]]) + "," + string(targetdur_array[randomizer[i]]));
 	flankersonly.set_duration(flankerdur_array[randomizer[i]]);
 	target_event.set_duration(targetdur_array[randomizer[i]]);
 	ISI_event.set_time(targetdur_array[randomizer[i]]);
@@ -452,6 +466,10 @@ begin
 	ITI_event.set_duration(ITIs[randomizer[i]]);
 	ITI.present();
 	i = i + 1;
+	if i == num_all_trials/2 then
+		break_trial.present();
+		get_ready_practice.present();
+	end;
 end;
 
 conclusion.present();
