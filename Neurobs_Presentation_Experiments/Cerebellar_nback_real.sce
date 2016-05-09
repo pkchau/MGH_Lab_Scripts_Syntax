@@ -5,8 +5,8 @@
 response_matching = simple_matching;
 default_font = "Arial"; #Closest Font to old expt font which is Courier New bolded + keep consistent w/ Flanker
 default_font_size = 36; 
-active_buttons = 5;
-button_codes = 1,2,3,4,5;
+active_buttons = 13;
+button_codes = 1,2,3,4,5,6,7,8,9,10,11,12,13;
 stimulus_properties = subjectID,string, nback,string, letter,string, is_target,string;
 event_code_delimiter = ",";
 #End Header
@@ -209,15 +209,12 @@ begin
 		if (is_target[i] == 1) then
 			index = holders[lvls[x]];
 			target_string = "yes"; #Writes to the log file that letter is a target. 
-			n_back_event.set_target_button({1,2,4,5}); #Set the correct response button
+			n_back_event.set_target_button({1,2}); #Set the correct response button
 		#Otherwise randomly select any number in the Letters array EXCLUDING the previous letter
 		else
 			index = random_exclude( 1, letters_set.count(), holders[lvls[x]] )
 		end;
 		pic.set_part( 1, letters_set[index] );
-		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(40);
-		string key = system_keyboard.get_input();
 		n_back_event.set_event_code(logfile.subject() + "," + string(lvls[x]) + "," + letters_set[index].description() + "," + target_string );
 		if (lvls[x] > 1) then
 			loop int z = 0 until z == lvls[x] - 1
