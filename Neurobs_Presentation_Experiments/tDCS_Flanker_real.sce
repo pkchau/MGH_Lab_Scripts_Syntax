@@ -9,8 +9,8 @@ response_matching = simple_matching;
 default_font = "Arial"; 
 
 #keys: 1 = c, 2 = m, 3 = spacebar
-active_buttons = 3;
-button_codes = 1,2,3;
+active_buttons = 8;
+button_codes = 1,2,3,4,5,6,7,8;
 
 #Log file setup
 stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string;
@@ -246,6 +246,7 @@ trial {
 			text err;
 			x = 0; y = 0;
 		} target_pic;
+	code = 99;
 	duration = 42; 
 	} target_event;
 } target;
@@ -317,20 +318,6 @@ trial {
 	x = 0; y = 0;
 	} conclusion_pic;	
 } conclusion; 
-
-#LSL trigger error
-trial {
-	trial_duration = forever;
-	trial_type = specific_response;
-	terminator_button = 3;
-	picture {
-	text { 
-		caption = "There is a problem w/ the cxn btwn the 2 computers.\n\nPlease restart the task.\n\nCheck that both computers are connected to the internet.\n\nCheck that the correct IP address is entered below.\n\nOtherwise restart NIC and/or the computers and unplug and replug the cxns"; 
-		font_size = 18; 
-	};
-	x = 0; y = 0;
-	} LSL_err_pic;	
-} LSL_err; 
 
 begin_pcl;
 
@@ -421,7 +408,7 @@ randomizer.shuffle();
 #8 bits for codification and no encryption
 isConnected = s.open(IP_address_of_NIC_laptop,1234,5000,socket::ANSI,socket::UNENCRYPTED);
 if isConnected == false then
-	LSL_err.present();
+	exit("\nThere is a problem w/ the cxn btwn the 2 computers.\nPlease restart the task.\nCheck that both computers are connected to the internet.\nCheck that the correct IP address was entered.\nOtherwise restart NIC and/or the computers and unplug and replug the cxns"); 
 end;
 
 #Present intro slides
