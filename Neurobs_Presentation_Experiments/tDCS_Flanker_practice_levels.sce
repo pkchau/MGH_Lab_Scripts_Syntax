@@ -9,8 +9,8 @@ response_matching = simple_matching;
 default_font = "Arial"; 
 
 #Keys: 1 = c, 2 = m, 3 = spacebar
-#button_codes = 1,2,3;
-active_buttons = 3;
+active_buttons = 8;
+button_codes = 1,2,3,4,5,6,7,8;
 
 #Log file setup
 stimulus_properties = subjectID,string, flankers,string, stim_arrows,string, condition,string, targ_buttons,string, flanker_dur,string, target_dur,string; 
