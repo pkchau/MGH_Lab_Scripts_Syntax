@@ -375,9 +375,6 @@ begin
 		msit_iaps_event.set_target_button({4,7});
 	end;
 	msit_iaps_event.get_target_buttons(targ_buttons);
-	system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-	system_keyboard.set_time_out(40);
-	string key = system_keyboard.get_input();
 	iaps_pre_trial.set_duration(picdur_set[level]);
 	msit_iaps_event.set_duration(stimdur_set[level]);
 	blank_event.set_time(stimdur_set[level]);

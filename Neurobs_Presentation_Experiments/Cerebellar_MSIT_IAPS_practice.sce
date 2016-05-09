@@ -10,6 +10,7 @@ active_buttons = 7;
 button_codes = 1,2,3,4,5,6,7;
 stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
+response_logging = log_active;
 #End Header	
 
 #Begin SDL
@@ -432,9 +433,6 @@ begin
 		msit_iaps_event.set_duration(stimdur_array[randomizer_array[x]]);
 		blank_event.set_time(stimdur_array[randomizer_array[x]]);
 		msit_iaps_event.get_target_buttons(targ_buttons);
-		system_keyboard.set_log_keypresses(true); #record all keypresses in case subject presses the wrong key
-		system_keyboard.set_time_out(40);
-		string key = system_keyboard.get_input();
 		msit_iaps_event.set_event_code(logfile.subject() + "," + num.caption() + "," + pics_array[randomizer_array[x]].filename().substring(71,8) + "," + num.description() + "," + pics_array[randomizer_array[x]].description()+ "," + string(targ_buttons[1]) + ";" + string(targ_buttons[2]) + "," + string(picdur_array[randomizer_array[x]]) + "," + string(stimdur_array[randomizer_array[x]]));
 		iaps_pre_trial.present();
 		msit_iaps_trial.present();
