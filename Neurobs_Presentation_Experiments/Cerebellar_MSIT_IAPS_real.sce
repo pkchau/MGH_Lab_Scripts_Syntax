@@ -5,9 +5,9 @@
 #Header
 response_matching = simple_matching;
 default_font = "Arial"; #Closest Font to old expt font which is Courier New bolded + keep consistent w/ Flanker
-active_buttons = 13;
+active_buttons = 15;
 #2,5 = number 1; 3,6 = number 2; 4,7 = number 3
-button_codes = 1,2,3,4,5,6,7,8,9,10,11,12,13;
+button_codes = 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15;
 stimulus_properties = subjectID,string, num_stim,string, pic_stim,string, interference,string, emotion,string, targ_buttons,string, pic_dur,string, stim_dur,string;
 event_code_delimiter = ",";
 #End Header	
