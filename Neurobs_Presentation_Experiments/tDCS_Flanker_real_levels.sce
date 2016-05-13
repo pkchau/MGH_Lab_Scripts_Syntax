@@ -234,7 +234,6 @@ trial {
 			text err; 	
 			x = 0; y = 0;
 		} flankersonly_pic;
-		code = 99;
 	} flankersonly_event;
 } flankersonly;
 
@@ -325,23 +324,9 @@ trial {
 	} conclusion_pic;	
 } conclusion; 
 
-#LSL trigger error
-trial {
-	trial_duration = forever;
-	trial_type = specific_response;
-	terminator_button = 3;
-	picture {
-	text { 
-		caption = "There is a problem w/ the cxn btwn the 2 computers.\n\nPlease restart the task.\n\nCheck that both computers are connected to the internet.\n\nCheck that the correct IP address is entered below.\n\nOtherwise restart NIC and/or the computers and unplug and replug the cxns"; 
-		font_size = 18; 
-	};
-	x = 0; y = 0;
-	} LSL_err_pic;	
-} LSL_err; 
-
 begin_pcl;
 
-#preset string IP_address_of_NIC_laptop;
+preset string IP_address_of_NIC_laptop;
 
 preset int level; #user enters in which level (stim dur) we should set the task to based on performance on practice task
 
@@ -349,12 +334,10 @@ preset int level; #user enters in which level (stim dur) we should set the task 
 array<int> flankerdur_set[5] = {136,114,92,70,48}; #Set to 400(original)/1300(original) x durations
 array<int> targetdur_set[5] = {62,52,42,32,22};
 
-/*
 #LSL code
 bool isConnected = false;
 #Create socket
 socket s = new socket();
-*/
 
 #Set array of varying ITIs (200, 300, 400)
 #Request 192, 292, 392 instead.
@@ -455,14 +438,13 @@ end;
 #Randomize the order of the stimuli while maintaining the flanker x flanker w/ target pairs
 randomizer.shuffle();
 
-/*
 #Connect to NIC server. enter in IP address of NIC computer. NIC server runs on port 1234. SET time-out time
 #8 bits for codification and no encryption
 isConnected = s.open(IP_address_of_NIC_laptop,1234,5000,socket::ANSI,socket::UNENCRYPTED);
 if isConnected == false then
-	LSL_err.present();
+	exit("\nThere is a problem w/ the cxn btwn the 2 computers.\nPlease restart the task.\nCheck that both computers are connected to the internet.\nCheck that the correct IP address was entered.\nOtherwise restart NIC and/or the computers and unplug and replug the cxns"); 
 end;
-*/
+
 
 #Present intro slides
 intro_1.present();
@@ -491,34 +473,29 @@ loop int b = 1 until b > num_blocks
 		target_event.set_duration(targetdur_set[level]);
 		ISI_event.set_time(targetdur_set[level]);
 		flankersonly.present();
-#		if isConnected == true then 
 		#Set the correct response depending on the stimulus displayed
-			if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
-				target_event.set_target_button(1);
-				/*
-				if t.caption() == "< < < < <" then
-					s.send("<TRIGGER>11</TRIGGER>"); #NIC server processes a trigger whenever it receives a string with the following format: <TRIGGER>xxx</TRIGGER> with xxx = any # other than 0
-				else
-					s.send("<TRIGGER>12</TRIGGER>");
-				end;	
-				*/
-			elseif (t.caption() == "> > > > >" || t.caption() == "< < > < <") then
-				target_event.set_target_button(2);				
-				/*
-				if t.caption() == "> > > > >" then
-					s.send("<TRIGGER>22</TRIGGER>");
-				else
-					s.send("<TRIGGER>21</TRIGGER>");
-				end;
-				
-			else 
-				s.send("<TRIGGER>100</TRIGGER>")
-			*/
+		if (t.caption() == "< < < < <" || t.caption() == "> > < > >") then
+			target_event.set_target_button(1);
+			if t.caption() == "< < < < <" then
+				target_event.set_event_code("11");
+			else
+				target_event.set_event_code("12"); 
 			end;	
+		elseif (t.caption() == "> > > > >" || t.caption() == "< < > < <") then
+			target_event.set_target_button(2);				
+			if t.caption() == "> > > > >" then
+				target_event.set_event_code("22");
+			else
+				target_event.set_event_code("21");
+			end;
+		else 
+			target_event.set_event_code("100");
+		end;	
 		target_event.get_target_buttons(targ_buttons);
-		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]) + "," + string(flankerdur_set[level]) + "," + string(targetdur_set[level]));
+#		target_event.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]) + "," + string(flankerdur_set[level]) + "," + string(targetdur_set[level]));
 		target.present();
 		stimulus_data last = stimulus_manager.last_stimulus_data();
+		last.set_event_code(logfile.subject() + "," + flankers_only[randomizer[i]].caption() + "," + t.caption() + "," + t.description()+ "," + string(targ_buttons[1]) + "," + string(flankerdur_set[level]) + "," + string(targetdur_set[level]));
 		#If response too slow, display too slow slide, otherwise display a blank slide
 		if last.reaction_time() > 600 || last.reaction_time() == 0 then
 			feedback_tooslow.present();
